@@ -18,7 +18,7 @@ public class jidoController {
     * /jido 페이지 요청 및 지도 데이터 요청을 처리할 메서드
     * @return
     * */
-    @GetMapping
+    @GetMapping("/jido")
     public String jidoPage() {
         log.info("/jido GET 요청 수신");
         return "jido";
