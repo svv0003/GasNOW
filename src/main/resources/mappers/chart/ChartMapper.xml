@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.gasnow.chart.model.mapper.ChartMapper">
+
+    <!-- 전체 조회 -->
+    <select id="getAllPrice" resultType="chart">
+        SELECT *
+        FROM avg_price
+        ORDER BY id DESC
+    </select>
+
+    <!-- 1년 조회 -->
+    <select id="getOneYearPrice" resultType="chart">
+        SELECT *
+        FROM avg_price
+        WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        AND oilCategory = 'B034'
+    </select>
+
+    <!-- 1달 조회 -->
+    <select id="getOneMonthPrice" resultType="chart">
+        SELECT *
+        FROM avg_price
+        WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+    </select>
+
+    <!-- 1주 조회 -->
+    <select id="getOneWeekPrice" resultType="chart">
+        SELECT *
+        FROM avg_price
+        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+    </select>
+
+
+</mapper>
