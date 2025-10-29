@@ -20,10 +20,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean checkUserIdDuplicate(String userId) {
-        int idExistCount = userMapper.checkUserIdExist(userId); // DB에서 검색된 결과의 개수
-
         // DB에 아이디가 존재하는 경우 (사용 불가능한 아이디)
-        if(idExistCount > 0){
+        if(userMapper.checkUserIdExist(userId) > 0){
             return false;
         }
         return true;
@@ -37,10 +35,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean checkPhoneDuplicate(String userPhone) {
-        int phoneExistCount = userMapper.checkUserPhoneExist(userPhone);
-
         // DB에 연락처가 존재하는 경우 (사용 불가능한 연락처)
-        if(phoneExistCount > 0){
+        if(userMapper.checkUserPhoneExist(userPhone) > 0){
             return false;
         }
         return true;
