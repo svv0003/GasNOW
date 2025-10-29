@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class rating {
-    private String GS_ID;
-    private String USER_ID;
-    private double RATING;
-    private String REVIEW_TEXT;
-    private String CREATED_AT;
+public class Rating {
+    private String gsId;
+    private String userId;
+    private double rating;
+    private String createdAt;
 }
