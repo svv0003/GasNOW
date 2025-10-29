@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원가입, 회원 정보 및 탈퇴 관리 Mapper -->
+<mapper namespace="project.gasnow.user.model.mapper.UserMapper">
+
+    <!-- 회원가입 -->
+    <insert id="insertNewUser" parameterType="User">
+        INSERT INTO user(user_id, name, password, email, phone)
+        VALUES(
+                #{userId}, #{userName}, #{userPassword}, #{userEmail}, #{userPhone}
+              )
+    </insert>
+
+    <!-- 회원가입 - 아이디 중복 체크 -->
+    <select id="checkUserIdExist" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원가입 - 연락처 중복 체크 -->
+    <select id="checkUserPhoneExist" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE phone = #{userPhone}
+    </select>
+
+    <!-- 마이페이지 - 회원정보 조회 -->
+    <select id="getUserInfoById" resultType="User">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 마이페이지 - 비밀번호 변경 (현재 비밀번호 일치 여부 확인) -->
+    <select id="getCurrentPassword" resultType="String">
+        SELECT password
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 마이페이지 - 비밀번호 변경 (새로운 비밀번호 저장) -->
+    <update id="updateUserPassword" parameterType="User">
+        UPDATE user
+        SET password = #{userPassword}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- 마이페이지 - 회원 탈퇴 -->
+    <delete id="deleteUser" parameterType="User">
+        DELETE FROM user
+        WHERE user_id = #{userId}
+    </delete>
+
+</mapper>
