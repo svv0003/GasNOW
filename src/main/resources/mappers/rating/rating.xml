@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.gasnow.rating.model.mapper.RatingMapper">
+
+
+
+    <!-- <select id="getRating" resultType="Rating"> 반환값이 하나면 double로 -->
+    <!-- 평균 -->
+    <select id="getAvgRating" resultType="double">
+        SELECT ROUND(AVG(RATING), 2)
+        FROM GS_RATING
+        WHERE GS_ID = #{gsId}
+    </select>
+
+    <!-- 금일 평점 작성했는지 -->
+    <select id="checkingInputRating" resultType="java.util.Date">
+        SELECT CREATED_AT
+        FROM GS_RATING
+        WHERE GS_ID = #{gsId} AND USER_ID = #{userId}
+    </select>
+
+    <!-- 평점 작성 -->
+    <insert id="addRating" parameterType="Rating">
+        INSERT INTO GS_RATING (GS_ID, USER_ID, RATING)
+            VALUES (#{gsId}, #{userId}, #{rating})
+    </insert>
+
+</mapper>
