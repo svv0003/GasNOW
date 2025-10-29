@@ -1,4 +1,4 @@
-package project.gasnow.map.model.dto;
+package project.gasnow.jido.model.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class map {
+public class jido {
     private String GS_ID;
     private String X_COORD;
     private String Y_COORD;
