@@ -2,7 +2,11 @@ package project.gasnow.user.model.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import project.gasnow.user.model.dto.User;
+import project.gasnow.user.model.dto.UserPoint;
 import project.gasnow.user.model.mapper.UserMapper;
 
 @Service
@@ -10,7 +14,34 @@ import project.gasnow.user.model.mapper.UserMapper;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+    /**
+     * 회원가입 메서드
+     * @param user 클라이언트가 view에서 form에 작성한 정보를 User 객체로 받아옴
+     */
+    @Transactional
+    @Override
+    public void register(User user) {
+        // 아이디 중복 체크
+        if(!checkUserIdDuplicate(user.getUserId())) {
+            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+        }
+
+        // 연락처 중복 체크
+        if(!checkPhoneDuplicate(user.getUserPhone())) {
+            throw new IllegalArgumentException("이미 등록된 연락처입니다.");
+        }
+
+        // 비밀번호 암호화
+        user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
+
+        // 회원 등록 - 최종 DB에 저장
+        userMapper.insertNewUser(user);
+
+        // 포인트 초기화
+        UserPoint point = User
+    }
 
     /**
      * 아이디 중복 체크 메서드

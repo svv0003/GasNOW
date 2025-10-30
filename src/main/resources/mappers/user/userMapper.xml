@@ -15,7 +15,10 @@
               )
     </insert>
 
-    <!-- 회원가입 - 아이디 중복 체크 -->
+    <!--
+    회원가입 - 아이디 중복 체크
+    로그인 - 아이디 존재 여부 확인
+    -->
     <select id="checkUserIdExist" resultType="int">
         SELECT COUNT(*)
         FROM user
@@ -36,7 +39,10 @@
         WHERE user_id = #{userId}
     </select>
 
-    <!-- 마이페이지 - 비밀번호 변경 (현재 비밀번호 일치 여부 확인) -->
+    <!--
+    마이페이지 - 비밀번호 변경 (현재 비밀번호 일치 여부 확인)
+    로그인 - 입력한 비밀번호 일치 확인
+    -->
     <select id="getCurrentPassword" resultType="String">
         SELECT password
         FROM user
