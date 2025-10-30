@@ -8,12 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
 import project.gasnow.user.model.mapper.UserMapper;
+import project.gasnow.user.model.mapper.UserPointMapper;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final UserPointMapper userPointMapper;
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     /**
@@ -40,7 +44,7 @@ public class UserServiceImpl implements UserService {
         userMapper.insertNewUser(user);
 
         // 포인트 초기화
-        UserPoint point = User
+        // userPointMapper 만든 후에 다시 작업
     }
 
     /**
@@ -71,5 +75,46 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 이메일 인증코드 전송 메서드
+     * @param email 세션에 저장된 클라이언트의 이메일 정보
+     * @return null 또는 인증코드
+     */
+    @Override
+    public String sendEmail(String email) {
+        return "";
+    }
+
+    /**
+     * 이메일 인증코드 확인 메서드
+     * @param map Map<String, Object>
+     * @return mapper 메서드에 map을 파라미터로 넘겨서 반환
+     */
+    @Override
+    public int checkAuthKey(Map<String, Object> map) {
+        return 0;
+    }
+
+    /**
+     * 로그인 메서드
+     * @param userId 클라이언트가 view에서 작성한 아이디
+     * @param password 클라이언트가 view에서 작성한 비밀번호
+     */
+    @Override
+    public void login(String userId, String password) {
+
+    }
+
+
+    /**
+     * 로그인 시 포인트 적립 메서드
+     * @param userId 세션에 저장된 userId
+     * @return 적립된 포인트
+     */
+    @Override
+    public int addLoginPoint(String userId) {
+        return 0;
     }
 }
