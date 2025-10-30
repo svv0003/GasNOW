@@ -11,7 +11,7 @@ import project.gasnow.user.model.dto.User;
  * 관리자 권한 체크 자동화 인터셉터
  */
 @Component
-public class AdminInterceptor implements HandlerInterceptor {
+public class  AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();

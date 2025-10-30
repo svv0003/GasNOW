@@ -4,4 +4,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="project.gasnow.rating.model.mapper.favoriteMapper"></mapper>
+<mapper namespace="project.gasnow.rating.model.mapper.favoriteMapper">
+
+    <!-- 즐겨찾기 확인 -->
+    <select id="getFavorite" resultType="Favorite">
+        SELECT *
+        FROM fav_gs
+        WHERE GS_ID = #{gsId} AND USER_ID = #{userId}
+    </select>
+
+    <!-- 즐겨찾기 추가 -->
+    <insert id="addFavorite" parameterType="Favorite">
+        INSERT INTO fav_gs (USER_ID, GS_ID)
+        VALUES (#{userId}, #{gsId})
+    </insert>
+
+    <!-- 즐겨찾기 삭제 -->
+    <delete id="removeFavorite" parameterType="Favorite">
+        DELETE FROM fav_gs
+        WHERE USER_ID = #{userId} AND GS_ID = #{gsId}
+    </delete>
+
+
+</mapper>

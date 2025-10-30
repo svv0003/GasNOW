@@ -11,7 +11,7 @@ public interface RatingMapper {
     /**
      * 주유소 평균 평점 조회
      */
-    Double getAvgRating(String gsId);
+    double getAvgRating(String gsId);
     Date checkingInputRating(String gsId, String userId);
     void  addRating(Rating rating);
     /**
