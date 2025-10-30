@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.gasnow.user.model.mapper.UserPointMapper">
+
+    <!-- user_point 테이블 - 포인트 적립 (update) -->
+
+    <!-- point_history 테이블에 포인트 적립/사용 내역 추가 (insert) -->
+
+    <!-- user_point 테이블 - 포인트 사용 (update) -->
+
+
+    <select id="getAll" resultMap="$">
+        SELECT *
+        FROM $
+        ORDER BY id DESC
+    </select>
+
+    <select id="get" parameterType="int" resultMap="$">
+        SELECT *
+        FROM $
+        WHERE = #{}
+    </select>
+
+</mapper>
