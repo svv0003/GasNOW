@@ -18,7 +18,7 @@
         SELECT *
         FROM avg_price
         WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
-        AND oilCategory = 'B034'
+          AND oilCategory = 'B034'
     </select>
 
     <!-- 1달 조회 -->

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import project.gasnow.common.scheduling.schedulingService.SchedulingService;
+import project.gasnow.common.scheduling.schedulingModel.schedulingService.SchedulingService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,12 +23,7 @@ public class ChartScheduling {
         log.info("==== 일일 평균가 업데이트 시작 [{}] ====", startTime);
 
         try {
-            // API 호출
-            // XML 파싱
-            // Chart DTO 변환 후 DB 저장
-
-            int result =  schedulingService.insertOilPrice();
-            log.info("업데이트 완료 : {} 건", result);
+            schedulingService.saveChartData();
         } catch (Exception e) {
             log.error("오류 발생 : ", e);
         }
