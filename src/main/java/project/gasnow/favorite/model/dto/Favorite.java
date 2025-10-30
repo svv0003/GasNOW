@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class favorite {
-    private String USER_ID;
-    private String GS_ID;
-    private String CREATED_AT;
+public class Favorite {
+    private String userId;
+    private String gsId;
+    private String createdAt;
 }

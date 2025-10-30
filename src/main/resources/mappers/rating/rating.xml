@@ -12,20 +12,20 @@
     <!-- 평균 -->
     <select id="getAvgRating" resultType="double">
         SELECT ROUND(AVG(RATING), 2)
-        FROM GS_RATING
+        FROM gs_rating
         WHERE GS_ID = #{gsId}
     </select>
 
     <!-- 금일 평점 작성했는지 -->
     <select id="checkingInputRating" resultType="java.util.Date">
         SELECT CREATED_AT
-        FROM GS_RATING
+        FROM gs_rating
         WHERE GS_ID = #{gsId} AND USER_ID = #{userId}
     </select>
 
     <!-- 평점 작성 -->
     <insert id="addRating" parameterType="Rating">
-        INSERT INTO GS_RATING (GS_ID, USER_ID, RATING)
+        INSERT INTO gs_rating (GS_ID, USER_ID, RATING)
             VALUES (#{gsId}, #{userId}, #{rating})
     </insert>
 

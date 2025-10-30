@@ -12,7 +12,7 @@ public interface RatingService {
     addRating(String userId, String gsId, Integer rating);
 
      */
-    Double getAvgRating(String gsId);
+    double getAvgRating(String gsId);
     Date checkingInputRating(String gsId, String userId);
     String  addRating(Rating rating);
 

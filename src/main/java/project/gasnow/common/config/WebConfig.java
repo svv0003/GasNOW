@@ -10,6 +10,7 @@ import project.gasnow.common.interceptor.LoginInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+
     @Autowired
     private LoginInterceptor loginInterceptor;
 
@@ -41,4 +42,5 @@ public class WebConfig implements WebMvcConfigurer {
                 )
         ;
     }
+
 }

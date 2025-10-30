@@ -18,7 +18,7 @@ public class RatingServiceImpl implements RatingService{
 
 
     @Override
-    public Double getAvgRating(String gsId) {
+    public double getAvgRating(String gsId) {
         return ratingMapper.getAvgRating(gsId);
     }
 
@@ -30,11 +30,8 @@ public class RatingServiceImpl implements RatingService{
 
     @Override
     public String addRating(Rating rating) {
-        String gsId = rating.getGsId();
-        String userId = rating.getUserId();
 
-        Date createdAt = checkingInputRating(gsId, userId);
-
+        Date createdAt = checkingInputRating(rating.getGsId(), rating.getUserId());
         if (createdAt != null) {
             Calendar calCreated = Calendar.getInstance();
             calCreated.setTime(createdAt);
