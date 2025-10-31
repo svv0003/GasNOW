@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
+import project.gasnow.user.model.dto.UserPointHistory;
 import project.gasnow.user.model.mapper.UserMapper;
 import project.gasnow.user.model.mapper.UserPointMapper;
 
@@ -44,7 +45,15 @@ public class UserServiceImpl implements UserService {
         userMapper.insertNewUser(user);
 
         // 포인트 초기화
-        // userPointMapper 만든 후에 다시 작업
+        userPointMapper.insertNewUserPoint(user.getUserId());
+
+        // 포인트 이력 추가
+        UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(user.getUserId());
+        userPointHistory.setUserId(user.getUserId());
+        userPointHistory.setPointChange(300);
+        userPointHistory.setPointType("EARN");
+        userPointHistory.setDescription("REGISTER");
+        userPointMapper.insertPointHistory(userPointHistory);
     }
 
     /**
@@ -76,6 +85,7 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
+
 
     /**
      * 이메일 인증코드 전송 메서드

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * user 테이블
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
