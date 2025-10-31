@@ -13,6 +13,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Autowired
     private FavoriteMapper favoriteMapper;
 
+    /* boolean으로 바꾸기 */
     @Override
     public String getFavorite(Favorite favorite) {
         Favorite result = favoriteMapper.getFavorite(favorite.getUserId(), favorite.getGsId());

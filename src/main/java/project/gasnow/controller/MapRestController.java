@@ -1,35 +1,34 @@
 package project.gasnow.controller;
 
-public class MapRestController{
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import project.gasnow.rating.model.dto.Rating;
+import project.gasnow.rating.model.service.RatingService;
 
+import java.util.Date;
 
-    // ============================================
-    // 평점 관련 API
-    // ============================================
+@RestController
+@RequestMapping("/api")
+@RequiredArgsConstructor
+public class MapRestController {
 
-    /**
-     * 평점 조회
-     * GET /api/map/info/review?gsId=xxxxx
-     */
-    /*
-    @GetMapping("/info/review")
-    public  getReviews(@RequestParam String gsId) {
-        mapService.getRatingList(gsId);
-        mapService.getAvgRating(gsId);
+    private final RatingService ratingService;
+
+    @GetMapping("/getRating")
+    public double getAvgRating(@RequestParam String gsId) {
+        return ratingService.getAvgRating(gsId);
     }
-*/
-    /**
-     * 평점 등록
-     * POST /api/map/info/review
-     * Body: { "gsId": "xxxxx", "rating": 5 }
-     */
-    /*
-    @PostMapping("/info/review")
-    public  addReview() {
 
-        mapService.addRating(userId, gsId, rating);
-        mapService.getAvgRating(gsId);
-
+    @GetMapping("/ratingDate")
+    public Date checkingInputRating(@RequestParam String gsId, String userId) {
+        return ratingService.checkingInputRating(gsId, userId);
     }
-     */
+
+    @PostMapping("/addRating")
+    public String  addRating(@RequestBody Rating rating){
+        return ratingService.addRating(rating);
+    }
+
 }
+
+
