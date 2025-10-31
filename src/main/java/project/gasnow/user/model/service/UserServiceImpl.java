@@ -45,8 +45,15 @@ public class UserServiceImpl implements UserService {
         userMapper.insertNewUser(user);
 
         // 포인트 초기화
+        userPointMapper.insertNewUserPoint(user.getUserId());
 
         // 포인트 이력 추가
+        UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(user.getUserId());
+        userPointHistory.setUserId(user.getUserId());
+        userPointHistory.setPointChange(300);
+        userPointHistory.setPointType("EARN");
+        userPointHistory.setDescription("REGISTER");
+        userPointMapper.insertPointHistory(userPointHistory);
     }
 
     /**
@@ -78,6 +85,7 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
+
 
     /**
      * 이메일 인증코드 전송 메서드

@@ -6,6 +6,14 @@
 
 <mapper namespace="project.gasnow.user.model.mapper.UserPointMapper">
 
+    <!-- user_point 테이블 - 회원가입 시 행 추가 (insert) -->
+    <insert id="insertNewUserPoint" parameterType="String">
+        INSERT INTO user_point(userId, point, total_earned, total_used)
+        VALUES(
+               #{userId}, 300, 300, 0
+              )
+    </insert>
+
     <!-- user_point 테이블 - 포인트 적립 / 사용 (update) -->
     <update id="updatePoint" parameterType="UserPoint">
         UPDATE user_point
@@ -27,20 +35,27 @@
         WHERE user_id = #{userId}
     </update>
 
-    <!-- point_history 테이블에 포인트 적립/사용 내역 추가 (insert) -->
-    <insert id="insertPoint" parameterType="UserPointHistory">
-        INSERT INTO point_history(userId, pointChange, pointType, description)
-        VALUES(
-               #{userId}, #{pointChange}, #{pointType}, #{description}
-              )
-    </insert>
-
     <!-- user_point 테이블 - 현재 총 포인트 조회 -->
     <select id="getCurrentPoint" resultType="int">
         SELECT point
         FROM user_point
         WHERE user_id = #{userId}
     </select>
+
+    <!-- point_history 객체 반환 -->
+    <select id="getPointHistoryById" resultType="UserPointHistory">
+        SELECT *
+        FROM point_history
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- point_history 테이블에 포인트 적립/사용 내역 추가 (insert) -->
+    <insert id="insertPointHistory" parameterType="UserPointHistory">
+        INSERT INTO point_history(userId, pointChange, pointType, description)
+        VALUES(
+               #{userId}, #{pointChange}, #{pointType}, #{description}
+              )
+    </insert>
 
     <!-- point_history 테이블 - 포인트 적립/사용 내역 조회 -->
     <select id="getPointHistoryList" resultType="UserPointHistory">
