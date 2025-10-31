@@ -14,5 +14,7 @@ public interface SchedulingMapper {
      * @return 영향을 받은 행의 수
      */
     int saveChartData(List<Chart> charts);
+    int saveAreaChartData(List<Chart> charts);
+
 
 }

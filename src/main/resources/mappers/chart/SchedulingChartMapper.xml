@@ -35,4 +35,29 @@
         CREATED_AT = NOW()
     </insert>
 
+    <insert id="saveAreaChartData" parameterType="java.util.List">
+        INSERT INTO AREA_AVG (
+        PRICE_DATE,
+        AREA_CODE,
+        AREA_NAME,
+        OIL_CATEGORY,
+        AVG_PRICE,
+        CREATED_AT
+        )
+        VALUES
+        <foreach collection="list" item="chart" separator=",">
+            (
+            STR_TO_DATE(#{chart.priceDate}, '%Y%m%d'),
+            #{chart.areaCode},
+            #{chart.areaName},
+            #{chart.oilCategory},
+            #{chart.avgPrice},
+            NOW()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        AVG_PRICE = VALUES(AVG_PRICE),
+        CREATED_AT = NOW()
+    </insert>
+
 </mapper>

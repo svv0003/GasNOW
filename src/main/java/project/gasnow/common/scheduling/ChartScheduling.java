@@ -24,6 +24,7 @@ public class ChartScheduling {
 
         try {
             schedulingService.saveChartData();
+            schedulingService.saveAreaChartData();
         } catch (Exception e) {
             log.error("오류 발생 : ", e);
         }

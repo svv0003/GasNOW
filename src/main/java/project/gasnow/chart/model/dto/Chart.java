@@ -15,6 +15,12 @@ public class Chart {
     @XmlElement(name = "DATE")
     private String priceDate; // XML의 DATE → DB PRICE_DATE
 
+    @XmlElement(name = "AREA_CD")
+    private String areaCode; // XML의 AREA_CD → DB AREA_CODE
+
+    @XmlElement(name = "AREA_NM")
+    private String areaName; // XML의 AREA_NM → DB AREA_NAME
+
     @XmlElement(name = "PRODCD")
     private String oilCategory; // XML의 PRODCD → DB OIL_CATEGORY
 
