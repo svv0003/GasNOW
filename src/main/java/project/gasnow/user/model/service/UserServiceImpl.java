@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
+import project.gasnow.user.model.dto.UserPointHistory;
 import project.gasnow.user.model.mapper.UserMapper;
 import project.gasnow.user.model.mapper.UserPointMapper;
 
@@ -44,7 +45,8 @@ public class UserServiceImpl implements UserService {
         userMapper.insertNewUser(user);
 
         // 포인트 초기화
-        // userPointMapper 만든 후에 다시 작업
+
+        // 포인트 이력 추가
     }
 
     /**

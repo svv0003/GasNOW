@@ -5,18 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * user_point 테이블
+ * point_history 테이블
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPoint {
-
+public class UserPointHistory {
+    private int historyId;
     private String userId;
-    private String lastLogin;
-    private int currentPoint;
-    private int totalEarned;
-    private int totalUsed;
+    private int pointChange;
+    private String pointType;
+    private String description;
     private String createdAt;
-    private String updatedAt;
 }
