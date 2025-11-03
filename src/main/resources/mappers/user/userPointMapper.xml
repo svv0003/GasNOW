@@ -6,6 +6,13 @@
 
 <mapper namespace="project.gasnow.user.model.mapper.UserPointMapper">
 
+    <!-- user_point 객체 반환 -->
+    <select id="getUserPointById" parameterType="String">
+        SELECT *
+        FROM user_point
+        WHERE user_id = #{userId}
+    </select>
+
     <!-- user_point 테이블 - 회원가입 시 행 추가 (insert) -->
     <insert id="insertNewUserPoint" parameterType="String">
         INSERT INTO user_point(userId, point, total_earned, total_used)
@@ -15,21 +22,21 @@
     </insert>
 
     <!-- user_point 테이블 - 포인트 적립 / 사용 (update) -->
-    <update id="updatePoint" parameterType="UserPoint">
+    <update id="updatePoint" parameterType="int">
         UPDATE user_point
         SET point = #{currentPoint}
         WHERE user_id = #{userId}
     </update>
 
     <!-- user_point 테이블 - 포인트 적립 시 totalEarned 변경 (update) -->
-    <update id="updateTotalEarned" parameterType="UserPoint">
+    <update id="updateTotalEarned" parameterType="int">
         UPDATE user_point
         SET total_earned = #{totalEarned}
         WHERE user_id = #{userId}
     </update>
 
     <!-- user_point 테이블 - 포인트 사용 시 totalUsed 변경 (update) -->
-    <update id="updateTotalUsed" parameterType="UserPoint">
+    <update id="updateTotalUsed" parameterType="int">
         UPDATE user_point
         SET total_used = #{totalUsed}
         WHERE user_id = #{userId}

@@ -2,6 +2,7 @@ package project.gasnow.user.model.service;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -185,7 +187,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 로그인 메서드
      * @param userId 클라이언트가 view에서 작성한 아이디
-     * @param password 클라이언트가 view에서 작성한 비밀번호
+     * @param userPassword 클라이언트가 view에서 작성한 비밀번호
      * @return 회원가입한 유저 객체
      */
     @Override
@@ -215,6 +217,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int addLoginPoint(String userId) {
         UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(userId);
+        UserPoint userPoint = userPointMapper.getUserPointById(userId);
 
         // String 형태의 createdAt -> 날짜 형식으로 파싱
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -222,10 +225,18 @@ public class UserServiceImpl implements UserService {
 
         // 마지막 로그인 일자가 오늘이 아니라면 포인트 적립
         if(!createdAt.toLocalDate().isEqual(LocalDate.now())) {
+            // 새로운 point_history 행 추가
             userPointHistory.setUserId(userId);
             userPointHistory.setPointChange(30);
             userPointHistory.setPointType("EARN");
             userPointHistory.setDescription("LOGIN");
+            userPointMapper.insertPointHistory(userPointHistory);
+            // 총 적립 포인트 변경
+            int currentPoint = userPointMapper.getCurrentPoint(userId);
+            userPointMapper.updatePoint(currentPoint + 30);  // 현재 포인트 변경
+            userPointMapper.updateTotalEarned(userPoint.getTotalEarned() + 30);  // 총 적립 포인트(total_earned) 변경
+
+            log.info("출석 포인트 적립 - userId: {}, 적립: 30", userId);
 
             return 30;
         }
