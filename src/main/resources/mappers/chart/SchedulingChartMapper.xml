@@ -17,6 +17,8 @@
     <insert id="saveChartData" parameterType="java.util.List">
         INSERT INTO AREA_AVG (
         PRICE_DATE,
+        AREA_CODE,
+        AREA_NAME,
         OIL_CATEGORY,
         AVG_PRICE,
         CREATED_AT
@@ -25,6 +27,8 @@
         <foreach collection="list" item="chart" separator=",">
             (
             STR_TO_DATE(#{chart.priceDate}, '%Y%m%d'),
+            0,
+            "전국",
             #{chart.oilCategory},
             #{chart.avgPrice},
             NOW()

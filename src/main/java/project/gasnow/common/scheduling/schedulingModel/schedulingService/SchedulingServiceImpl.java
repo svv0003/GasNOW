@@ -67,8 +67,6 @@ public class SchedulingServiceImpl implements SchedulingService{
     @Override
     public void saveAreaChartData() {
 
-        final String API_URL_AREA = "https://www.opinet.co.kr/api/areaAvgRecentPrice.do?out=xml&code=" + API_Key + "&area=01&date=";
-
         // 지역 코드 리스트
         List<String> areaCodes = new ArrayList<>();
         // 1 ~ 11
@@ -83,80 +81,53 @@ public class SchedulingServiceImpl implements SchedulingService{
         List<Chart> allAreaCharts = new ArrayList<>();
 
         try {
+            // JAXB Context와 Unmarshaller는 루프 시작 전에 한 번만 생성합니다. (효율적)
+            JAXBContext jaxbContext = JAXBContext.newInstance(ChartWrapper.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-            /*
-            // [수정 3] 17개 지역 코드 순회
-            for (String areaCode : AREA_CODES) {
-                // [수정 2] API URL을 루프 내에서 동적으로 생성
-                final String API_URL_AREA = String.format(
-                    "https://www.opinet.co.kr/api/areaAvgRecentPrice.do?out=xml&code=%s&area=%s",
-                    API_Key, areaCode
-                );
+            // 17개 지역 코드를 순회한다.
+            for (String areaCode : areaCodes) {
 
-                log.info("API 호출 (지역): {}", API_URL_AREA);
+                // API URL을 루프 내에서 생성한다.
+                final String API_URL_AREA = String.format("https://www.opinet.co.kr/api/areaAvgRecentPrice.do?out=xml&code=%s&area=%s", API_Key, areaCode);
+
+                log.info("API 지역 : {}", API_URL_AREA);
                 String xmlResponse = restTemplate.getForObject(API_URL_AREA, String.class);
 
                 if (xmlResponse == null || xmlResponse.isEmpty()) {
                     log.warn("API 응답이 비어있습니다 (지역 코드: {}).", areaCode);
-                    continue; // 다음 지역 코드로 넘어감
+                    // 응답이 없어도 다음 지역 코드로 넘어간다.
+                    continue;
                 }
 
-                // 2. XML 파싱
+                // XML 파싱
                 StringReader reader = new StringReader(xmlResponse);
                 ChartWrapper chartWrapper = (ChartWrapper) unmarshaller.unmarshal(reader);
-                reader.close(); // 리소스 정리
+
+                // 리소스 정리
+                reader.close();
 
                 if (chartWrapper != null && chartWrapper.getOils() != null && !chartWrapper.getOils().isEmpty()) {
-                    // [수정 3] 파싱된 데이터를 전체 리스트에 추가
+                    // 파싱된 데이터를 전체 리스트에 추가한다.
                     allAreaCharts.addAll(chartWrapper.getOils());
                 } else {
                     log.warn("파싱 데이터가 없습니다 (지역 코드: {}).", areaCode);
                 }
 
-                // (참고) API 부하를 줄이기 위해 짧은 대기 시간 추가 가능
+                // (참고) API 부하를 줄이기 위해 짧은 대기 시간 추가 가능하다.
                 // Thread.sleep(100);
 
             } // end for loop
 
-            // 3. MyBatis Mapper로 DB에 저장 (17개 지역 데이터를 한 번에)
+            // DB에 저장한다.
             if (allAreaCharts.isEmpty()) {
                 log.warn("저장할 지역 데이터가 없습니다.");
                 return;
             }
 
-            // [수정 4] 올바른 매퍼 메소드 호출
+            // <foreach> 메서드 호출한다.
             int affectedRows = schedulingMapper.saveAreaChartData(allAreaCharts);
             log.info("DB 저장 완료 (지역). 총 {}건의 데이터 중 {}건 업데이트 완료.", allAreaCharts.size(), affectedRows);
-
-             */
-
-
-
-            // 1. API 호출
-            log.info("API 호출: {}", API_URL_AREA);
-            String xmlResponse = restTemplate.getForObject(API_URL_AREA, String.class);
-
-            if (xmlResponse == null || xmlResponse.isEmpty()) {
-                log.warn("API 응답이 비어있습니다.");
-                return;
-            }
-
-            // 2. XML 파싱
-            // JAXB 기능을 사용하기 위한 진입점     ChartWrapper 클래스를 기준으로 변역 작업할 것이라고 선언한다.
-            JAXBContext jaxbContext = JAXBContext.newInstance(ChartWrapper.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            StringReader reader = new StringReader(xmlResponse);
-            ChartWrapper chartWrapper = (ChartWrapper) unmarshaller.unmarshal(reader);
-
-            if (chartWrapper == null || chartWrapper.getOils() == null || chartWrapper.getOils().isEmpty()) {
-                log.warn("파싱 데이터가 없습니다.");
-                return;
-            }
-
-            // 3. MyBatis Mapper로 DB에 저장
-            int affectedRows = schedulingMapper.saveAreaChartData(chartWrapper.getOils());
-            log.info("DB 저장 완료. 총 {}건의 데이터 중 {}건 업데이트 완료.", chartWrapper.getOils().size(), affectedRows);
-
         } catch (Exception e) {
             log.error("작업 중 오류 발생", e);
         }
