@@ -54,12 +54,113 @@
     <nav class="auth-buttons">
         <a href="/login" class="btn btn-login">로그인</a>
         <a href="/register" class="btn btn-signup">회원가입</a>
+        <p id="gsId">abc123</p>
+        <p id="userId">bbb</p>
+        <button class="ratingScore" onclick="ratingScore()">점수보기</button>
+        <button class="ratingDate" onclick="ratingDate()">마지막입력날짜</button>
+        <input type="text" id="rating">
+        <button class="addRating" onclick="addRating()">평점입력하기</button>
     </nav>
 </header>
 
 <main class="main-content">
     <h2>메인 컨텐츠 영역</h2>
     <p>전일 대비 등락률, 지역별 최저가, 유가 추이 등이 여기에 표시됩니다.</p>
+    <div id="scoreResult" style="margin-left: 300px; margin-top: 30px;">결과</div>
+    <div id="ratingDate" style="margin-left: 300px; margin-top: 30px;">마지막 리뷰 입력 날짜</div>
+
 </main>
+
+
 </body>
+
+<script>
+    const API_BASE_URL = "http://localhost:8080/api"; // 백엔드 기본 URL
+
+    // 점수 보기 함수
+    async function ratingScore() {
+        const gsId = document.getElementById("gsId").innerText;
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL}/getRating?gsId=${gsId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            // 3. 결과값 받기
+            const avgRating = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
+
+            // 4. 결과 화면에 표시
+            document.getElementById("scoreResult").innerText = `평균 점수: ${avgRating}`;
+        } catch (error) {
+            console.error(error);
+            document.getElementById("scoreResult").innerText = "점수 불러오기 실패";
+        }
+
+
+    }
+
+    async function ratingDate() {
+        const gsId = document.getElementById("gsId").innerText;
+        const userId = document.getElementById("userId").innerText;
+
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL}/ratingDate?gsId=${gsId}&userId=${userId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            // 3. 결과값 받기
+            const ratingDate = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
+            const dateOnly = ratingDate.slice(1, 11);
+
+
+            // 4. 결과 화면에 표시
+            document.getElementById("ratingDate").innerText = `마지막입력날짜: ${dateOnly}`;
+        } catch (error) {
+            console.error(error);
+            document.getElementById("ratingDate").innerText = "점수 불러오기 실패";
+        }
+
+
+    }
+
+    async function addRating() {
+        const gsId = document.getElementById("gsId").innerText;
+        const userId = document.getElementById("userId").innerText;
+        const rating = Number(document.getElementById("rating").value);
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL}/addRating`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    gsId: gsId,
+                    userId: userId,
+                    rating: rating  // 숫자로 변환
+                })
+            });
+
+            if (response.ok) {
+                const result = await response.text();
+                alert("등록 성공: " + result);
+            } else {
+                alert("등록 실패: " + response.status);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
+
+</script>
 </html>
