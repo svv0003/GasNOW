@@ -16,6 +16,9 @@ import project.gasnow.user.model.mapper.EmailMapper;
 import project.gasnow.user.model.mapper.UserMapper;
 import project.gasnow.user.model.mapper.UserPointMapper;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,7 +173,9 @@ public class UserServiceImpl implements UserService {
     /**
      * 이메일 인증코드 확인 메서드
      * @param map Map<String, Object>
-     * @return mapper 메서드에 map을 파라미터로 넘겨서 반환
+     * @return mapper 메서드에 map을 파라미터로 넘겨서 반환 <br>
+     *         이메일이 존재하고, 인증번호가 일치하면 1 반환 <br>
+     *         둘 중 하나라도 해당하지 않는 경우 0 반환
      */
     @Override
     public int checkAuthKey(Map<String, Object> map) {
@@ -181,12 +186,26 @@ public class UserServiceImpl implements UserService {
      * 로그인 메서드
      * @param userId 클라이언트가 view에서 작성한 아이디
      * @param password 클라이언트가 view에서 작성한 비밀번호
+     * @return 회원가입한 유저 객체
      */
     @Override
-    public void login(String userId, String password) {
+    public User login(String userId, String userPassword) {
+        User user = userMapper.getUserById(userId);
+        
+        // 아이디가 DB에 존재하지 않는 경우
+        if(user == null){
+            return null;
+        }
+        
+        // 비밀번호가 일치하지 않는 경우
+        if(!bCryptPasswordEncoder.matches(userPassword, user.getUserPassword())){
+            return null;
+        }
 
+        user.setUserPassword(null);
+        addLoginPoint(userId);
+        return user;
     }
-
 
     /**
      * 로그인 시 포인트 적립 메서드
@@ -195,6 +214,21 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int addLoginPoint(String userId) {
+        UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(userId);
+
+        // String 형태의 createdAt -> 날짜 형식으로 파싱
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime createdAt = LocalDateTime.parse(userPointHistory.getCreatedAt(), formatter);
+
+        // 마지막 로그인 일자가 오늘이 아니라면 포인트 적립
+        if(!createdAt.toLocalDate().isEqual(LocalDate.now())) {
+            userPointHistory.setUserId(userId);
+            userPointHistory.setPointChange(30);
+            userPointHistory.setPointType("EARN");
+            userPointHistory.setDescription("LOGIN");
+
+            return 30;
+        }
         return 0;
     }
 }
