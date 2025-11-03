@@ -14,8 +14,8 @@ public class FavoriteServiceImpl implements FavoriteService {
     private FavoriteMapper favoriteMapper;
 
     @Override
-    public String getFavorite(Favorite favorite) {
-        Favorite result = favoriteMapper.getFavorite(favorite.getUserId(), favorite.getGsId());
+    public String getFavorite(String userId, String gsId) {
+        Favorite result = favoriteMapper.getFavorite(userId, gsId);
         if (result != null) {
                  return "1";
         } else {
@@ -27,7 +27,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void addFavorite(Favorite favorite) {
         Favorite result = favoriteMapper.getFavorite(favorite.getUserId(), favorite.getGsId());
         if (result == null) {
-            favoriteMapper.addFavorite(favorite.getGsId(), favorite.getGsId());
+            favoriteMapper.addFavorite(favorite.getUserId(), favorite.getGsId());
 
         } else {
             removeFavorite(favorite);
@@ -38,7 +38,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public void removeFavorite(Favorite favorite) {
-        favoriteMapper.removeFavorite(favorite.getGsId(), favorite.getGsId());
+        favoriteMapper.removeFavorite(favorite.getUserId(), favorite.getGsId());
 
     }
 

@@ -317,7 +317,7 @@ html {
 }
 
 .oil-type button:hover{
-    background-color: #afafaf;
+    background-color: #9E9E9E;
 }
 
 .gasoline {
@@ -374,9 +374,18 @@ html {
     margin: 20px auto 0 auto; /* 위쪽 간격 주고 중앙 정렬 */
     width: 100%;
     font-size: 14px;
-    
+    max-height: 360px;      /* 스크롤 높이 설정 (12개)*/
+    overflow-y: auto;       /* 세로 스크롤 */
 }
 
+.list-table {
+    width: 100%;
+    max-height: 400px; /* 보여주고 싶은 영역 높이 */
+    overflow-y: auto;  /* 세로 스크롤 활성화 */
+    margin: 20px auto 0 auto;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
 .list-table table {
     width: 100%;
     border-collapse: collapse;
@@ -400,6 +409,16 @@ thead {
 
 .center-text {
     text-align: center;
+}
+
+.list-right > button:hover {
+    color: black !important;
+}
+
+.oil-type button.selected {
+    background-color: #9E9E9E;
+    color: white;
+
 }
 
 

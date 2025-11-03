@@ -68,7 +68,7 @@
                 <div class="gas-list">
                     <div class="list-top">
                         <div class="list-left">
-                            <span>검색결과 (총 개)</span>
+                            <span>검색결과 (총 <span id="countGasStation"></span>개)</span>
                         </div>
                         <div class="list-right">
                             <button id="order-price">가격순</button>
@@ -87,15 +87,11 @@
                             <tbody>
                                 <tr>
                                     <th class="left-text">평균가격</th>
-                                    <td class="center-text">1862</td>
-                                    <td class="center-text">1739</td>
+                                    <td class="center-text"></td>
+                                    <td class="center-text"></td>
                                 </tr>
-                                <tr>
-                                    <td class="left-text">HD현대오일뱅크(주)</td>
-                                    <td class="center-text">1635</td>
-                                    <td class="center-text">1524</td>
-                                </tr>
-                            
+
+
                             </tbody>
                             </table>
 
@@ -394,6 +390,8 @@
                     // find()를 사용하여 원하는 태그를 찾습니다.
                     const $station = $xml.find('OIL');
 
+
+
                     // 1. 주유소 기본 정보를 객체에 저장합니다.
                     const stationInfo = {
                         id: $station.find('UNI_ID').text(),
@@ -486,7 +484,14 @@
                     const xmlText = response.xml_data;
                     // ✅ jQuery를 사용해 문자열을 XML 객체로 파싱
                     const xmlDoc = $.parseXML(xmlText);
-                    
+
+                    /*-----------------윤선 --------------------*/
+                    const totalStations = $(xmlDoc).find('OIL').length;
+
+
+                    document.getElementById("countGasStation").innerText = totalStations;
+
+                    /*-----------------윤선 --------------------*/
                     // XML 응답 파싱
                     $(xmlDoc).find('OIL').each(function() {
                         const station = $(this);
@@ -703,6 +708,18 @@
     });
 });
 
+        // 기름 종류 선택별 배경색 추가
+        const oilButtons = document.querySelectorAll('.oil-type button');
+
+        oilButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 다른 버튼 선택 해제
+                oilButtons.forEach(btn => btn.classList.remove('selected'));
+
+                // 클릭한 버튼만 선택
+                button.classList.add('selected');
+            });
+        });
 
  /* ----------------------------윤선1 */
 </script>
