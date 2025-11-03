@@ -10,6 +10,12 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
+    /**
+     * userId로 User 객체 반환 메서드
+     * @param userId 유저 아이디
+     * @return User 객체
+     */
+    User getUserById(String userId);
 
     /**
      * 회원가입 메서드
