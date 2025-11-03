@@ -32,10 +32,11 @@ public interface UserService {
 
     /**
      * 이메일 인증코드 전송 메서드
+     * @param htmlName 이메일 전송 화면이 구현된 html 파일명
      * @param email 세션에 저장된 클라이언트의 이메일 정보
      * @return null 또는 인증코드
      */
-    String sendEmail(String email);
+    String sendEmail(String htmlName, String email);
 
     // 이메일 인증코드 확인
 
