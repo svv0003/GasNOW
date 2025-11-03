@@ -50,6 +50,7 @@ public class RatingServiceImpl implements RatingService{
     }
 
 
+}
 
 
 /*
@@ -90,4 +91,3 @@ public String addRating(Rating rating) {
     }
 
      */
-}
