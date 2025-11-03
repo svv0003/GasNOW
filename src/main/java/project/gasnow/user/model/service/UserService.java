@@ -1,5 +1,6 @@
 package project.gasnow.user.model.service;
 
+import jakarta.servlet.http.HttpSession;
 import project.gasnow.user.model.dto.User;
 
 import java.util.Map;
@@ -52,7 +53,7 @@ public interface UserService {
      * @param userId 클라이언트가 view에서 작성한 아이디
      * @param password 클라이언트가 view에서 작성한 비밀번호
      */
-    User login(String userId, String password);
+    String login(HttpSession session, String userId, String password);
 
     /**
      * 로그인 시 포인트 적립 메서드

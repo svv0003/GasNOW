@@ -1,6 +1,7 @@
 package project.gasnow.user.model.service;
 
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
+import project.gasnow.common.util.SessionUtil;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
 import project.gasnow.user.model.dto.UserPointHistory;
@@ -191,7 +193,7 @@ public class UserServiceImpl implements UserService {
      * @return 회원가입한 유저 객체
      */
     @Override
-    public User login(String userId, String userPassword) {
+    public String login(HttpSession session, String userId, String userPassword) {
         User user = userMapper.getUserById(userId);
         
         // 아이디가 DB에 존재하지 않는 경우
@@ -205,8 +207,10 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setUserPassword(null);
+
         addLoginPoint(userId);
-        return user;
+        SessionUtil.setLoginUser(session, user);  // 세션에 유저 정보 저장
+        return "redirect:/";
     }
 
     /**
