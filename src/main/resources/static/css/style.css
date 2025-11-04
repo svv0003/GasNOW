@@ -380,7 +380,7 @@ html {
 
 .list-table {
     width: 100%;
-    max-height: 400px; /* 보여주고 싶은 영역 높이 */
+    max-height: 50vh; /* 보여주고 싶은 영역 높이 */
     overflow-y: auto;  /* 세로 스크롤 활성화 */
     margin: 20px auto 0 auto;
     font-size: 14px;
@@ -421,5 +421,98 @@ thead {
 
 }
 
+.gs-detail {
+    width: 100%;
+    height: 35%;
+    background-color: #FFEBEB;
+    position: fixed;
+    left: 50%;
+    bottom: 0%;
+    transform: translateX(-50%);
+    border-bottom-left-radius: 50px;
+}
 
+#fav-unFilled {
+    font-size: 30px;
+    border: none;
+    background-color: #FFEBEB;
+    color: red;
+    cursor: pointer;
+    border-radius: 20px;
+    position: fixed;
+    right: 15%;
+    top: 10%;
+}
+
+#fav-filled {
+    font-size: 30px;
+    border: none;
+    background-color: #FFEBEB;
+    color: red;
+    cursor: pointer;
+    border-radius: 20px;
+    position: fixed;
+    right: 15%;
+    top: 10%;
+
+}
+
+
+
+#rating-btn{
+    font-size: 15px;
+    color: #EB9823;
+    border: none;
+    background-color: #FFEBEB;
+    cursor: pointer;
+    position: fixed;
+    right: 20%;
+    top: 25%;
+}
+
+.rating-info {
+    width: 60%;
+    height: 25%;
+    background-color: white;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+#ratingScore {
+    display: flex;
+    font-size: 2vw;
+    justify-content: center;
+    user-select: none; /* 드래그로 선택 방지 */
+}
+
+.star {
+    color: lightgray;
+    position: relative;
+    cursor: pointer;
+}
+
+.star.filled {
+    color: gold;
+}
+
+.star.half::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: gold;
+}
+
+#giveRating {
+    width: 10%;
+    height: 10%;
+    border: none;
+    background-color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
 /* ------------------------------윤선1--- */
