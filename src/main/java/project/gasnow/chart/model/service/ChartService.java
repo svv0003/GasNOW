@@ -14,4 +14,5 @@ public interface ChartService {
      * @return 차트 데이터 리스트
      */
     List<Chart> getChartData(String oilCategory, String areaName, String period);
+    List<Chart> getChartDataAlways(String oilCategory, String period);
 }

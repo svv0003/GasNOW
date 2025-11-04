@@ -1,0 +1,357 @@
+2025-11-04 14:48:24.922  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 12568 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 14:48:24.925  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 14:48:24.983  INFO 12568 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-04 14:48:24.984  INFO 12568 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-04 14:48:27.319  INFO 12568 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 14:48:27.345  INFO 12568 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 14:48:27.345  INFO 12568 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 14:48:27.415  INFO 12568 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 14:48:27.415  INFO 12568 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2431 ms
+2025-11-04 14:48:28.437  WARN 12568 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 85cb84a9-70c2-461f-86e9-495f0f9b7ba9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 14:48:28.449  INFO 12568 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 14:48:28.576  INFO 12568 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 14:48:29.043  INFO 12568 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 14:48:29.751  INFO 12568 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 14:48:29.827  INFO 12568 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 14:48:29.845  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 5.678 seconds (process running for 6.675)
+2025-11-04 14:48:30.419  INFO 12568 --- [RMI TCP Connection(2)-192.168.0.142] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 14:48:30.420  INFO 12568 --- [RMI TCP Connection(2)-192.168.0.142] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 14:48:30.418  WARN 12568 --- [RMI TCP Connection(3)-192.168.0.142] com.zaxxer.hikari.HikariConfig           : MyHikariCP - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2025-11-04 14:48:30.422  INFO 12568 --- [RMI TCP Connection(3)-192.168.0.142] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Starting...
+2025-11-04 14:48:30.423  INFO 12568 --- [RMI TCP Connection(2)-192.168.0.142] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-11-04 14:48:31.113  INFO 12568 --- [RMI TCP Connection(3)-192.168.0.142] com.zaxxer.hikari.pool.HikariPool        : MyHikariCP - Added connection com.mysql.cj.jdbc.ConnectionImpl@15a1a214
+2025-11-04 14:48:31.125  INFO 12568 --- [RMI TCP Connection(3)-192.168.0.142] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Start completed.
+2025-11-04 14:49:50.084  INFO 12568 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-11-04 14:49:50.095  INFO 12568 --- [Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 14:49:50.110  INFO 12568 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 14:49:50.112  INFO 12568 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Shutdown initiated...
+2025-11-04 14:49:50.127  INFO 12568 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Shutdown completed.
+2025-11-04 14:49:50.286  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 12568 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 14:49:50.286  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 14:49:52.274  INFO 12568 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 14:49:52.275  INFO 12568 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 14:49:52.275  INFO 12568 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 14:49:52.294  INFO 12568 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 14:49:52.295  INFO 12568 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2009 ms
+2025-11-04 14:49:53.220  WARN 12568 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6fc45554-312b-405b-a63e-25fe9358134b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 14:49:53.223  INFO 12568 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 14:49:53.276  INFO 12568 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 14:49:53.586  INFO 12568 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 14:49:54.030  INFO 12568 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 14:49:54.058  INFO 12568 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 14:49:54.071  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 3.832 seconds (process running for 90.902)
+2025-11-04 14:49:54.076  INFO 12568 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 14:49:55.521  INFO 12568 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-11-04 14:49:55.523  INFO 12568 --- [Thread-7] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 14:49:55.525  INFO 12568 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 14:49:55.641  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 12568 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 14:49:55.642  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 14:49:56.406  INFO 12568 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 14:49:56.406  INFO 12568 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 14:49:56.406  INFO 12568 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 14:49:56.436  INFO 12568 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 14:49:56.436  INFO 12568 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 792 ms
+2025-11-04 14:49:56.869  WARN 12568 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: ee57f6d1-03eb-4430-b0a8-c003ac98f6dc
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 14:49:56.869  INFO 12568 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 14:49:56.913  INFO 12568 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 14:49:57.218  INFO 12568 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 14:49:57.736  INFO 12568 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 14:49:57.808  INFO 12568 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 14:49:57.820  INFO 12568 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 2.227 seconds (process running for 94.652)
+2025-11-04 14:49:57.820  INFO 12568 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:00:55.619  INFO 12568 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 15:00:55.619  INFO 12568 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 15:00:55.621  INFO 12568 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-11-04 15:00:55.697  INFO 12568 --- [http-nio-8080-exec-1] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:00:56.202  INFO 12568 --- [http-nio-8080-exec-6] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:00:56.203  WARN 12568 --- [http-nio-8080-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2025-11-04 15:00:59.614  INFO 12568 --- [http-nio-8080-exec-9] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:00:59.615  WARN 12568 --- [http-nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2025-11-04 15:01:45.943  INFO 12568 --- [http-nio-8080-exec-10] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:01:45.943  WARN 12568 --- [http-nio-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2025-11-04 15:05:03.410  INFO 12568 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:05:03.422  INFO 12568 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:05:08.230  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:05:08.232  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:05:08.280  INFO 4000 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-04 15:05:08.281  INFO 4000 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-04 15:05:10.374  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:05:10.389  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:05:10.389  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:05:10.442  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:05:10.442  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2161 ms
+2025-11-04 15:05:11.332  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: b99f6509-9a6b-4dbc-bee0-92e2449bbfbf
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:05:11.343  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:05:11.454  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:05:11.881  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:05:12.532  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:05:12.604  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:05:12.622  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 5.025 seconds (process running for 5.865)
+2025-11-04 15:05:13.062  INFO 4000 --- [RMI TCP Connection(3)-192.168.0.142] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 15:05:13.063  INFO 4000 --- [RMI TCP Connection(3)-192.168.0.142] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 15:05:13.066  INFO 4000 --- [RMI TCP Connection(3)-192.168.0.142] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-11-04 15:05:13.155  WARN 4000 --- [RMI TCP Connection(4)-192.168.0.142] com.zaxxer.hikari.HikariConfig           : MyHikariCP - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2025-11-04 15:05:13.157  INFO 4000 --- [RMI TCP Connection(4)-192.168.0.142] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Starting...
+2025-11-04 15:05:13.590  INFO 4000 --- [RMI TCP Connection(4)-192.168.0.142] com.zaxxer.hikari.pool.HikariPool        : MyHikariCP - Added connection com.mysql.cj.jdbc.ConnectionImpl@6003aedf
+2025-11-04 15:05:13.604  INFO 4000 --- [RMI TCP Connection(4)-192.168.0.142] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Start completed.
+2025-11-04 15:06:16.671  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-11-04 15:06:16.677  INFO 4000 --- [Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:06:16.684  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:06:16.692  INFO 4000 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Shutdown initiated...
+2025-11-04 15:06:16.701  INFO 4000 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : MyHikariCP - Shutdown completed.
+2025-11-04 15:06:16.825  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:06:16.825  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:06:17.596  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:06:17.597  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:06:17.598  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:06:17.618  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:06:17.618  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 790 ms
+2025-11-04 15:06:18.024  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 216ff002-b4b1-48b0-adf4-7fa9aac5b4d8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:06:18.027  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:06:18.069  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:06:18.358  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:06:18.733  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:06:18.761  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:06:18.771  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 1.985 seconds (process running for 72.015)
+2025-11-04 15:06:18.774  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:06:19.020  INFO 4000 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 15:06:19.021  INFO 4000 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 15:06:19.022  INFO 4000 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-11-04 15:06:19.087  INFO 4000 --- [http-nio-8080-exec-1] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:06:19.894  INFO 4000 --- [http-nio-8080-exec-6] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:06:19.896  WARN 4000 --- [http-nio-8080-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2025-11-04 15:06:20.557  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-11-04 15:06:20.558  INFO 4000 --- [Thread-7] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:06:20.562  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:06:20.657  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:06:20.658  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:06:21.258  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:06:21.258  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:06:21.259  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:06:21.280  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:06:21.280  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 619 ms
+2025-11-04 15:06:21.673  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: bf8ed598-9c87-4311-8c13-94d8b6858f34
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:06:21.676  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:06:21.711  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:06:21.994  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:06:22.361  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:06:22.385  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:06:22.394  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 1.771 seconds (process running for 75.637)
+2025-11-04 15:06:22.396  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:06:25.651  INFO 4000 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 15:06:25.651  INFO 4000 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 15:06:25.652  INFO 4000 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-11-04 15:06:25.656  INFO 4000 --- [http-nio-8080-exec-2] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:06:25.753  INFO 4000 --- [http-nio-8080-exec-5] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:06:25.755  WARN 4000 --- [http-nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2025-11-04 15:06:28.717  INFO 4000 --- [http-nio-8080-exec-6] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:06:28.798  INFO 4000 --- [http-nio-8080-exec-2] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:06:28.799  WARN 4000 --- [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2025-11-04 15:07:52.908  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-11-04 15:07:52.910  INFO 4000 --- [Thread-11] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:07:52.914  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:07:53.010  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:07:53.010  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:07:53.920  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:07:53.921  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:07:53.921  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:07:53.939  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:07:53.939  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 926 ms
+2025-11-04 15:07:54.278  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 13c5ae60-d667-4aa8-9a4d-68a529c97aa4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:07:54.281  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:07:54.317  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:07:54.592  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:07:55.008  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:07:55.031  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:07:55.040  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 2.064 seconds (process running for 168.283)
+2025-11-04 15:07:55.042  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:07:56.040  INFO 4000 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 15:07:56.040  INFO 4000 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 15:07:56.042  INFO 4000 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-11-04 15:07:56.046  INFO 4000 --- [http-nio-8080-exec-1] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:07:56.125  INFO 4000 --- [http-nio-8080-exec-6] p.gasnow.common.aop.LoggingAspect        : [ExceptionController.notFound()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:07:56.127  WARN 4000 --- [http-nio-8080-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2025-11-04 15:07:56.752  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-11-04 15:07:56.753  INFO 4000 --- [Thread-15] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:07:56.757  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:07:56.845  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:07:56.846  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:07:57.415  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:07:57.416  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:07:57.416  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:07:57.433  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:07:57.434  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 586 ms
+2025-11-04 15:07:57.767  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 42eb7046-faf4-4287-ae19-29ed505a3acf
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:07:57.770  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:07:57.803  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:07:58.072  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:07:58.460  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:07:58.482  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:07:58.491  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 1.676 seconds (process running for 171.733)
+2025-11-04 15:07:58.492  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:11:13.723  INFO 4000 --- [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-04 15:11:13.724  INFO 4000 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-04 15:11:13.725  INFO 4000 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-11-04 15:11:13.765  INFO 4000 --- [http-nio-8080-exec-3] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:11:58.762  INFO 4000 --- [http-nio-8080-exec-1] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:12:00.516  INFO 4000 --- [http-nio-8080-exec-4] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:12:05.310  INFO 4000 --- [http-nio-8080-exec-5] p.gasnow.common.aop.LoggingAspect        : [HomeController.home()] 요청 / ip : 0:0:0:0:0:0:0:1
+2025-11-04 15:31:45.178  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-11-04 15:31:45.185  INFO 4000 --- [Thread-19] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:31:45.199  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:31:45.343  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:31:45.344  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:31:46.077  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:31:46.079  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:31:46.079  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:31:46.096  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:31:46.097  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 749 ms
+2025-11-04 15:31:46.486  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e679a6a4-9579-47eb-af25-dd803f71700d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:31:46.489  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:31:46.526  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:31:46.805  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:31:47.299  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:31:47.322  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:31:47.331  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 2.045 seconds (process running for 1600.574)
+2025-11-04 15:31:47.333  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:31:49.077  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-11-04 15:31:49.078  INFO 4000 --- [Thread-23] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:31:49.082  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:31:49.179  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:31:49.179  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:31:50.025  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:31:50.026  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:31:50.026  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:31:50.044  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:31:50.045  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 863 ms
+2025-11-04 15:31:50.468  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: bbed4a4b-03c3-43f9-b285-263f0539c04d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:31:50.471  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:31:50.520  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:31:50.821  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:31:51.169  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:31:51.191  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:31:51.199  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 2.055 seconds (process running for 1604.442)
+2025-11-04 15:31:51.201  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 15:49:59.719  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-11-04 15:49:59.756  INFO 4000 --- [Thread-27] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 15:49:59.808  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 15:49:59.963  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:49:59.963  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:50:01.472  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:50:01.474  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:50:01.474  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:50:01.497  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:50:01.497  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1531 ms
+2025-11-04 15:50:01.858  WARN 4000 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chartScheduling' defined in file [C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main\project\gasnow\common\scheduling\ChartScheduling.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'project.gasnow.common.scheduling.schedulingModel.schedulingService.SchedulingService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-11-04 15:50:01.859  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-11-04 15:50:01.870  INFO 4000 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-11-04 15:50:01.905 ERROR 4000 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in project.gasnow.common.scheduling.ChartScheduling required a bean of type 'project.gasnow.common.scheduling.schedulingModel.schedulingService.SchedulingService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'project.gasnow.common.scheduling.schedulingModel.schedulingService.SchedulingService' in your configuration.
+
+2025-11-04 15:50:03.648  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 15:50:03.648  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 15:50:04.271  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 15:50:04.273  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 15:50:04.273  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 15:50:04.298  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-04 15:50:04.299  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 649 ms
+2025-11-04 15:50:04.664  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 99641b3e-4641-4f29-9f3c-c045e80f0a0b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 15:50:04.667  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 15:50:04.709  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 15:50:05.005  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 15:50:05.402  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 15:50:05.424  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 15:50:05.433  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 1.819 seconds (process running for 2698.676)
+2025-11-04 15:50:05.435  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-04 17:20:00.069  INFO 4000 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-11-04 17:20:00.072  INFO 4000 --- [Thread-31] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-04 17:20:00.076  INFO 4000 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-04 17:20:00.276  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Starting GasNowApplication using Java 21.0.8 with PID 4000 (C:\Users\TJ\Desktop\test\GasNOW\build\classes\java\main started by TJ in C:\Users\TJ\Desktop\test\GasNOW)
+2025-11-04 17:20:00.276  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-04 17:20:01.584  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-04 17:20:01.586  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-04 17:20:01.588  INFO 4000 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-04 17:20:01.635  INFO 4000 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-11-04 17:20:01.635  INFO 4000 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1355 ms
+2025-11-04 17:20:02.005  WARN 4000 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6fa6a072-5b76-4920-ba5d-32f51a2ce106
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-11-04 17:20:02.008  INFO 4000 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-04 17:20:02.042  INFO 4000 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-11-04 17:20:02.312  INFO 4000 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-04 17:20:03.435  INFO 4000 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-11-04 17:20:03.461  INFO 4000 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-11-04 17:20:03.472  INFO 4000 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 3.315 seconds (process running for 8096.715)
+2025-11-04 17:20:03.473  INFO 4000 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

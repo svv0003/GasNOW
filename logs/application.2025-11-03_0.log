@@ -738,3 +738,5 @@ This generated password is for development use only. Your security configuration
 2025-11-03 17:51:04.718  INFO 2108 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
 2025-11-03 17:51:04.727  INFO 2108 --- [restartedMain] project.gasnow.GasNowApplication         : Started GasNowApplication in 1.698 seconds (process running for 6365.443)
 2025-11-03 17:51:04.728  INFO 2108 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-11-03 17:59:29.907  INFO 2108 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-03 17:59:29.907  INFO 2108 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete

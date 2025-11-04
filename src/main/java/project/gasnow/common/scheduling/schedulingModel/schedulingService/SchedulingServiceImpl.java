@@ -113,18 +113,12 @@ public class SchedulingServiceImpl implements SchedulingService{
                 } else {
                     log.warn("파싱 데이터가 없습니다 (지역 코드: {}).", areaCode);
                 }
-
-                // (참고) API 부하를 줄이기 위해 짧은 대기 시간 추가 가능하다.
-                // Thread.sleep(100);
-
-            } // end for loop
-
+            }
             // DB에 저장한다.
             if (allAreaCharts.isEmpty()) {
                 log.warn("저장할 지역 데이터가 없습니다.");
                 return;
             }
-
             // <foreach> 메서드 호출한다.
             int affectedRows = schedulingMapper.saveAreaChartData(allAreaCharts);
             log.info("DB 저장 완료 (지역). 총 {}건의 데이터 중 {}건 업데이트 완료.", allAreaCharts.size(), affectedRows);

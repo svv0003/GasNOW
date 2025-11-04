@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project.gasnow.chart.model.dto.Chart;
+import project.gasnow.chart.model.dto.ChartResponse;
 import project.gasnow.chart.model.service.ChartService;
 
 import java.util.List;
@@ -19,10 +20,9 @@ public class ChartController {
 
     private final ChartService chartService;
 
-    @GetMapping("/") // 예시 API 주소
-    public List<Chart> getChartData(
-
-            // 기본값으로 'B027', '서울', '1week' 지정한다.
+    @GetMapping("/")
+    public ChartResponse getData(
+            // 기본값으로 'B027', '서울', 'week' 지정한다.
             @RequestParam(defaultValue = "B027")
             String oilCategory,
             @RequestParam(defaultValue = "서울")
@@ -34,7 +34,12 @@ public class ChartController {
         ServiceImpl에게는 그냥 받은 값을 그대로 넘겨준다.
         Js에서 선택된 값을 보내면 해당 값을 조회하고, 아니면 기본값을 조회한다.
          */
-        return chartService.getChartData(oilCategory, areaName, period);
-    }
+        // 서비스 호출 결과를 변수에 담는다.
+        List<Chart> local = chartService.getChartData(oilCategory, areaName, period);
+        List<Chart> nationwide = chartService.getChartDataAlways(oilCategory, period);
 
+        log.info(nationwide.toString());
+        // DTO 객체를 생성하여 반환한다.
+        return new ChartResponse(local, nationwide);
+    }
 }

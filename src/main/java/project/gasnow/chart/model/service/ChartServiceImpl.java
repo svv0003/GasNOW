@@ -27,8 +27,6 @@ public class ChartServiceImpl implements ChartService {
         }
          */
 
-
-
         // 클라이언트가 선택한 기간에 따라 mapper 메서드 호출한다.
         if ("week".equals(period)) {
             return chartMapper.getOneWeekPrice(oilCategory, areaName);
@@ -41,6 +39,23 @@ public class ChartServiceImpl implements ChartService {
 
         } else { // "all" 또는 기타
             return chartMapper.getAllPrice(oilCategory, areaName);
+        }
+    }
+
+    @Override
+    public List<Chart> getChartDataAlways(String oilCategory, String period) {
+
+        if ("week".equals(period)) {
+            return chartMapper.getOneWeekPrice(oilCategory, "전국");
+
+        } else if ("month".equals(period)) {
+            return chartMapper.getOneMonthPrice(oilCategory, "전국");
+
+        } else if ("year".equals(period)) {
+            return chartMapper.getOneYearPrice(oilCategory, "전국");
+
+        } else { // "all" 또는 기타
+            return chartMapper.getAllPrice(oilCategory, "전국");
         }
     }
 }
