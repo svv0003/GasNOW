@@ -65,6 +65,7 @@
                     <button id="kerosene">실내등유</button>
                     <button id="lpg">LPG</button>
                 </div>
+
                 <div class="gas-list">
                     <div class="list-top">
                         <div class="list-left">
@@ -84,12 +85,13 @@
                                     <th class="center-text">보통</th>
                                 </tr>
                             </thead>
+                            <firstTbody>
+                                <th class="left-text">평균가격</th>
+                                <td class="center-text"></td>
+                                <td class="center-text"></td>
+                            </firstTbody>
                             <tbody>
-                                <tr>
-                                    <th class="left-text">평균가격</th>
-                                    <td class="center-text"></td>
-                                    <td class="center-text"></td>
-                                </tr>
+
 
 
                             </tbody>
@@ -97,6 +99,29 @@
 
                     </div>
                 </div>
+
+                <p id="gsId">abc123</p>
+                <p id="userId">bbb</p>
+
+                <div class="gs-detail">
+                    <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
+                    <button id="fav-filled"><i class="fa-solid fa-star"></i></button>
+                    <button id="rating-btn">리뷰하기</button>
+
+                    <div class="rating-info">
+
+                        <div id="ratingScore">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                        <!-- <h2><span id="score">0</span></h2> -->
+                       <button id="giveRating">확인</button>
+                    </div>
+                </div>
+
             </div>
     </aside>
     <!-- ----------------------------윤선1---->
@@ -434,6 +459,8 @@
         }
 
         var petro_name;
+        // 가격 평균/ 최저값 구하기 위한 배열 생성
+        let station = [];
         // ✅ Opinet API 호출 함수를 Vercel 프록시를 사용하도록 수정
         function getNearbyGasStations(katecX, katecY, petro_type) {
             // 이전 주유소 마커들 제거
@@ -464,7 +491,12 @@
                         <th class="left-text">주유소명</th>
                         <th class="center-text">${petro_name}</th>
                         <th class="center-text">거리</th>
+
                 </tr>
+                <tr>
+                        <th class="left-text">평균가격</th>
+                        <td class="center-text" id="avg-price"></td>
+                   </tr>
             `);
             $(".list-table tbody").empty();
             $.ajax({
@@ -491,12 +523,17 @@
 
                     document.getElementById("countGasStation").innerText = totalStations;
 
-                    /*-----------------윤선 --------------------*/
+                    /*----------------------------------윤선*/
                     // XML 응답 파싱
                     $(xmlDoc).find('OIL').each(function() {
                         const station = $(this);
                         const name = station.find('OS_NM').text();
-                        const price = station.find('PRICE').text();
+                        let price = station.find('PRICE').text();
+
+                        /*윤선----------------------------------*/
+
+                        /*--------------------------------윤선*/
+
                         const oilKatecX = parseFloat(station.find('GIS_X_COOR').text());
                         const oilKatecY = parseFloat(station.find('GIS_Y_COOR').text());
                         const brand = station.find('POLL_DIV_CO').text();
@@ -690,6 +727,8 @@
 
 
     /* 윤선1----------------------------*/
+    const API_BASE_URL1 = "http://localhost:8080/api";
+
    document.addEventListener("DOMContentLoaded", function() {
     const hideBtn = document.querySelector(".list-hide");
     const gasList = document.querySelector(".gas-info");
@@ -721,6 +760,126 @@
             });
         });
 
- /* ----------------------------윤선1 */
+
+        async function isFav() {
+            const gsId = document.getElementById("gsId").innerText;
+            const userId = document.getElementById("userId").innerText;
+
+            // 2. API 호출
+            try {
+                const response = await fetch(`${API_BASE_URL1}/isFav?userId=${userId}&gsId=${gsId}`);
+
+                if (!response.ok) {
+                    throw new Error("서버 요청 실패");
+                }
+
+                // 3. 결과값 받기
+                const isFav = (await response.text()).trim();
+
+                // 4. 결과 화면에 표시
+                if(Number(isFav) === 0){
+                    document.getElementById("fav-unFilled").style.display = "inline-block";
+                    document.getElementById("fav-filled").style.display = "none";
+                } else {
+                    document.getElementById("fav-unFilled").style.display = "none";
+                    document.getElementById("fav-filled").style.display = "inline-block";
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById("scoreResult").innerText = "점수 불러오기 실패";
+            }
+
+
+        }
+
+        async function addFav() {
+            const gsId = document.getElementById("gsId").innerText;
+            const userId = document.getElementById("userId").innerText;
+
+            // 2. API 호출
+            try {
+                const response = await fetch(`${API_BASE_URL1}/addFav`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        gsId: gsId
+                    })
+                });
+
+                if (response.ok) {
+                    isFav();
+                } else {
+                    alert("등록 실패: " + response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+
+
+        }
+        document.getElementById("fav-unFilled").addEventListener("click", addFav);
+        document.getElementById("fav-filled").addEventListener("click", addFav);
+
+        window.addEventListener("DOMContentLoaded", () => {
+            isFav();
+        });
+
+
+
+        const stars = document.querySelectorAll('.star');
+        const scoreDisplay = document.getElementById('score');
+        let currentScore = 0; // 클릭 후 저장된 점수
+
+        function updateStars(idx, isHalf, permanent=false) {
+            stars.forEach((star, i) => {
+                star.classList.remove('filled', 'half');
+
+                if(permanent){
+                    // 클릭 후 유지할 때
+                    if(i + 1 <= currentScore) star.classList.add('filled');
+                    else if(i + 0.5 === currentScore) star.classList.add('half');
+                } else {
+                    // hover 시
+                    if(i < idx) star.classList.add('filled');
+                    if(i === idx) {
+                        if(isHalf) star.classList.add('half');
+                        else star.classList.add('filled');
+                    }
+                }
+            });
+        }
+
+        // hover 이벤트
+        stars.forEach((star, idx) => {
+            star.addEventListener('mousemove', e => {
+                const rect = star.getBoundingClientRect();
+                const isHalf = (e.clientX - rect.left) < rect.width / 2;
+                updateStars(idx, isHalf);
+            });
+
+            // 마우스 떠날 때 클릭 점수 유지
+            star.addEventListener('mouseleave', () => {
+                updateStars(0, false, true);
+            });
+
+            // 클릭 이벤트
+            star.addEventListener('click', e => {
+                const rect = star.getBoundingClientRect();
+                const isHalf = (e.clientX - rect.left) < rect.width / 2;
+                currentScore = idx + (isHalf ? 0.5 : 1);
+                scoreDisplay.textContent = currentScore;
+                updateStars(0, false, true);
+            });
+        });
+
+        // 확인 버튼 클릭 시 점수 알림
+        document.getElementById('giveRating').addEventListener('click', () => {
+            alert(`선택한 점수: ${currentScore}점`);
+        });
+
+        /* ----------------------------윤선1 */
 </script>
 </html>
