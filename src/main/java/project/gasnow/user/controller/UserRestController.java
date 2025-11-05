@@ -75,7 +75,7 @@ public class UserRestController {
         String inputCode = body.get("inputCode");  // 클라이언트가 보낸 인증키
 
         String savedCode = (String) session.getAttribute("authKey:" + email);  // 세션에 저장된 인증키
-        Long authTime = (Long) session.getAttribute("authTime:" + email); // 세션에 저장된 전송 시각
+        Long authTime = (Long) session.getAttribute("authTime:" + email);      // 세션에 저장된 전송 시각
 
         // 유효시간 5분
         if (savedCode != null && authTime != null && (System.currentTimeMillis() - authTime) <= 5 * 60000) {
