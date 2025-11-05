@@ -9,6 +9,13 @@ import java.util.List;
 @Mapper
 public interface UserPointMapper {
     /**
+     * UserPoint 객체 반환 메서드
+     * @param userId 유저 아이디
+     * @return UserPoint 객체
+     */
+    UserPoint getUserPointById(String userId);
+
+    /**
      * 회원가입 시 행 추가 메서드
      * @param userId User 객체에 저장된 userId
      * @return 추가된 행 개수
@@ -19,19 +26,19 @@ public interface UserPointMapper {
      * 포인트 적립/사용 시 point 변경 메서드
      * @param point total_earned 와 total_used 로 계산해 setter로 담겨진 현재 포인트
      */
-    void updatePoint(UserPoint point);
+    int updatePoint(int point);
 
     /**
      * 포인트 적립 시 total_earned 변경 메서드
-     * @param point 적립된 포인트
+     * @param point 총 적립된 포인트
      */
-    void updateTotalEarned(UserPoint point);
+    int updateTotalEarned(int point);
 
     /**
      * 포인트 사용 시 total_used 변경 메서드
-     * @param point 사용한 포인트
+     * @param point 총 사용한 포인트
      */
-    void updateTotalUsed(UserPoint point);
+    int updateTotalUsed(int point);
 
     /**
      * 회원의 현재 총 포인트 조회 메서드

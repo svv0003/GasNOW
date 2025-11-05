@@ -1,8 +1,17 @@
 package project.gasnow.user.controller;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+import java.util.Map;
+
+@RestControllerAdvice
 public class UserExceptionController {
-
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException e) {
+        return ResponseEntity
+                .badRequest()
+                .body(Map.of("error", e.getMessage()));
+    }
 }
