@@ -44,11 +44,36 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void register(User user) {
+        // 아이디 유효성 검사
+        if(user.getUserId() == null) {
+            throw new IllegalArgumentException("아이디는 비워둘 수 없습니다.");
+        }
+        if(user.getUserId().length() < 6) {
+            throw new IllegalArgumentException("아이디는 최소 6글자 이상이어야 합니다.");
+        }
         // 아이디 중복 체크
         if(!checkUserIdDuplicate(user.getUserId())) {
             throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
         }
 
+        // 이름 유효성 검사
+        if(user.getUserName() == null) {
+            throw new IllegalArgumentException("이름은 비워둘 수 없습니다.");
+        }
+
+        // 비밀번호 유효성 검사
+        if(user.getUserPassword() == null) {
+            throw new IllegalArgumentException("비밀번호는 비워둘 수 없습니다.");
+        }
+        String pattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'<>,.?/]).{8,16}$";
+        if(!user.getUserPassword().matches(pattern)) {
+            throw new IllegalArgumentException("영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)");
+        }
+
+        // 연락처 유효성 검사
+        if(user.getUserPhone() == null) {
+            throw new IllegalArgumentException("연락처를 정확히 입력해주세요.");
+        }
         // 연락처 중복 체크
         if(!checkPhoneDuplicate(user.getUserPhone())) {
             throw new IllegalArgumentException("이미 등록된 연락처입니다.");
@@ -64,7 +89,7 @@ public class UserServiceImpl implements UserService {
         userPointMapper.insertNewUserPoint(user.getUserId());
 
         // 포인트 이력 추가
-        UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(user.getUserId());
+        UserPointHistory userPointHistory = new UserPointHistory();
         userPointHistory.setUserId(user.getUserId());
         userPointHistory.setPointChange(300);
         userPointHistory.setPointType("EARN");
@@ -122,28 +147,12 @@ public class UserServiceImpl implements UserService {
             helper.setText(loadHtml(authKey, htmlName), true);
 
             javaMailSender.send(mimeMessage);
+            return authKey;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        
-        Map<String, String> map = new HashMap<>();
-        map.put("authKey", authKey);
-        map.put("userEmail", userEmail);
-        
-        int result = emailMapper.updateAuthKey(map); // 발송 기록이 없으면 0
-        
-        // 이전 발송 기록 없는 경우
-        if(result == 0) {
-            result = emailMapper.insertAuthKey(map); // 새로운 인증키 기록 삽입, 인증키 발송이 안 되면 0
-        }
-        
-        // 발송 기록이 없고, 인증키 발송이 안 된 경우
-        if(result == 0) {
-            return null;
-        }
-        
-        return authKey;
     }
 
     /**
@@ -175,25 +184,13 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 이메일 인증코드 확인 메서드
-     * @param map Map<String, Object>
-     * @return mapper 메서드에 map을 파라미터로 넘겨서 반환 <br>
-     *         이메일이 존재하고, 인증번호가 일치하면 1 반환 <br>
-     *         둘 중 하나라도 해당하지 않는 경우 0 반환
-     */
-    @Override
-    public int checkAuthKey(Map<String, Object> map) {
-        return emailMapper.checkAuthKey(map);
-    }
-
-    /**
      * 로그인 메서드
      * @param userId 클라이언트가 view에서 작성한 아이디
      * @param userPassword 클라이언트가 view에서 작성한 비밀번호
      * @return 회원가입한 유저 객체
      */
     @Override
-    public String login(HttpSession session, String userId, String userPassword) {
+    public User login(HttpSession session, String userId, String userPassword) {
         User user = userMapper.getUserById(userId);
         
         // 아이디가 DB에 존재하지 않는 경우
@@ -207,10 +204,8 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setUserPassword(null);
-
         addLoginPoint(userId);
-        SessionUtil.setLoginUser(session, user);  // 세션에 유저 정보 저장
-        return "redirect:/";
+        return user;
     }
 
     /**

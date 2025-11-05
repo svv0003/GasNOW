@@ -11,6 +11,8 @@
         SELECT *
         FROM user_point
         WHERE user_id = #{userId}
+        ORDER BY create_at DESC
+        LIMIT 1;
     </select>
 
     <!-- user_point 테이블 - 회원가입 시 행 추가 (insert) -->
