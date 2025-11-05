@@ -72,8 +72,8 @@
                             <span>검색결과 (총 <span id="countGasStation"></span>개)</span>
                         </div>
                         <div class="list-right">
-                            <button id="order-price">가격순</button>
-                            <button id="order-distance">거리순</button>
+<!--                            <button id="order-price">가격순</button>-->
+<!--                            <button id="order-distance">거리순</button>-->
                         </div>
                     </div>
                     <div class="list-table">
@@ -85,31 +85,33 @@
                                     <th class="center-text">보통</th>
                                 </tr>
                             </thead>
-                            <firstTbody>
-                                <th class="left-text">평균가격</th>
-                                <td class="center-text"></td>
-                                <td class="center-text"></td>
-                            </firstTbody>
+
                             <tbody>
-
-
-
                             </tbody>
                             </table>
-
                     </div>
                 </div>
+
 
                 <p id="gsId">abc123</p>
                 <p id="userId">bbb</p>
 
                 <div class="gs-detail">
-                    <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
-                    <button id="fav-filled"><i class="fa-solid fa-star"></i></button>
-                    <button id="rating-btn">리뷰하기</button>
+                    <div class="detail-top">
+                        <h2 id="info-gsName">주유소이름</h2>
+                        <button id="outInfo">X</button>
+                        <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
+                        <button id="fav-filled"><i class="fa-solid fa-star"></i></button>
+                        <span id="rating-result"><span id="result-star"><i class="fa-solid fa-star gold-star"></i></span>1.9</span>
+                        <span id="count-rating">리뷰 111</span>
+                        <button id="rating-btn">리뷰하기</button>
+                        <span id="gs-address">서울 종로구 ...</span>
+                        <span id="gs-number">070-1234-1234</span>
+                    </div>
 
                     <div class="rating-info">
 
+                        <button id="outRating">X</button>
                         <div id="ratingScore">
                             <span class="star" data-value="1">★</span>
                             <span class="star" data-value="2">★</span>
@@ -459,13 +461,14 @@
         }
 
         var petro_name;
+        let station_a = [];
         // 가격 평균/ 최저값 구하기 위한 배열 생성
-        let station = [];
         // ✅ Opinet API 호출 함수를 Vercel 프록시를 사용하도록 수정
         function getNearbyGasStations(katecX, katecY, petro_type) {
+            station_a = [];
             // 이전 주유소 마커들 제거
             clearGasStationMarkers();
-            
+            $('.list-table tbody').empty();
             switch (petro_type) {
                 case ("B027"):
                     petro_name = "휘발유"
@@ -498,7 +501,6 @@
                         <td class="center-text" id="avg-price"></td>
                    </tr>
             `);
-            $(".list-table tbody").empty();
             $.ajax({
                 method: "GET",
                 // ✅ URL을 새로 만든 프록시 API 엔드포인트로 변경
@@ -518,9 +520,11 @@
                     const xmlDoc = $.parseXML(xmlText);
 
                     /*-----------------윤선 --------------------*/
+
+
+
+                    // 주유소 개수 세기
                     const totalStations = $(xmlDoc).find('OIL').length;
-
-
                     document.getElementById("countGasStation").innerText = totalStations;
 
                     /*----------------------------------윤선*/
@@ -530,15 +534,12 @@
                         const name = station.find('OS_NM').text();
                         let price = station.find('PRICE').text();
 
-                        /*윤선----------------------------------*/
-
-                        /*--------------------------------윤선*/
 
                         const oilKatecX = parseFloat(station.find('GIS_X_COOR').text());
                         const oilKatecY = parseFloat(station.find('GIS_Y_COOR').text());
                         const brand = station.find('POLL_DIV_CO').text();
                         const uni_id = station.find('UNI_ID').text();
-                        //객체 하나를 이름 / 가격 / 거리 
+                        //객체 하나를 이름 / 가격 / 거리
                         katecToWgsForMarker(oilKatecX, oilKatecY, name, price, brand, uni_id);
                     });
                 },
@@ -561,6 +562,20 @@
                     const target_ll = {latitude : lat, longitude : lon};
                     const curr_ll = {latitude : cur_lat, longitude : cur_lon};
                     const distanceInMeters = haversineDistance(target_ll, curr_ll);
+                    /* 윤선 -----------------------------------------*/
+
+                    if (station_a && Array.isArray(station_a)) {
+                        station_a.push({
+                            name,
+                            price,
+                            distance: distanceInMeters,
+                            brand,
+                            uni_id,
+                            lat,
+                            lon
+                        });
+                    }
+                    /* ----------------------------------------윤선*/
                     switch (brand) {
                         case "GSC":
                             var imageSrc = './icon_map/GS.png';
@@ -592,6 +607,7 @@
                             <td class="center-text">${formattedDistance}</td>
                         </tr>
                     `;
+
                     $(".list-table tbody").append(newRow);
                     var imageSize = new kakao.maps.Size(36, 48),
                         imageOption = {offset: new kakao.maps.Point(18, 48)};
@@ -757,6 +773,8 @@
 
                 // 클릭한 버튼만 선택
                 button.classList.add('selected');
+
+
             });
         });
 
@@ -879,6 +897,112 @@
         document.getElementById('giveRating').addEventListener('click', () => {
             alert(`선택한 점수: ${currentScore}점`);
         });
+
+
+
+
+
+
+
+        $('.oil-type button').on('click', function() {
+            // 클릭된 오일 버튼 강조 (선택사항)
+            $('.oil-type button').removeClass('active-btn');
+            $(this).addClass('active-btn');
+
+            // list-right 영역에 버튼 두 개 삽입
+            document.querySelector('.list-right').innerHTML = `
+        <button id="order-price">가격순</button>
+        <button id="order-distance">거리순</button>
+    `;
+
+            // 버튼 클릭 시 가격 순으로 정렬
+            $('#order-price').on('click', function() {
+                if (!station_a || !Array.isArray(station_a)) return;
+
+                $('#order-price, #order-distance').removeClass('active-btn2');
+                $(this).addClass('active-btn2');
+
+                // tbody 초기화
+                $('.list-table tbody').empty();
+                // 가격순 정렬
+                station_a.sort((a, b) => a.price - b.price);
+
+                station_a.forEach(item => {
+                    const formattedDistance = item.distance < 1000
+                        ? item.distance.toFixed(0) + 'm'
+                        : (item.distance / 1000).toFixed(2) + 'km';
+
+                    const newRow = `
+            <tr data-station-id="${item.uni_id}">
+                <td class="left-text">${item.name}</td>
+                <td class="center-text">${item.price}</td>
+                <td class="center-text">${formattedDistance}</td>
+            </tr>
+        `;
+                    $('.list-table tbody').append(newRow);
+                });
+            });
+
+            // 버튼 클릭 시 거리순으로 정렬
+            $('#order-distance').on('click', function() {
+                if (!station_a || !Array.isArray(station_a)) return;
+
+                $('#order-price, #order-distance').removeClass('active-btn2');
+                $(this).addClass('active-btn2');
+
+                // tbody 초기화
+                $('.list-table tbody').empty();
+
+                // 거리순 정렬
+                station_a.sort((a, b) => a.distance - b.distance);
+
+                station_a.forEach(item => {
+                    const formattedDistance = item.distance < 1000
+                        ? item.distance.toFixed(0) + 'm'
+                        : (item.distance / 1000).toFixed(2) + 'km';
+
+                    const newRow = `
+        <tr data-station-id="${item.uni_id}">
+            <td class="left-text">${item.name}</td>
+            <td class="center-text">${item.price}</td>
+            <td class="center-text">${formattedDistance}</td>
+        </tr>
+        `;
+                    $('.list-table tbody').append(newRow);
+                });
+            });
+        });
+
+
+        // 주유소 리스트에서 이름 클릭 시 상세창 보이기
+        $(document).on('click', '.list-table tbody tr .left-text', function() {
+            // .gs-detail을 보여주기
+            $('.gs-detail').css('display', 'block');
+
+        });
+
+        $('#outInfo').on('click',  function() {
+            // .gs-detail을 안보이게
+            $('.gs-detail').css('display', 'none');
+
+        });
+
+        $('#rating-btn').on('click',  function() {
+            // .rating-info을 보여주기
+            $('.rating-info').css('display', 'block');
+
+        });
+
+        $('#outRating').on('click',  function() {
+            // .rating-info을 안보이게
+            $('.rating-info').css('display', 'none');
+
+        });
+
+
+
+
+
 
         /* ----------------------------윤선1 */
 </script>
