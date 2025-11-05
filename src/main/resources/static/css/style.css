@@ -421,6 +421,28 @@ thead {
 
 }
 
+#info-gsName {
+    position: fixed;
+    left: 10%;
+    top: 10%;
+
+}
+
+#gs-address {
+    font-size: 15px;
+    position: fixed;
+    left: 10%;
+    top: 32%;
+}
+
+#gs-number{
+    font-size: 15px;
+    position: fixed;
+    left: 10%;
+    top: 40%;
+}
+
+
 .gs-detail {
     width: 100%;
     height: 35%;
@@ -430,6 +452,7 @@ thead {
     bottom: 0%;
     transform: translateX(-50%);
     border-bottom-left-radius: 50px;
+    /*display: none;*/
 }
 
 #fav-unFilled {
@@ -458,6 +481,44 @@ thead {
 }
 
 
+#outInfo {
+    background-color: #FFEBEB;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    position: fixed;
+    right: 8%;
+    top: 10%;
+}
+
+#outRating {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    position: fixed;
+    right: 8%;
+    top: 10%;
+}
+
+
+#rating-result{
+    font-size: 15px;
+    position: fixed;
+    right: 50%;
+    top: 23%;
+}
+
+#result-star {
+    color: gold;
+}
+
+#count-rating {
+    font-size: 15px;
+    position: fixed;
+    right: 35%;
+    top: 23%;
+}
 
 #rating-btn{
     font-size: 15px;
@@ -466,8 +527,8 @@ thead {
     background-color: #FFEBEB;
     cursor: pointer;
     position: fixed;
-    right: 20%;
-    top: 25%;
+    right: 17%;
+    top: 23%;
 }
 
 .rating-info {
@@ -479,6 +540,7 @@ thead {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    display: none;
 }
 
 #ratingScore {
@@ -515,4 +577,15 @@ thead {
     font-size: 12px;
     cursor: pointer;
 }
+
+/*가격순 거리순 버튼 누르면 색칠*/
+.active-btn2 {
+    color: black !important;
+}
+
+/*주유소 이름 마우스 커서*/
+.list-table tbody .left-text {
+    cursor: pointer;
+}
+
 /* ------------------------------윤선1--- */
