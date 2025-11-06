@@ -29,7 +29,7 @@ public class SchedulingServiceImpl implements SchedulingService{
     @Override
     public void saveChartData() {
 
-        final String API_URL = "http://www.opinet.co.kr/api/avgRecentPrice.do?out=xml&code=" + API_Key;
+        final String API_URL = "https://www.opinet.co.kr/api/avgRecentPrice.do?out=xml&code=%s" + API_Key;
 
         try {
             // 1. API 호출
@@ -44,9 +44,7 @@ public class SchedulingServiceImpl implements SchedulingService{
             // 2. XML 파싱
             // JAXB 기능을 사용하기 위한 진입점     ChartWrapper 클래스를 기준으로 변역 작업할 것이라고 선언한다.
             JAXBContext jaxbContext = JAXBContext.newInstance(ChartWrapper.class);
-
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
             StringReader reader = new StringReader(xmlResponse);
             ChartWrapper chartWrapper = (ChartWrapper) unmarshaller.unmarshal(reader);
 

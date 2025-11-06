@@ -26,6 +26,32 @@
             fill: #90caf9;
             stroke: #0d47a1;
         }
+
+        .region .on {
+            fill: #90caf9;
+            stroke: #0d47a1;
+        }
+
+        .button {
+            fill: #e3f2fd;
+            stroke: #1565c0;
+            stroke-width: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            fill: #90caf9;
+            stroke: #0d47a1;
+        }
+
+        .button .on {
+            fill: #90caf9;
+            stroke: #0d47a1;
+        }
+
+
+
+
     </style>
 </head>
 <body>
@@ -56,7 +82,7 @@
             </path>
             <path class="region" d="M388.7 909l1 2.1-0.6 0.8-1.3 0.4-1 1.1 0.1 0.9 0.9 1.5 0 0.9-0.5 0.9-1.2 1.5-0.2 0.5-2.4 2.8-4.7 3.7-1.4 3.1-2 3.5-0.1 1.5-0.9 2.1-3.4 0.4-1.3 0.7-3.5-0.4-5.2 4.2-13.7 2.5-4.6 3.9-5.6 1.2-6-0.6-6.9 1.3-5.7-1.7-12.9 0.2-4 1.8-2.4 4.3-2.2 0.4-2.2-1-3-5-4.2-1.4-3.9-4.2-1.4-5.1 2.4-6.6 2.3-4.1 1.4-1.4 4.7-2.8 4-7 3.7-1 1.7-3.7 6.4-2.2 13.8-3.9 3.5-3 13.2-1.4 9-3.9 2.1 0.6 11-1.8 6.3-0.5 4.2 0.7 1.7 2.4 2 1.6 6.5 2.6 2 2 1.3 4.9 1.3 1.9 0.7-0.8 0.8-0.7 0.4-0.7z" id="KR49" name="Jeju">
             </path>
-            <path class="region" d="M411.7 230.4l3.7 0 3.2-1.2 2.8 0 1 2.5-0.4 2.5-1.9 1-2 1.4 0 3 1.1 1.3-2.3 3.1-1.3 2.3-3.5 2.1-3.9 0.9-4 2-1.5-3.6-3.4 0.8-3.4 1-2.4 1.4-2.4 0.4-5.8-0.2-4-5.2-4-1.2-2.7-1.8-0.7-4.9-2.7-3.8-3.2-4 2.1-4.3 3.8 0.2 4.3 2.7 3.2-1.1 2.9-1.8 0.2-2.9 0.8-2.7 6.1-0.6 3.1-4 1.9-4.1 2.7-2.9 4.3-1 4.8 0.4 2.4 4 0.9 5.5 1.4 3.8 0.1 4.2-1.3 4.8z" id="KR11" name="Seoul">
+            <path class="region on" d="M411.7 230.4l3.7 0 3.2-1.2 2.8 0 1 2.5-0.4 2.5-1.9 1-2 1.4 0 3 1.1 1.3-2.3 3.1-1.3 2.3-3.5 2.1-3.9 0.9-4 2-1.5-3.6-3.4 0.8-3.4 1-2.4 1.4-2.4 0.4-5.8-0.2-4-5.2-4-1.2-2.7-1.8-0.7-4.9-2.7-3.8-3.2-4 2.1-4.3 3.8 0.2 4.3 2.7 3.2-1.1 2.9-1.8 0.2-2.9 0.8-2.7 6.1-0.6 3.1-4 1.9-4.1 2.7-2.9 4.3-1 4.8 0.4 2.4 4 0.9 5.5 1.4 3.8 0.1 4.2-1.3 4.8z" id="KR11" name="Seoul">
             </path>
             <path class="region" d="M461.4 430l-0.7 3.9-1.8 2.9-1.9 7.3-3.6 2.8-1.9 0.7-5.9 4.4-6.7 1.7-2.8-9.1-0.7-12.2-2.5-4.8-7.2-11.4 6.2-1.7 8.8-2.4 3.1 0.3-0.3 1.2 0.5 1.3 0.9 1 1.2 0.6 0.8 1.9-0.5 2.9 4.1 1.2 4.3-1 1.6-2.3 1.9 0.5-0.2 1.9 1.6 0.9 0.3 3 1.4 4.5z" id="KR30" name="Daejeon">
             </path>
@@ -69,46 +95,253 @@
             <path class="region" d="M632.1 518.2l-1-0.3-1.3 0.1 0 1.1-0.1 1.4-1.3 3.4 0 1-0.4 1.6-3.1 1.8-7.8-2-4.4-0.4-1.9 1.5-1.9 3.4-1.1 0.9-1.2-1.1-1.7-1.1-2.4-1.9-1.6-3.1-2-2-2.1-0.8-0.8-3.1 1.9-2.6 2 0 2.2-0.4 0.6-1.5 0.2-1.7-1.2-0.5-1.3-0.2 1.5-3.3 2.3-2.5-0.8-7.6 6.4-5.3 8.6-1.2 7.1-0.5 5.5 4 1.7 3-0.1 1.3-0.6 1.2 0 4.2 1.1 1.6 1.5 1.3 0.2 2.6 0.1 2.9-0.7 2.6-2.1 2.2z" id="KR27" name="Daegu">
             </path>
 
-            <text x="400" y="235" class="label">서울</text>
-            <text x="400" y="165" class="label">경기</text>
-            <text x="350" y="250" class="label">인천</text>
-            <text x="600" y="200" class="label">강원</text>
-            <text x="420" y="400" class="label">세종</text>
-            <text x="440" y="430" class="label">대전</text>
-            <text x="500" y="350" class="label">충북</text>
-            <text x="350" y="400" class="label">충남</text>
-            <text x="620" y="510" class="label">대구</text>
-            <text x="700" y="580" class="label">울산</text>
-            <text x="680" y="630" class="label">부산</text>
-            <text x="630" y="430" class="label">경북</text>
-            <text x="570" y="610" class="label">경남</text>
-            <text x="420" y="540" class="label">전북</text>
-            <text x="400" y="680" class="label">전남</text>
-            <text x="385" y="625" class="label">광주</text>
-            <text x="333" y="930" class="label">제주</text>
+            <text id="label-KR11" x="400" y="235" class="label">서울</text>
+            <text id="label-KR41" x="400" y="165" class="label">경기</text>
+            <text id="label-KR28" x="350" y="250" class="label">인천</text>
+            <text id="label-KR42" x="600" y="200" class="label">강원</text>
+            <text id="label-KR50" x="420" y="400" class="label">세종</text>
+            <text id="label-KR30" x="440" y="430" class="label">대전</text>
+            <text id="label-KR43" x="500" y="350" class="label">충북</text>
+            <text id="label-KR44" x="350" y="400" class="label">충남</text>
+            <text id="label-KR27" x="620" y="510" class="label">대구</text>
+            <text id="label-KR31" x="700" y="580" class="label">울산</text>
+            <text id="label-KR26" x="680" y="630" class="label">부산</text>
+            <text id="label-KR47" x="630" y="430" class="label">경북</text>
+            <text id="label-KR48" x="570" y="610" class="label">경남</text>
+            <text id="label-KR45" x="420" y="540" class="label">전북</text>
+            <text id="label-KR46" x="400" y="680" class="label">전남</text>
+            <text id="label-KR29" x="385" y="625" class="label">광주</text>
+            <text id="label-KR49" x="333" y="930" class="label">제주</text>
 
         </svg>
+        <!-- 필터 및 검색 폼 -->
+
+        <button id="B027" class="oilBtn">고급휘발유</button>
+        <button id="B034" class="oilBtn on">휘발유</button>
+        <button id="C004" class="oilBtn">경유</button>
+        <button id="D047" class="oilBtn">등유</button>
+        <button id="K015" class="oilBtn">LPG</button>
+    </div>
     </div>
 </main>
 </body>
 <script>
-    const API_BASE_URL = "http://localhost:8080/api";
-    $.ajax({
-        method: "GET",
-        url: `${API_BASE_URL}/api/avg-sido-price`,
-        data: "F250930867",
-        dataType: 'json',
-        success: function(data) {
-            // 파싱
-            // 저장
-            // 표시
-        },
-        error: function(xhr, status, error) {
-            console.error("API 호출 실패:", error);
-            alert("데이터를 불러오는 데 실패했습니다.");
-        }
-    });
+    /*
+    0. API에서 데이터를 파싱하여 베열에 담기
+    1. 지역, 유종 버튼 클릭 시 해당 value 전달받기
+    2. 해당 value 가격 정보를 화면에 띄우기
+    3. 선택된 지역과 버튼은 css 다르게 설정하기
+    */
+    // API
+    const API_BASE_URL = "https://axis-convert-new.vercel.app";
+    const API_KEY = "F250930867";
 
+    // 유종 코드(PRODCD)를 한글명으로 매핑
+    const PROD_NAMES = {
+        'B027': '고급휘발유',
+        'B034': '휘발유',
+        'C004': '경유',
+        'D047': '등유',
+        'K015': 'LPG'
+    };
 
+    // Path id를 API 지역 코드로 변환하는 맵
+    const SVG_TO_API_MAP = {
+        'KR11': '01', // 서울
+        'KR26': '10', // 부산
+        'KR27': '14', // 대구
+        'KR28': '15', // 인천
+        'KR29': '16', // 광주
+        'KR30': '17', // 대전
+        'KR31': '18', // 울산
+        'KR41': '02', // 경기
+        'KR42': '03', // 강원
+        'KR43': '04', // 충북
+        'KR44': '05', // 충남
+        'KR45': '06', // 전북
+        'KR46': '07', // 전남
+        'KR47': '08', // 경북
+        'KR48': '09', // 경남
+        'KR49': '11', // 제주
+        'KR50': '19'  // 세종
+    };
+
+    // API 전체 데이터를 저장할 변수
+    let allOilPrice = [];
+
+    // sidoNameMap을 선언
+    let sidoNameMap = new Map();
+
+    // 지역, 유종 선택 값을 저장할 변수
+    let selectedOil = '';
+    let selectedarea = '';
+
+    // API 코드를 SVG ID로 변환하는 맵
+    const API_TO_SVG_MAP = {};
+    for (const svgId in SVG_TO_API_MAP) {
+
+        // 원본 객체에서 키(svgId)를 이용해 값(apiCode)을 찾습니다.
+        // svgId 'KR11' -> apiCode '01'
+        const apiCode = SVG_TO_API_MAP[svgId];
+
+        // 객체에, 키와 값을 반대로 저장한다.
+        // API_TO_SVG_MAP['01'] = 'KR11'
+        API_TO_SVG_MAP[apiCode] = svgId;
+    }
+
+    // 페이지 로드 시 API 데이터 요청
+    $(document).ready(function() {
+        // API 호출
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/api/avg-sido-price`,
+            data: {
+                api_key: API_KEY,
+            },
+
+            success: function(data) {
+                console.log(data);
+                // 1. API 응답 로그 확인 (정상이라면 {xml_data: "..."}가 찍힘)
+                console.log("API에서 받은 전체 응답:", data);
+
+                // 2. 'xml_data' 키가 있고, 그 값이 비어있지 않은지 확인
+                if (data && data.xml_data) {
+                    try {
+                        // 3. 받아온 XML 문자열을 XML 문서 객체로 파싱
+                        const xmlDoc = $.parseXML(data.xml_data);
+
+                        // 4. 파싱된 XML 문서를 jQuery 객체로 감싸서 쉽게 탐색
+                        const $xml = $(xmlDoc);
+
+                        // 5. <OIL> 태그를 모두 찾아서 순회 (each)
+                        $xml.find('OIL').each(function() {
+                            const $oil = $(this);
+
+                            // 6. <OIL> 태그 내부의 데이터를 추출하여 객체 생성
+                            const oilData = {
+                                SIDOCD: $oil.find('SIDOCD').text(),
+                                SIDONM: $oil.find('SIDONM').text(),
+                                PRODCD: $oil.find('PRODCD').text(),
+                                PRICE: $oil.find('PRICE').text(),
+                                // DIFF: $oil.find('DIFF').text() // 필요한 경우 다른 데이터도 추가
+                            };
+
+                            // 7. 전역 변수 allOilPrice 배열에 추가
+                            allOilPrice.push(oilData);
+
+                            // 8. sidoNameMap 맵에 (지역코드, 지역명) 저장
+                            if (!sidoNameMap.has(oilData.SIDOCD)) {
+                                sidoNameMap.set(oilData.SIDOCD, oilData.SIDONM);
+                            }
+                        });
+
+                        console.log("XML 파싱 후 생성된 데이터:", allOilPrice);
+                        console.log("XML 파싱 후 생성된 지역 맵:", sidoNameMap);
+
+                        // 만약 <OIL> 데이터가 하나도 없었다면
+                        if (allOilPrice.length === 0) {
+                            alert("데이터 파싱에 성공했으나, 유가 정보(<OIL>)가 없습니다.");
+                        }
+
+                    } catch (parseError) {
+                        // $.parseXML() 실패 시
+                        console.error("XML 파싱 중 오류 발생:", parseError);
+                        alert("데이터 형식이 올바르나, 내부 XML을 파싱하는 데 실패했습니다.");
+                    }
+
+                } else {
+                    // 'xml_data' 키 자체가 없는 경우
+                    console.error("API 응답에 'xml_data' 필드가 없습니다:", data);
+                    alert("API 응답 형식이 올바르지 않습니다. (xml_data 없음)");
+                }
+            },
+
+            error: function(xhr, status, error) {
+                // 이 부분은 기존과 동일
+                console.error("API 호출 실패:", error);
+                alert("데이터를 불러오는 데 실패했습니다.");
+            }
+        });
+
+        /*
+        가격 조회 버튼 클릭 이벤트
+        'on' 클래스 토글
+        선택된 유종 코드(id) 업데이트
+        디스플레이 업데이트
+        */
+        $('.oilBtn').on('click', function() {
+            $('.oilBtn').removeClass('on');
+            $(this).addClass('on');
+            selectedOil = $(this).attr('id');
+            console.log("유종 선택:", selectedOil);
+            updateDisplay(selectedOil);
+        });
+
+        /*
+        SVG 지역 클릭 이벤트
+        'on' 클래스 토글
+        클릭한 SVG의 ID (예: 'KR11')를 가져옴
+        변환 맵을 사용해 API 코드 (예: '01')로 변환
+        */
+        $('.region').on('click', function() {
+            $('.region').removeClass('on');
+            $(this).addClass('on');
+            const svgId = $(this).attr('id');
+            console.log("지역 선택 (SVG ID):", svgId);
+            selectedarea = SVG_TO_API_MAP[svgId];
+            console.log("변환된 API 지역 코드:", selectedarea);
+            // =====================================
+            // 추후 차트 그래프 기능에 사용할 예정이다.
+            // =====================================
+        });
+    })
+
+    /*
+    SVG 텍스트 업데이트 함수
+    sidoNameMap에 저장된 모든 지역을 순회합니다. (forEach -> apiCode: '01', sidoName: '서울')
+    API 코드('01')로 SVG ID('KR11')를 찾습니다.
+    맵에 없는 코드(예: '00' 전국)는 건너뜁니다.
+    현재 지역(apiCode)과 선택된 유종(oilCode)이 모두 일치하는 데이터를 찾습니다.
+    전체 라벨('svg .label')이 아닌, 현재 지역의 SVG ID(예: '#KR11') 내부의 '.label'을 찾아 개별적으로 텍스트를 업데이트합니다.
+    */
+    function updateDisplay(oilCode) {
+        sidoNameMap.forEach((sidoName, apiCode) => {
+
+            // 1. API 코드(예: '01')로 SVG ID(예: 'KR11')를 찾습니다.
+            const svgId = API_TO_SVG_MAP[apiCode];
+
+            // 맵에 없는 코드(예: '00' 전국)는 건너뜁니다.
+            if (!svgId) {
+                return; // forEach의 continue와 동일
+            }
+
+            // 2. 현재 지역과 선택된 유종이 일치하는 가격 데이터를 찾습니다.
+            const priceData = allOilPrice.find(item =>
+                item.SIDOCD === apiCode && item.PRODCD === oilCode
+            );
+
+            // 3. 기본 텍스트와 가격 포맷팅
+            let displayText = `${sidoName}: -`;
+            if (priceData) {
+                const formattedPrice = parseFloat(priceData.PRICE).toLocaleString('ko-KR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                displayText = `${formattedPrice}원`;
+            }
+
+            // --- 💡 [수정] 여기가 핵심입니다 ---
+
+            // 4. SVG ID(예: 'KR11')를 기반으로 라벨 ID(예: 'label-KR11')를 조립합니다.
+            const labelId = 'label-' + svgId;
+
+            // 5. find()를 사용하지 않고, 조립된 ID로 라벨을 '직접' 선택합니다.
+            const $label = $('#' + labelId);
+
+            // 6. 라벨의 텍스트를 업데이트합니다.
+            $label.text(displayText);
+            // ------------------------------------
+        });
+    }
 </script>
 </html>

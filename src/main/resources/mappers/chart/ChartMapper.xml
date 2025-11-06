@@ -6,48 +6,7 @@
 
 <mapper namespace="project.gasnow.chart.model.mapper.ChartMapper">
 
-    <!--
-    전체 조회
-    <select id="getAllPrice" resultType="chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        ORDER BY price_date ASC
-    </select>
-    -->
-
-    <!--
-    1년 조회
-    <select id="getOneYearPrice" resultType="chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
-          AND oilCategory = 'B034'
-        ORDER BY price_date ASC
-    </select>
-    -->
-
-    <!--
-    1달 조회
-    <select id="getOneMonthPrice" resultType="chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
-        ORDER BY price_date ASC
-    </select>
-    -->
-
-    <!--
-    1주 조회
-    <select id="getOneWeekPrice" resultType="chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
-        ORDER BY price_date ASC
-    </select>
-    -->
-
-
-    <select id="getAllPrice" resultType="chart">
+    <select id="getAllPrice" resultType="project.gasnow.chart.model.dto.Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE OIL_CATEGORY = #{oilCategory}
@@ -55,7 +14,7 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
-    <select id="getOneYearPrice" resultType="chart">
+    <select id="getOneYearPrice" resultType="project.gasnow.chart.model.dto.Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
@@ -64,7 +23,7 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
-    <select id="getOneMonthPrice" resultType="chart">
+    <select id="getOneMonthPrice" resultType="project.gasnow.chart.model.dto.Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
@@ -73,7 +32,7 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
-    <select id="getOneWeekPrice" resultType="chart">
+    <select id="getOneWeekPrice" resultType="project.gasnow.chart.model.dto.Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
