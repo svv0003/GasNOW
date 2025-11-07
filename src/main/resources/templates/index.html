@@ -11,7 +11,7 @@
             font-family: 'Noto Sans KR', sans-serif;
             font-size: 1.5rem;
             font-weight: bold;
-            fill: #000000;
+            fill: #ff0055;
             text-anchor: middle;
             pointer-events: none;
         }
@@ -97,12 +97,12 @@
 
             <text id="label-KR11" x="400" y="235" class="label">서울</text>
             <text id="label-KR41" x="400" y="165" class="label">경기</text>
-            <text id="label-KR28" x="350" y="250" class="label">인천</text>
+            <text id="label-KR28" x="350" y="270" class="label">인천</text>
             <text id="label-KR42" x="600" y="200" class="label">강원</text>
             <text id="label-KR50" x="420" y="400" class="label">세종</text>
             <text id="label-KR30" x="440" y="430" class="label">대전</text>
             <text id="label-KR43" x="500" y="350" class="label">충북</text>
-            <text id="label-KR44" x="350" y="400" class="label">충남</text>
+            <text id="label-KR44" x="340" y="380" class="label">충남</text>
             <text id="label-KR27" x="620" y="510" class="label">대구</text>
             <text id="label-KR31" x="700" y="580" class="label">울산</text>
             <text id="label-KR26" x="680" y="630" class="label">부산</text>
@@ -112,16 +112,14 @@
             <text id="label-KR46" x="400" y="680" class="label">전남</text>
             <text id="label-KR29" x="385" y="625" class="label">광주</text>
             <text id="label-KR49" x="333" y="930" class="label">제주</text>
-
         </svg>
-        <!-- 필터 및 검색 폼 -->
 
+        <!-- 검색 -->
         <button id="B027" class="oilBtn">고급휘발유</button>
         <button id="B034" class="oilBtn on">휘발유</button>
         <button id="C004" class="oilBtn">경유</button>
         <button id="D047" class="oilBtn">등유</button>
         <button id="K015" class="oilBtn">LPG</button>
-    </div>
     </div>
 </main>
 </body>
@@ -321,11 +319,11 @@
             );
 
             // 3. 기본 텍스트와 가격 포맷팅
-            let displayText = `${sidoName}: -`;
+            let displayText = '';
             if (priceData) {
                 const formattedPrice = parseFloat(priceData.PRICE).toLocaleString('ko-KR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
                 });
                 displayText = `${formattedPrice}원`;
             }
