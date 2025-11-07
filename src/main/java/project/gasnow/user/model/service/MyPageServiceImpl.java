@@ -117,8 +117,23 @@ public class MyPageServiceImpl implements MyPageService {
         return userMapper.updateUserPassword(userId, newEncodedPassword);
     }
 
+    /**
+     * 회원 탈퇴 메서드
+     * @param userId 세션에 저장된 유저 아이디
+     */
     @Override
     public void withdrawUser(String userId) {
+        favGsMapper.deleteUserFavorite(userId);  // 즐겨찾기 삭제
+        gsRatingMapper.deleteMyReview(userId);   // 리뷰 내역 삭제
+        userPointMapper.deleteUserPoint(userId); // 포인트 삭제
+        userPointMapper.deleteUserPointHistory(userId);  // 포인트 변동 내역 삭제
 
+        int result = userMapper.deleteUser(userId);  // 회원 삭제
+
+        if(result == 0) {
+            throw new IllegalArgumentException("회원탈퇴 실패");
+        }
+
+        log.info("회원탈퇴 완료 - userId: {}", userId);
     }
 }

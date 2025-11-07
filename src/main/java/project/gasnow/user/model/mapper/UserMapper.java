@@ -59,8 +59,8 @@ public interface UserMapper {
 
     /**
      * 마이페이지 - 회원 탈퇴 메서드
-     * @param user 세션에 저장되어 있는 유저 객체
+     * @param userId 세션에 저장되어 있는 유저 아이디
      * @return 삭제된 행의 개수 / Service 에서 boolean으로 정상작동 했는지 판단하는 용도로 사용
      */
-    int deleteUser(User user);
+    int deleteUser(String userId);
 }
