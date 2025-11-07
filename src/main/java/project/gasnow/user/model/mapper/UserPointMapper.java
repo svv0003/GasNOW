@@ -67,4 +67,17 @@ public interface UserPointMapper {
      * @return 포인트 내역 리스트
      */
     List<UserPointHistory> getPointHistoryList(String userId);
+
+    /**
+     * 회원 탈퇴 시 포인트 삭제
+     * @param userId 세션에 저장된 유저 아이디
+     */
+    void deleteUserPoint(String userId);
+
+    /**
+     * 회원 탈퇴 시 포인트 변동 내역 삭제
+     * @param userId 세션에 저장된 유저 아이디
+     */
+    void deleteUserPointHistory(String userId);
+
 }
