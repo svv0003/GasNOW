@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/favorites.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -28,19 +29,19 @@
     <nav class="sidebar-nav">
         <ul>
             <li>
-                <a href="/">
+                <a href="/" >
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </a>
             </li>
             <li>
-                <a href="/map.html" class="active">
+                <a href="/jido">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Map</span>
                 </a>
             </li>
             <li>
-                <a href="/favorites">
+                <a href="/favorites" class="active">
                     <i class="fas fa-star"></i>
                     <span>Favorite</span>
                 </a>
@@ -54,6 +55,110 @@
         </a>
     </div>
 </aside>
+
+<aside class="right-info">
+    <button class="list-hide">>></button>
+    <div class="gas-info">
+        <div class="info-top">
+
+            <h1>즐겨찾기 목록</h1>
+        </div>
+
+
+
+        <div class="gs-detail">
+            <div class="detail-top">
+                <span id="gsId">abc123</span>
+                <span id="userId">bbb</span>
+                <h3 id="info-gsName"></h3>
+                <button id="outInfo">X</button>
+                <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
+                <button id="fav-filled"><i class="fa-solid fa-star"></i></button>
+                <span id="rating-result"><span id="result-star"><i class="fa-solid fa-star gold-star"></i></span>1.9</span>
+                <span id="count-rating">리뷰 111</span>
+                <button id="rating-btn">리뷰하기</button>
+                <span id="gs-address"></span>
+                <span id="gs-number"></span>
+                <table id="oil-info-table" border="1" cellspacing="0" cellpadding="5">
+                    <thead id="oil-info-head">
+                    <tr>
+                        <th>유종</th>
+                        <th>경유</th>
+                        <th>휘발유</th>
+                        <th>고급휘발유</th>
+                        <th>실내등유</th>
+                        <th>LPG</th>
+                    </tr>
+                    </thead>
+                    <tbody id="oil-info-body">
+                    <tr>
+                        <td>가격<br>
+                            <span id="oil-info-area"></span>
+                        </td>
+                        <td><span id="oil-diesel-price1"></span><br>
+                            <span id="oil-diesel-price2"></span>
+                        </td>
+                        <td><span id="oil-gasoline-price1"></span><br>
+                            <span id="oil-gasoline-price2"></span>
+                        </td>
+                        <td><span id="oil-premiumGasoline-price1"></span><br>
+                            <span id="oil-premiumGasoline-price2"></span>
+                        </td>
+                        <td><span id="oil-kerosene-price1"></span><br>
+                            <span id="oil-kerosene-price2"></span>
+                        </td>
+                        <td><span id="oil-lpg-price1"></span><br>
+                            <span id="oil-lpg-price2"></span>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="rating-info">
+
+                <button id="outRating">X</button>
+                <div id="ratingScore">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <!-- <h2><span id="score">0</span></h2> -->
+                <button id="giveRating">확인</button>
+            </div>
+        </div>
+
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=536af43f432cf63c34cf438bc785017a&autoload=false"></script>
 </body>
@@ -88,7 +193,7 @@
                 // 현 위치 마커 생성
                 var imageSrc = './icon_map/current_loc.png',
                     imageSize = new kakao.maps.Size(30, 30),
-                    imageOption = { offset: new kakao.maps.Point(15, 15) };
+                    imageOption = {offset: new kakao.maps.Point(15, 15)};
                 var markerPosition = new kakao.maps.LatLng(cur_lat, cur_lon),
                     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
                 var marker = new kakao.maps.Marker({
@@ -118,11 +223,12 @@
                     $.ajax({
                         method: "GET",
                         url: `${API_BASE_URL}/wgs84-to-katec`,
-                        data: { "lon": centerLon, "lat": centerLat },
+                        data: {"lon": centerLon, "lat": centerLat},
                         success: function (response) {
                             const katecResultX = response.x;
                             const katecResultY = response.y;
                             $("#curr_map_katec").html(`<b>현재 지도 중심 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
+
                         },
                         error: function (jqXHR) {
                             let errorMessage = jqXHR.responseJSON?.detail || "Unknown error";
@@ -137,38 +243,441 @@
                     map.panTo(moveLatLon);
                 });
 
-                // 휘발유 검색
-                $("#gasoline").on("click", function () {
-                    const centerLatLng = map.getCenter();
-                    const centerLon = centerLatLng.getLng();
-                    const centerLat = centerLatLng.getLat();
 
-                    $("#curr_map_katec").html("중심 좌표 변환 중...");
+                kakao.maps.event.addListener(map, 'click', function () {
+                    // 1. 이전에 선택된 마커가 있는지 확인합니다 (null이 아닌지).
+                    if (selectedMarker) {
 
-                    // 1. 지도 중심 WGS84 -> KATEC 변환
-                    $.ajax({
-                        method: "GET",
-                        url: `${API_BASE_URL}/wgs84-to-katec`,
-                        data: { "lon": centerLon, "lat": centerLat },
-                        success: function (response) {
-                            const katecResultX = response.x;
-                            const katecResultY = response.y;
-                            $("#curr_map_katec").html(`<b>현재 지도 중심 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
-
-                            // 2. 변환된 KATEC 좌표로 주변 주유소 검색 함수 호출
-                            getNearbyGasStations(katecResultX, katecResultY, "B027");
-                        },
-                        error: function (jqXHR) {
-                            let errorMessage = jqXHR.responseJSON?.detail || "Unknown error";
-                            $("#curr_map_katec").html(`<p style="color:red;"><b>❌ 변환 실패:</b> ${errorMessage}</p>`);
-                        }
-                    });
+                        // 2. 선택된 마커가 있다면, 이미지를 'normalImage'로 되돌립니다.
+                        selectedMarker.setImage(selectedMarker.normalImage);
+                        selectedMarker.setZIndex(0);
+                        // 3. 선택된 마커 변수를 다시 null로 초기화합니다.
+                        selectedMarker = null;
+                    }
                 });
 
-            }); // getCurrentPosition callback 닫기
-        } // if geolocation 닫기
-    }); // kakao.maps.load 닫기
+                kakao.maps.event.addListener(map, 'click', function () {
+                    // 1. 이전에 선택된 마커가 있는지 확인합니다 (null이 아닌지).
+                    if (selectedMarker) {
 
+                        // 2. 선택된 마커가 있다면, 이미지를 'normalImage'로 되돌립니다.
+                        selectedMarker.setImage(selectedMarker.normalImage);
+                        selectedMarker.setZIndex(0);
+                        // 3. 선택된 마커 변수를 다시 null로 초기화합니다.
+                        selectedMarker = null;
+                    }
+                });
+            });
+        } else {
+            console.log("GPS error");
+        }
+
+
+    });
+
+    // --- 2. API 호출 함수들 ---
+    const API_BASE_URL = "https://axis-convert-new.vercel.app";
+
+    function haversineDistance(coords1, coords2) {
+        const R = 6371e3; // Earth's radius in metres
+        const lat1 = coords1.latitude * Math.PI / 180;
+        const lat2 = coords2.latitude * Math.PI / 180;
+        const deltaLat = (coords2.latitude - coords1.latitude) * Math.PI / 180;
+        const deltaLon = (coords2.longitude - coords1.longitude) * Math.PI / 180;
+
+        const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return Math.floor(R * c); // distance in metres
+    }
+
+    // 여기에 DB 조회 로직 추가
+
+    function getDetailById(uid) {
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/api/detail-by-id`,
+            data: {
+                api_key: "F250930867",
+                uid: uid
+            },
+            success: function (response) {
+                const xmlText = response.xml_data;
+                const xmlDoc = $.parseXML(xmlText);
+                const $xml = $(xmlDoc); // XML 문서를 jQuery 객체로 감쌉니다.
+
+                // find()를 사용하여 원하는 태그를 찾습니다.
+                const $station = $xml.find('OIL');
+
+
+                // 1. 주유소 기본 정보를 객체에 저장합니다.
+                const stationInfo = {
+                    id: $station.find('UNI_ID').text(),
+                    name: $station.find('OS_NM').text(),
+                    brand: $station.find('POLL_DIV_CO').text(),
+                    tel: $station.find('TEL').text(),
+                    address: $station.find('NEW_ADR').text(),
+                    // 'Y'/'N' 값을 boolean(true/false)으로 변환하면 사용하기 편리합니다.
+                    hasCarWash: $station.find('CAR_WASH_YN').text() === 'Y',
+                    hasCvs: $station.find('CVS_YN').text() === 'Y',
+                    prices: {} // 유가 정보를 담을 객체를 미리 생성합니다.
+                };
+
+                // 2. 여러 개의 유가 정보를 반복문으로 처리합니다.
+                $station.find('OIL_PRICE').each(function () {
+                    const $priceInfo = $(this); // 현재 반복 중인 OIL_PRICE 태그
+
+                    const productCode = $priceInfo.find('PRODCD').text();
+                    const price = $priceInfo.find('PRICE').text();
+
+                    // stationInfo 객체의 prices 속성에 유종 코드(PRODCD)를 key로 가격을 저장합니다.
+                    // ex) prices['B027'] = 1989
+                    stationInfo.prices[productCode] = parseInt(price, 10); // 문자열을 숫자로 변환
+                });
+
+                // 3. 최종적으로 파싱된 데이터를 확인합니다.
+                console.log(stationInfo);
+                $('#detail_name').text(stationInfo.name);
+                $('#detail_address').text(stationInfo.address);
+                $('#detail_tel').text(stationInfo.tel);
+                $('#detail_gasoline_price').text(stationInfo.prices['B027']);
+                $('#detail_diesel_price').text(stationInfo.prices['D047']);
+                $('#detail_par_price').text(stationInfo.prices['C004']);
+                $('#detail_hgasoline_price').text(stationInfo.prices['B034']);
+                // 이제 stationInfo 객체를 사용하여 화면에 정보를 표시할 수 있습니다.
+                // 예: $('#station-name').text(stationInfo.name);
+                // 예: $('#gasoline-price').text(stationInfo.prices['B027']);
+            }
+        })
+    }
+
+    var petro_name;
+    let station_a = [];
+    let totalStations = 0;
+    let completed = 0;
+    // 가격 평균/ 최저값 구하기 위한 배열 생성
+    // ✅ Opinet API 호출 함수를 Vercel 프록시를 사용하도록 수정
+    function getNearbyGasStations(katecX, katecY, petro_type) {
+        station_a = [];
+        completed = 0;
+        totalStations = 0;
+        // 이전 주유소 마커들 제거
+        clearGasStationMarkers();
+        $('.list-table tbody').empty();
+        switch (petro_type) {
+            case ("B027"):
+                petro_name = "휘발유"
+                break;
+            case ("B034"):
+                petro_name = "고급휘발유"
+                break;
+            case ("D047"):
+                petro_name = "경유"
+                break;
+            case ("C004"):
+                petro_name = "실내등유"
+                break;
+            case ("K105"):
+                petro_name = "LPG"
+                break;
+            default:
+                break;
+        }
+
+        $(".list-table thead").html(`
+                <tr>
+                        <th class="left-text">주유소명</th>
+                        <th class="center-text">${petro_name}</th>
+                        <th class="center-text">거리</th>
+
+                </tr>
+                <tr>
+                        <th class="left-text">평균가격</th>
+                        <td class="center-text" id="avg-price"></td>
+                   </tr>
+            `);
+        $.ajax({
+            method: "GET",
+            // ✅ URL을 새로 만든 프록시 API 엔드포인트로 변경
+            url: `${API_BASE_URL}/api/nearby-gas-stations`,
+            data: {
+                // ✅ 필요한 파라미터만 전달
+                api_key: "F250930867",
+                x: katecX,
+                y: katecY,
+                radius: 5000,
+                prodcd: petro_type
+            },
+            success: function (response) {
+                // ✅ 서버가 JSON으로 한번 감쌌으므로, response.xml_data 에서 XML을 추출
+                const xmlText = response.xml_data;
+                // ✅ jQuery를 사용해 문자열을 XML 객체로 파싱
+                const xmlDoc = $.parseXML(xmlText);
+
+                /*-----------------윤선 --------------------*/
+
+
+                // 주유소 개수 세기
+                totalStations = $(xmlDoc).find('OIL').length;
+                document.getElementById("countGasStation").innerText = totalStations;
+
+                /*----------------------------------윤선*/
+                // XML 응답 파싱
+                $(xmlDoc).find('OIL').each(function () {
+                    const station = $(this);
+                    const name = station.find('OS_NM').text();
+                    let price = station.find('PRICE').text();
+
+
+                    const oilKatecX = parseFloat(station.find('GIS_X_COOR').text());
+                    const oilKatecY = parseFloat(station.find('GIS_Y_COOR').text());
+                    const brand = station.find('POLL_DIV_CO').text();
+                    const uni_id = station.find('UNI_ID').text();
+                    //객체 하나를 이름 / 가격 / 거리
+                    katecToWgsForMarker(oilKatecX, oilKatecY, name, price, brand, uni_id);
+                });
+            },
+            error: function (jqXHR) {
+                const errorMsg = jqXHR.responseJSON?.detail || "주변 주유소 정보 조회에 실패했습니다.";
+                alert(errorMsg);
+            }
+        });
+    }
+
+    let oilAvgPrice = 0;
+    // ✅ 마커 표시용 KATEC -> WGS84 변환 함수 추가
+    function katecToWgsForMarker(katecX, katecY, name, price, brand, uni_id) {
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/katec-to-wgs84`,
+            data: {"x": katecX, "y": katecY},
+            success: function (response) {
+                const lat = response.lat;
+                const lon = response.lon;
+                const target_ll = {latitude: lat, longitude: lon};
+                const curr_ll = {latitude: cur_lat, longitude: cur_lon};
+                const distanceInMeters = haversineDistance(target_ll, curr_ll);
+                /* 윤선 -----------------------------------------*/
+
+                if (station_a && Array.isArray(station_a)) {
+                    station_a.push({
+                        name,
+                        price,
+                        distance: distanceInMeters,
+                        brand,
+                        uni_id,
+                        lat,
+                        lon
+                    });
+                }
+
+                completed++;
+
+                // 모든 요청이 끝났을 때만 실행
+                if (completed === totalStations) {
+                    oilAvgPrice = getAveragePrice();
+                    console.log("최종 평균:", oilAvgPrice);
+                    // 여기서 값 넣기
+                    document.getElementById('avg-price').innerText = oilAvgPrice;
+
+                }
+
+                /* ----------------------------------------윤선*/
+                switch (brand) {
+                    case "GSC":
+                        var imageSrc = './icon_map/GS.png';
+                        break;
+                    case "SKE":
+                    case "SKG":
+                        var imageSrc = './icon_map/SK.png';
+                        break;
+                    case "HDO":
+                        var imageSrc = './icon_map/HD.png';
+                        break;
+                    case "SOL":
+                        var imageSrc = './icon_map/S-OIL.png';
+                        break;
+                    case "RTX":
+                    case "RTE":
+                        var imageSrc = './icon_map/CAF.png';
+                        break;
+                    case "NHO":
+                        var imageSrc = './icon_map/NH.png';
+                        break;
+                    default :
+                        var imageSrc = './icon_map/ETC.png';
+
+                }
+                const formattedDistance = distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km';
+                const newRow = `
+                        <tr data-station-id="${uni_id}">
+                            <td class="left-text">${name}</td>
+                            <td class="center-text">${price}</td>
+                            <td class="center-text">${formattedDistance}</td>
+                        </tr>
+                    `;
+
+                $(".list-table tbody").append(newRow);
+
+                var imageSize = new kakao.maps.Size(36, 48),
+                    imageOption = {offset: new kakao.maps.Point(18, 48)};
+
+                // 클릭시 크기 키우기
+                var clickedWidth = 43;
+                var clickedHeight = 58;
+                var clickedSize = new kakao.maps.Size(clickedWidth, clickedHeight);
+                var clickedOption = {
+                    offset: new kakao.maps.Point(clickedWidth / 2, clickedHeight)
+                };
+                var clickedImage = new kakao.maps.MarkerImage(imageSrc, clickedSize, clickedOption);
+
+                var normalImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(lat, lon),
+                    title: name,
+                    image: normalImage,
+                    clickable: true,
+                    gs_id: uni_id
+                });
+                marker.normalImage = normalImage;
+                marker.clickedImage = clickedImage;
+                gasStationMarkers.push(marker); // 배열에 마커 추가
+
+                // 인포윈도우를 생성합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: `<div style="padding:5px;font-size:12px;width:150px;"><strong>${name}</strong><br>휘발유: ${price}원<br>거리: ${distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km'}</div>`
+                });
+
+                // 마커에 마우스오버 이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    infowindow.open(map, marker);
+                });
+
+                // 마커에 마우스아웃 이벤트를 등록합니다
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    infowindow.close();
+                });
+
+                // 마커에 마우스클릭 이벤트를 등록합니다 (상세정보 페이지)
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    if (selectedMarker && selectedMarker !== marker) {
+                        selectedMarker.setImage(selectedMarker.normalImage);
+                        selectedMarker.setZIndex(0);
+                    }
+
+                    marker.setImage(marker.clickedImage);
+                    marker.setZIndex(100);
+                    selectedMarker = marker;
+                    map.panTo(marker.getPosition());
+
+                    getDetailById(uni_id);
+                    $('.gs-detail').css('display', 'block');
+                    getGsInfo(uni_id);
+                })
+
+            }
+            // 변환 실패는 콘솔에만 로그를 남기고 무시
+        });
+    }
+
+    // ✅ 기존 주유소 마커를 지우는 함수 추가
+    function clearGasStationMarkers() {
+        for (var i = 0; i < gasStationMarkers.length; i++) {
+            gasStationMarkers[i].setMap(null);
+        }
+        gasStationMarkers = [];
+    }
+
+    // (기존 katecToWgs, wgsToKatec 함수 및 버튼 이벤트 핸들러는 그대로 유지)
+    function katecToWgs(katecX, katecY) {
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/katec-to-wgs84`,
+            data: {"x": katecX, "y": katecY},
+            success: function (response) {
+                const lat = response.lat;
+                const lon = response.lon;
+                $("#result_wgs").html(`<p style="color:blue;"><b>✅ 변환 성공</b></p><p><b>원본 KATEC:</b> X=${katecX}, Y=${katecY}</p><p><b>변환된 WGS84:</b> 위도=${lat}, 경도=${lon}</p>`);
+            },
+            error: function (jqXHR) {
+                let errorMessage = jqXHR.responseJSON?.detail || "Unknown error";
+                $("#result_wgs").html(`<p style="color:red;"><b>❌ 변환 실패:</b> ${errorMessage}</p>`);
+            }
+        });
+    }
+
+    function wgsToKatec(wgsLon, wgsLat, isInitial = false) {
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/wgs84-to-katec`,
+            data: {"lon": wgsLon, "lat": wgsLat},
+            success: function (response) {
+                const katecResultX = response.x;
+                const katecResultY = response.y;
+                if (isInitial) {
+                    console.log("현재 위치 KATEC 변환 결과:", {x: katecResultX, y: katecResultY});
+                    $("#curr_loc").html(`<b>현재 위치 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
+                } else {
+                    $("#result_katec").html(`<p style="color:blue;"><b>✅ 변환 성공</b></p><p><b>원본 WGS84:</b> 경도=${wgsLon}, 위도=${wgsLat}</p><p><b>변환된 KATEC:</b> X=${katecResultX}, Y=${katecResultY}</p>`);
+                }
+
+            },
+            error: function (jqXHR) {
+                let errorMessage = jqXHR.responseJSON?.detail || "Unknown error";
+                if (!isInitial) {
+                    $("#result_katec").html(`<p style="color:red;"><b>❌ 변환 실패:</b> ${errorMessage}</p>`);
+                }
+            }
+        });
+    }
+
+    $("#convert_to_wgs").on("click", function () {
+        const katecX = parseFloat($("#katec_x").val());
+        const katecY = parseFloat($("#katec_y").val());
+        if (isNaN(katecX) || isNaN(katecY)) {
+            $("#result_wgs").html("<p style='color:red;'>올바른 숫자 좌표를 입력해주세요.</p>");
+            return;
+        }
+        $("#result_wgs").html("<p>변환 중...</p>");
+        katecToWgs(katecX, katecY);
+    });
+
+    $("#convert_to_katec").on("click", function () {
+        const wgsLon = parseFloat($("#wgs_lon").val());
+        const wgsLat = parseFloat($("#wgs_lat").val());
+        if (isNaN(wgsLon) || isNaN(wgsLat)) {
+            $("#result_katec").html("<p style='color:red;'>올바른 숫자 좌표를 입력해주세요.</p>");
+            return;
+        }
+        $("#result_katec").html("<p>변환 중...</p>");
+        wgsToKatec(wgsLon, wgsLat);
+    });
+
+
+
+//     윤선 ------------------------------------------------------------
+    document.addEventListener("DOMContentLoaded", function () {
+        const hideBtn = document.querySelector(".list-hide");
+        const gasList = document.querySelector(".gas-info");
+
+        hideBtn.addEventListener("click", function () {
+            gasList.classList.toggle("hidden");
+
+            // 버튼 위치 조정
+            if (gasList.classList.contains("hidden")) {
+                hideBtn.style.right = "0"; // 숨겨졌을 때 화면 끝으로
+                hideBtn.textContent = "<<"; // 화살표 방향 바꾸기
+            } else {
+                hideBtn.style.right = "25vw"; // 나타날 때 gas-info 왼쪽
+                hideBtn.textContent = ">>";
+            }
+        });
+    });
+
+//     -----------------------------------------------------------윤선
 
 </script>
 </html>
