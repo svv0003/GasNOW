@@ -42,8 +42,9 @@ public interface MyPageService {
      * @param userId 세션에 저장된 유저 아이디
      * @param oldPassword 기존 비밀번호 (클라이언트 입력)
      * @param newPassword 변경할 비밀번호 (클라이언트 입력)
+     * @return 업데이트 된 행의 개수
      */
-    void changePassword(String userId, String oldPassword, String newPassword);
+    int changePassword(String userId, String oldPassword, String newPassword);
 
     /**
      * 회원 탈퇴 메서드
