@@ -23,10 +23,14 @@
         WHERE GS_ID = #{gsId} AND USER_ID = #{userId}
     </select>
 
+
+
     <!-- 평점 작성 -->
     <insert id="addRating" parameterType="Rating">
         INSERT INTO gs_rating (GS_ID, USER_ID, RATING)
             VALUES (#{gsId}, #{userId}, #{rating})
     </insert>
+
+
 
 </mapper>
