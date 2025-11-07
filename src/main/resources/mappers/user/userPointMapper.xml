@@ -11,8 +11,13 @@
         SELECT *
         FROM user_point
         WHERE user_id = #{userId}
-        ORDER BY create_at DESC
-        LIMIT 1;
+    </select>
+
+    <!-- user_point 테이블 - 현재 총 포인트 조회 -->
+    <select id="getCurrentPoint" resultType="int">
+        SELECT point
+        FROM user_point
+        WHERE user_id = #{userId}
     </select>
 
     <!-- user_point 테이블 - 회원가입 시 행 추가 (insert) -->
@@ -44,18 +49,15 @@
         WHERE user_id = #{userId}
     </update>
 
-    <!-- user_point 테이블 - 현재 총 포인트 조회 -->
-    <select id="getCurrentPoint" resultType="int">
-        SELECT point
-        FROM user_point
-        WHERE user_id = #{userId}
-    </select>
+    <!-- ============================================================== -->
 
     <!-- point_history 객체 반환 -->
     <select id="getPointHistoryById" resultType="UserPointHistory">
         SELECT *
         FROM point_history
         WHERE user_id = #{userId}
+        ORDER BY create_at DESC
+            LIMIT 1;
     </select>
 
     <!-- point_history 테이블에 포인트 적립/사용 내역 추가 (insert) -->
@@ -72,5 +74,17 @@
         FROM point_history
         WHERE user_id = #{userId}
     </select>
+
+    <!-- user_point 테이블 - 회원 탈퇴 시 포인트 삭제 -->
+    <delete id="deleteUserPoint">
+        DELETE FROM user_point
+        WHERE user_id = #{userId}
+    </delete>
+
+    <!-- point_history 테이블 - 회원 탈퇴 시 내역 삭제 -->
+    <delete id="deleteUserPointHistory">
+        DELETE FROM point_history
+        WHERE user_id = #{userId}
+    </delete>
 
 </mapper>

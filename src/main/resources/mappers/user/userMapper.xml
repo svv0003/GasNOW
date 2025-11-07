@@ -39,13 +39,6 @@
         WHERE phone = #{userPhone}
     </select>
 
-    <!-- 마이페이지 - 회원정보 조회 -->
-    <select id="getUserInfoById" resultType="User">
-        SELECT *
-        FROM user
-        WHERE user_id = #{userId}
-    </select>
-
     <!--
     마이페이지 - 비밀번호 변경 (현재 비밀번호 일치 여부 확인)
     로그인 - 입력한 비밀번호 일치 확인
