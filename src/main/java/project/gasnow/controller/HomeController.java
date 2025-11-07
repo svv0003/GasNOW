@@ -15,4 +15,8 @@ public class HomeController {
     public String jido() {
         return "/pages/jido.html";
     }
+
+    @GetMapping("/favorites")
+    public String favorites() { return "/pages/favorites.html";
+    }
 }
