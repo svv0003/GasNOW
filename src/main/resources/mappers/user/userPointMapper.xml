@@ -13,6 +13,13 @@
         WHERE user_id = #{userId}
     </select>
 
+    <!-- user_point 테이블 - 현재 총 포인트 조회 -->
+    <select id="getCurrentPoint" resultType="int">
+        SELECT point
+        FROM user_point
+        WHERE user_id = #{userId}
+    </select>
+
     <!-- user_point 테이블 - 회원가입 시 행 추가 (insert) -->
     <insert id="insertNewUserPoint" parameterType="String">
         INSERT INTO user_point(userId, point, total_earned, total_used)
@@ -42,12 +49,7 @@
         WHERE user_id = #{userId}
     </update>
 
-    <!-- user_point 테이블 - 현재 총 포인트 조회 -->
-    <select id="getCurrentPoint" resultType="int">
-        SELECT point
-        FROM user_point
-        WHERE user_id = #{userId}
-    </select>
+    <!-- ============================================================== -->
 
     <!-- point_history 객체 반환 -->
     <select id="getPointHistoryById" resultType="UserPointHistory">

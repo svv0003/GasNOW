@@ -3,6 +3,7 @@ package project.gasnow.user.model.service;
 import project.gasnow.user.model.dto.ReviewItemDTO;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
+import project.gasnow.user.model.dto.UserPointHistory;
 
 import java.util.List;
 
@@ -21,6 +22,13 @@ public interface MyPageService {
      * @return UserPoint 객체
      */
     UserPoint getUserPoint(String userId);
+
+    /**
+     * 포인트 변동 내역 조회 메서드
+     * @param userId 세션에 저장된 유저 아이디
+     * @return UserPointHistory 객체
+     */
+    List<UserPointHistory> getUserPointHistory(String userId);
 
     /**
      * 회원정보 조회 메서드
