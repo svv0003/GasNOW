@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+<div class="map_wrap">
+    <div id="map" style="width:100vw;height:100vh;overflow:hidden;"></div>
+
+</div>
+<aside class="main-sidebar">
+    <div class="sidebar-logo">
+        <a href="/">
+            <img src="./logo/logo-small-white.png" alt="GASNOW Logo" class="logo-default">
+            <img src="./logo/logo-small-orange.png" alt="GASNOW Logo Hover" class="logo-hover">
+        </a>
+    </div>
+
+    <nav class="sidebar-nav">
+        <ul>
+            <li>
+                <a href="/">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/map.html" class="active">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Map</span>
+                </a>
+            </li>
+            <li>
+                <a href="/favorites">
+                    <i class="fas fa-star"></i>
+                    <span>Favorite</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-profile">
+        <a href="/profile">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+</aside>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=536af43f432cf63c34cf438bc785017a&autoload=false"></script>
+</body>
+
+<script>
+    // --- 1. 카카오맵 생성 ---
+
+    // 마커들을 담을 배열입니다
+    var selectedMarker = null;
+    var gasStationMarkers = [];
+    var map; // map 변수를 전역에서 접근할 수 있도록 바깥으로 빼냅니다.
+    var cur_lat;
+    var cur_lon;
+
+    // 빈 배열 객체 하나 선언
+    kakao.maps.load(function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                cur_lat = position.coords.latitude;
+                cur_lon = position.coords.longitude;
+
+                wgsToKatec(cur_lon, cur_lat, true);
+
+                // 지도 생성
+                var mapContainer = document.getElementById('map');
+                var mapOption = {
+                    center: new kakao.maps.LatLng(cur_lat, cur_lon),
+                    level: 5
+                };
+                map = new kakao.maps.Map(mapContainer, mapOption); // 전역 map 변수에 할당
+
+                // 현 위치 마커 생성
+                var imageSrc = './icon_map/current_loc.png',
+                    imageSize = new kakao.maps.Size(30, 30),
+                    imageOption = { offset: new kakao.maps.Point(15, 15) };
+                var markerPosition = new kakao.maps.LatLng(cur_lat, cur_lon),
+                    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition,
+                    image: markerImage
+                });
+                marker.setMap(map);
+
+                // 지도 중심 변경 이벤트
+                kakao.maps.event.addListener(map, 'center_changed', function () {
+                    var level = map.getLevel();
+                    var latlng = map.getCenter();
+                    var message = '<p>지도 레벨은 ' + level + ' 이고, 중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
+                    var resultDiv = document.getElementById('result');
+                    // resultDiv.innerHTML = message;
+                });
+
+                // "현재 지도 중심 변환" 버튼 클릭 이벤트 수정
+                $("#convertnow").on("click", function () {
+                    const centerLatLng = map.getCenter();
+                    const centerLon = centerLatLng.getLng();
+                    const centerLat = centerLatLng.getLat();
+
+                    $("#curr_map_katec").html("중심 좌표 변환 중...");
+
+                    // 1. 지도 중심 WGS84 -> KATEC 변환
+                    $.ajax({
+                        method: "GET",
+                        url: `${API_BASE_URL}/wgs84-to-katec`,
+                        data: { "lon": centerLon, "lat": centerLat },
+                        success: function (response) {
+                            const katecResultX = response.x;
+                            const katecResultY = response.y;
+                            $("#curr_map_katec").html(`<b>현재 지도 중심 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
+                        },
+                        error: function (jqXHR) {
+                            let errorMessage = jqXHR.responseJSON?.detail || "Unknown error";
+                            $("#curr_map_katec").html(`<p style="color:red;"><b>❌ 변환 실패:</b> ${errorMessage}</p>`);
+                        }
+                    });
+                });
+
+                // 현재 위치로 돌아가기
+                $("#whereami").on("click", function panTo() {
+                    var moveLatLon = new kakao.maps.LatLng(cur_lat, cur_lon);
+                    map.panTo(moveLatLon);
+                });
+
+                // 휘발유 검색
+                $("#gasoline").on("click", function () {
+                    const centerLatLng = map.getCenter();
+                    const centerLon = centerLatLng.getLng();
+                    const centerLat = centerLatLng.getLat();
+
+                    $("#curr_map_katec").html("중심 좌표 변환 중...");
+
+                    // 1. 지도 중심 WGS84 -> KATEC 변환
+                    $.ajax({
+                        method: "GET",
+                        url: `${API_BASE_URL}/wgs84-to-katec`,
+                        data: { "lon": centerLon, "lat": centerLat },
+                        success: function (response) {
+                            const katecResultX = response.x;
+                            const katecResultY = response.y;
+                            $("#curr_map_katec").html(`<b>현재 지도 중심 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
+
+                            // 2. 변환된 KATEC 좌표로 주변 주유소 검색 함수 호출
+                            getNearbyGasStations(katecResultX, katecResultY, "B027");
+                        },
+                        error: function (jqXHR) {
+                            let errorMessage = jqXHR.responseJSON?.detail || "Unknown error";
+                            $("#curr_map_katec").html(`<p style="color:red;"><b>❌ 변환 실패:</b> ${errorMessage}</p>`);
+                        }
+                    });
+                });
+
+            }); // getCurrentPosition callback 닫기
+        } // if geolocation 닫기
+    }); // kakao.maps.load 닫기
+
+
+</script>
+</html>
