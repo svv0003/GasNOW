@@ -579,6 +579,32 @@
                     const oilKatecY = parseFloat(station.find('GIS_Y_COOR').text());
                     const brand = station.find('POLL_DIV_CO').text();
                     const uni_id = station.find('UNI_ID').text();
+
+                    // DB에 저장할 GasStation 데이터 구성 (부분 데이터)
+                    const gasStationData = {
+                        gsId: uni_id,
+                        xCoord: oilKatecX,
+                        yCoord: oilKatecY,
+                        brandCode: brand,
+                        stationName: name,
+                        address: null, // 주소 정보는 이 API에 없음
+                        phone: null    // 전화번호 정보는 이 API에 없음
+                    };
+
+                    // 백엔드로 데이터 전송
+                    $.ajax({
+                        method: "POST",
+                        url: "/api/jido/station",
+                        contentType: "application/json",
+                        data: JSON.stringify(gasStationData),
+                        success: function() {
+                            console.log(`Partially saved station: ${gasStationData.gsId}`);
+                        },
+                        error: function(err) {
+                            console.error(`Failed to partially save station: ${gasStationData.gsId}`, err);
+                        }
+                    });
+
                     //객체 하나를 이름 / 가격 / 거리
                     katecToWgsForMarker(oilKatecX, oilKatecY, name, price, brand, uni_id);
                 });
@@ -1084,6 +1110,32 @@
                 const $xml = $(xmlDoc);
 
                 const $station = $xml.find('OIL'); // 주유소 정보
+
+                // DB에 저장할 GasStation 데이터 구성
+                const gasStationData = {
+                    gsId: $station.find('UNI_ID').text(),
+                    xCoord: parseFloat($station.find('GIS_X_COOR').text()),
+                    yCoord: parseFloat($station.find('GIS_Y_COOR').text()),
+                    brandCode: $station.find('POLL_DIV_CO').text(),
+                    stationName: $station.find('OS_NM').text(),
+                    address: $station.find('VAN_ADR').text(),
+                    phone: $station.find('TEL').text()
+                };
+
+                // 백엔드로 데이터 전송
+                $.ajax({
+                    method: "POST",
+                    url: "/api/jido/station",
+                    contentType: "application/json",
+                    data: JSON.stringify(gasStationData),
+                    success: function() {
+                        console.log("Gas station data saved successfully.");
+                    },
+                    error: function(err) {
+                        console.error("Failed to save gas station data:", err);
+                    }
+                });
+
 
                 // 주유소 기본 정보
                 const stationInfo = {

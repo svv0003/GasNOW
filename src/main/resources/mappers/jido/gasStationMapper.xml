@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.gasnow.jido.model.mapper.GasStationMapper">
+
+    <insert id="upsertGasStation" parameterType="project.gasnow.jido.model.dto.GasStation">
+        INSERT INTO gas_station (GS_ID, X_COORD, Y_COORD, BRAND_CODE, STATION_NAME, ADDRESS, PHONE, CREATED_AT, UPDATED_AT)
+        VALUES (#{gsId}, #{xCoord}, #{yCoord}, #{brandCode}, #{stationName}, #{address}, #{phone}, NOW(), NOW())
+        ON DUPLICATE KEY UPDATE
+        X_COORD = VALUES(X_COORD),
+        Y_COORD = VALUES(Y_COORD),
+        BRAND_CODE = VALUES(BRAND_CODE),
+        STATION_NAME = VALUES(STATION_NAME),
+        ADDRESS = VALUES(ADDRESS),
+        PHONE = VALUES(PHONE),
+        UPDATED_AT = NOW();
+    </insert>
+
+</mapper>
