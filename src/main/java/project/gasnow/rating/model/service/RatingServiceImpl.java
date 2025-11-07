@@ -50,44 +50,6 @@ public class RatingServiceImpl implements RatingService{
     }
 
 
-
-
-/*
-@Override
-public String addRating(Rating rating) {
-    // 오늘 입력했는지 확인
-    String check = checkingInputRating(rating.getGsId(), rating.getUserId());
-    if ("이미 평점을 입력했습니다".equals(check)) {
-        return "fail"; // 저장하지 않음
-    }
-
-    // DB에 저장
-    ratingMapper.insertRating(rating);
-    return "success";
 }
 
- */
 
-    /*
-
-    // ============ 평점 ============
-
-
-    @Override
-    public boolean addRating(String userId, String gsId, Integer rating) {
-        // 오늘 이미 평점을 입력했는지 확인
-        int count = mapMapper.checkTodayRating(userId, gsId);
-        if (count > 0) {
-            return false; // 이미 오늘 작성함
-        }
-
-        GsRating gsRating = new GsRating();
-        gsRating.setUserId(userId);
-        gsRating.setGsId(gsId);
-        gsRating.setRating(rating);
-
-        return mapMapper.insertRating(gsRating) > 0;
-    }
-
-     */
-}
