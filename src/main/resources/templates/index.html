@@ -268,6 +268,7 @@
             selectedOil = $(this).attr('id');
             console.log("유종 선택:", selectedOil);
             updateDisplay(selectedOil);
+            changeDiff(selectedOil);
         });
 
         /*
@@ -336,5 +337,121 @@
             // ------------------------------------
         });
     }
+
+    /*================================================================================================
+    ================================================================================================*/
+    const API_BASE_URL = "http://localhost:8080";
+
+    // API 전체 데이터를 저장할 변수
+    let avgOilPrice = [];
+
+    $(document).ready(function() {
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/api/avg-all-price`,
+            data: {
+                api_key: API_KEY,
+            },
+            success: function (data) {
+                console.log(data);
+                console.log("API에서 받은 전체 응답:", data);
+                if (data && data.xml_data) {
+                    try {
+                        const xmlDoc = $.parseXML(data.xml_data);
+                        const $xml = $(xmlDoc);
+                        $xml.find('OIL').each(function () {
+                            const $price = $(this);
+                            const priceData = {
+                                SIDOCD: $price.find('TRADE_DT').text(),
+                                SIDONM: $price.find('PRODCD').text(),
+                                PRODCD: $price.find('PRODNM').text(),
+                                PRICE: $price.find('PRICE').text(),
+                            };
+                            avgOilPrice.push(priceData);
+                        });
+                        console.log("XML 파싱 후 생성된 데이터:", avgOilPrice);
+                        if (avgOilPrice.length === 0) {
+                            alert("데이터 파싱에 성공했으나, 유가 정보(<OIL>)가 없습니다.");
+                        }
+                    } catch (e) {
+                        console.error("XML 파싱 중 오류 발생:", e);
+                        alert("데이터 형식이 올바르나, 내부 XML을 파싱하는 데 실패했습니다.");
+                    }
+                } else {
+                    console.error("API 응답에 'xml_data' 필드가 없습니다:", data);
+                    alert("API 응답 형식이 올바르지 않습니다. (xml_data 없음)");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("API 호출 실패:", error);
+                alert("데이터를 불러오는 데 실패했습니다.");
+            }
+        });
+    })
+
+
+    /**
+     * 선택된 유종(selectedOil)의 어제자 가격 정보를 DB에서 조회합니다.
+     * @param {string} selectedOil - 선택된 유종 코드 (예: "B027", "D047")
+     */
+    async function changeDiff(selectedOil) {
+
+        // 1. 서버에 요청할 API 엔드포인트를 작성한다.
+        const url = `${API_BASE_URL}/diff`;
+
+        try {
+            // 2. API 서버에 데이터를 비동기로 요청합니다.
+            const res = await fetch(url);
+
+            // 3. 서버 응답이 실패했는지 확인합니다. (템플릿과 동일)
+            if (!res.ok) {
+                throw new Error("서버 응답 오류 : " + res.status);
+            }
+
+            // 4. 응답(Response) 객체를 JSON 객체로 파싱합니다.
+            // (어제자 가격 정보가 어떤 구조로 오는지에 따라 달라집니다)
+            // 예: [ {sidoCd: "01", price: 1750.0}, {sidoCd: "02", price: 1800.0}, ... ]
+            const yesterdayPriceList = await res.json();
+
+            // 5. "조회해 온 데이터 사용하기"
+            if (!yesterdayPriceList || yesterdayPriceList.length === 0) {
+                console.warn("어제자 유가 정보가 없습니다:", selectedOil);
+                // 예: "전일 대비" 가격 표시란을 '-'로 초기화
+                // document.getElementById('diff-display-element').innerText = "-";
+            } else {
+                // 6. 데이터가 성공적으로 왔을 때의 로직
+                console.log("어제자 유가 정보:", yesterdayPriceList);
+
+                // ---
+                // ⭐️ 여기에 [yesterdayPriceList]를 "사용"하는 코드를 작성하세요.
+                //
+                // <수도 코드 예시>
+                // 1. 오늘 유가 정보(allOilPrice)와 어제 유가 정보(yesterdayPriceList)를 비교
+                //
+                // allOilPrice.forEach(todayOil => {
+                //    if(todayOil.PRODCD !== selectedOil) return; // 선택된 유종만
+                //
+                //    // 오늘 서울(01) 가격에 맞는 어제 서울(01) 가격 찾기
+                //    const yesterdayOil = yesterdayPriceList.find(y => y.sidoCd === todayOil.SIDOCD);
+                //
+                //    if(yesterdayOil) {
+                //        const diff = todayOil.PRICE - yesterdayOil.price; // 가격 차이 계산
+                //        console.log(`${todayOil.SIDONM}의 가격 차이: ${diff}원`);
+                //
+                //        // 이 diff 값을 SVG 지도 위 텍스트(g.diff)나
+                //        // 다른 UI 요소에 업데이트하면 됩니다.
+                //    }
+                // });
+                // ---
+            }
+
+        } catch (error) {
+            // 7. fetch가 실패했거나(네트워크 오류), JSON 파싱에 실패했을 때
+            console.error("changeDiff 함수 실행 중 오류 발생:", error);
+            // alert("가격 정보를 불러오는 중 오류가 발생했습니다.");
+        }
+    }
+    /*================================================================================================
+    ================================================================================================*/
 </script>
 </html>
