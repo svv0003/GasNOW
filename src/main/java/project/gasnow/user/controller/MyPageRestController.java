@@ -3,10 +3,7 @@ package project.gasnow.user.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.gasnow.rating.model.dto.Rating;
 import project.gasnow.user.model.dto.ReviewItemDTO;
 import project.gasnow.user.model.dto.User;
@@ -72,9 +69,17 @@ public class MyPageRestController {
         return myPageService.getUserInfo(userId);
     }
 
-    // 비밀번호 변경
-
-    // 로그아웃
+    /**
+     * 비밀번호 변경 메서드
+     * @param session
+     * @param oldPassword 클라이언트가 입력한 기존 비밀번호
+     * @param newPassword 클리이언트가 입력한 변경 비밀번호
+     */
+    @PatchMapping("/password")
+    public void changePassword(HttpSession session, String oldPassword, String newPassword) {
+        String userId = getLoginUserId(session);
+        myPageService.changePassword(userId, oldPassword, newPassword);
+    }
 
     // 회원 탈퇴
 }
