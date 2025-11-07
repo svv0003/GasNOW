@@ -1,5 +1,6 @@
 package project.gasnow.user.model.service;
 
+import jakarta.servlet.http.HttpSession;
 import project.gasnow.user.model.dto.User;
 
 import java.util.Map;
@@ -32,26 +33,18 @@ public interface UserService {
 
     /**
      * 이메일 인증코드 전송 메서드
+     * @param htmlName 이메일 전송 화면이 구현된 html 파일명
      * @param email 세션에 저장된 클라이언트의 이메일 정보
      * @return null 또는 인증코드
      */
-    String sendEmail(String email);
-
-    // 이메일 인증코드 확인
-
-    /**
-     * 이메일 인증코드 확인 메서드
-     * @param map Map<String, Object>
-     * @return mapper의 메서드에 map을 파라미터로 넘겨서 반환
-     */
-    int checkAuthKey(Map<String, Object> map);
+    String sendEmail(String htmlName, String email);
 
     /**
      * 로그인 메서드
      * @param userId 클라이언트가 view에서 작성한 아이디
      * @param password 클라이언트가 view에서 작성한 비밀번호
      */
-    void login(String userId, String password);
+    User login(HttpSession session, String userId, String password);
 
     /**
      * 로그인 시 포인트 적립 메서드
