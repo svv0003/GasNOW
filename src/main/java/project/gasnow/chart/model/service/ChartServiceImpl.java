@@ -1,12 +1,14 @@
 package project.gasnow.chart.model.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import project.gasnow.chart.model.dto.Chart;
 import project.gasnow.chart.model.mapper.ChartMapper;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChartServiceImpl implements ChartService {
@@ -46,5 +48,10 @@ public class ChartServiceImpl implements ChartService {
         } else { // "all" 또는 기타
             return chartMapper.getAllPrice(oilCategory, "전국");
         }
+    }
+
+    @Override
+    public List<Chart> getYesterdayData() {
+        return chartMapper.getYesterdayPrice();
     }
 }

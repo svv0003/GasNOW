@@ -15,4 +15,5 @@ public interface ChartService {
      */
     List<Chart> getChartData(String oilCategory, String areaName, String period);
     List<Chart> getChartDataAlways(String oilCategory, String period);
+    List<Chart> getYesterdayData();
 }

@@ -18,5 +18,7 @@ public interface ChartMapper {
                             @Param("areaName") String areaName);
     List<Chart> getOneWeekPrice(@Param("oilCategory") String oilCategory,
                             @Param("areaName") String areaName);
+    List<Chart> getYesterdayPrice();
+
 
 }

@@ -42,4 +42,9 @@ public class ChartController {
         // DTO 객체를 생성하여 반환한다.
         return new ChartResponse(local, nationwide);
     }
+
+    @GetMapping("/yesterday")
+    public List<Chart> getYesterdayData() {
+        return chartService.getYesterdayData();
+    }
 }

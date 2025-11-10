@@ -122,18 +122,21 @@
             align-content: center;
         }
         .ticker-oil {
+            width: 120px;
+            font-size: 1rem;
+            text-align: center;
+            align-content: center;
+        }
+        .ticker-price {
+            width: 80px;
             font-size: 1rem;
             text-align: left;
             align-content: center;
         }
-        .ticker-price {
-            font-size: 1rem;
-            text-align: right;
-            align-content: center;
-        }
         .ticker-percent {
+            width: 70px;
             font-size: 0.7rem;
-            text-align: right;
+            text-align: center;
             align-content: center;
         }
     </style>
@@ -524,7 +527,7 @@
     3. JSON 데이터를 JavaScript 객체로 변환하여 반환한다.
     ================================================================================================*/
     async function getData() {
-        const res = await fetch(API_BASE_URL + "/chart");
+        const res = await fetch(DB_URL + "/chart/yesterday");
         if (!res.ok) {
             throw new Error("서버 응답 오류: " + res.status);
         }
@@ -586,7 +589,7 @@
       try {
         const chartData = await getData();
         chartData.forEach((item) => {
-          yesterdayPricesMap.set(item.PRODCD, item.PRICE_DATE);
+          yesterdayPricesMap.set(item.OIL_CATEGORY, item.AVG_PRICE);
         });
         console.log("yesterdayPricesMap:", yesterdayPricesMap);
       } catch (e) {
@@ -618,7 +621,8 @@
         try {
             const chartData = await getData();
             chartData.forEach((item) => {
-                yesterdayPricesMap.set(item.PRODCD, item.PRICE_DATE);
+                // SQL의 OIL_CATEGORY를 Key로, AVG_PRICE를 Value로 저장
+                yesterdayPricesMap.set(item.oilCategory, item.avgPrice);
             });
             console.log("yesterdayPricesMap:", yesterdayPricesMap);
         } catch (e) {

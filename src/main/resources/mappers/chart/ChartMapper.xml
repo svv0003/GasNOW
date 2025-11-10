@@ -6,7 +6,7 @@
 
 <mapper namespace="project.gasnow.chart.model.mapper.ChartMapper">
 
-    <select id="getAllPrice" resultType="project.gasnow.chart.model.dto.Chart">
+    <select id="getAllPrice" resultType="Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE OIL_CATEGORY = #{oilCategory}
@@ -14,7 +14,7 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
-    <select id="getOneYearPrice" resultType="project.gasnow.chart.model.dto.Chart">
+    <select id="getOneYearPrice" resultType="Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
@@ -23,7 +23,7 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
-    <select id="getOneMonthPrice" resultType="project.gasnow.chart.model.dto.Chart">
+    <select id="getOneMonthPrice" resultType="Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
@@ -32,7 +32,7 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
-    <select id="getOneWeekPrice" resultType="project.gasnow.chart.model.dto.Chart">
+    <select id="getOneWeekPrice" resultType="Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
         WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
@@ -41,5 +41,11 @@
         ORDER BY PRICE_DATE ASC
     </select>
 
+    <select id="getYesterdayPrice" resultType="Chart">
+        SELECT OIL_CATEGORY, AVG_PRICE
+        FROM AREA_AVG
+        WHERE PRICE_DATE = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+          AND AREA_NAME = "전국"
+    </select>
 
 </mapper>
