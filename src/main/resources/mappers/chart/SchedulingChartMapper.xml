@@ -4,13 +4,64 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="project.gasnow.common.scheduling.schedulingMapper.SchedulingMapper">
+<mapper namespace="project.gasnow.common.scheduling.schedulingModel.schedulingMapper.SchedulingMapper">
 
-    <!-- INSERT API 데이터 저장 -->
+    <!--
+    INSERT API 데이터 저장
     <insert id="insertOilPrice" parameterType="chart">
         INSERT INTO avg_price (price_date, oil_category, avg_price, created_at)
         VALUES (#{priceDate}, #{oilCategory}, #{avgPrice}, NOW())
     </insert>
+    -->
 
+    <insert id="saveChartData" parameterType="java.util.List">
+        INSERT INTO AREA_AVG (
+        PRICE_DATE,
+        AREA_CODE,
+        AREA_NAME,
+        OIL_CATEGORY,
+        AVG_PRICE,
+        CREATED_AT
+        )
+        VALUES
+        <foreach collection="list" item="chart" separator=",">
+            (
+            STR_TO_DATE(#{chart.priceDate}, '%Y%m%d'),
+            0,
+            "전국",
+            #{chart.oilCategory},
+            #{chart.avgPrice},
+            NOW()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        AVG_PRICE = VALUES(AVG_PRICE),
+        CREATED_AT = NOW()
+    </insert>
+
+    <insert id="saveAreaChartData" parameterType="java.util.List">
+        INSERT INTO AREA_AVG (
+        PRICE_DATE,
+        AREA_CODE,
+        AREA_NAME,
+        OIL_CATEGORY,
+        AVG_PRICE,
+        CREATED_AT
+        )
+        VALUES
+        <foreach collection="list" item="chart" separator=",">
+            (
+            STR_TO_DATE(#{chart.priceDate}, '%Y%m%d'),
+            #{chart.areaCode},
+            #{chart.areaName},
+            #{chart.oilCategory},
+            #{chart.avgPrice},
+            NOW()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        AVG_PRICE = VALUES(AVG_PRICE),
+        CREATED_AT = NOW()
+    </insert>
 
 </mapper>
