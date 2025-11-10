@@ -44,19 +44,18 @@ public class UserRestController {
 
     /**
      * 이메일 전송 메서드
-     * @param user
+     * @param userEmail
      * @return 이메일 전송 성공 시 1, 실패 시 0
      */
     @PostMapping("/api/send-email-code")
-    public int sendEmailCode(@RequestBody User user, HttpSession session) {
-        String email = user.getUserEmail();
-        String authKey = userService.sendEmail("register", email);
+    public int sendEmailCode(@RequestBody String userEmail, HttpSession session) {
+        String authKey = userService.sendEmail("register", userEmail);
 
         if(authKey == null) return 0;
 
         // 세션에 인증번호 저장
-        session.setAttribute("authKey:" + email, authKey);
-        session.setAttribute("authTime:" + email, System.currentTimeMillis());  // 이메일 전송 시각 저장
+        session.setAttribute("authKey:" + userEmail, authKey);
+        session.setAttribute("authTime:" + userEmail, System.currentTimeMillis());  // 이메일 전송 시각 저장
 
         return 1;
     }

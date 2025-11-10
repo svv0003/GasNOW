@@ -7,29 +7,163 @@
 
 </head>
 <body>
-    <form>
-        <label>이름</label>
-        <input type="text" name="username" id="username"/>
-        <br>
-        <label>아이디</label>
-        <input type="text" name="userId" id="userId"/>
-        <br>
-        <label>비밀번호</label>
-        <input type="password" name="userPassword" id="userPassword"/>
-        <br>
-        <label>비밀번호 확인</label>
-        <input type="password" name="userPasswordCheck" id="userPasswordCheck"/>
-        <br>
-        <label>이메일</label>
-        <input type="password" name="userEmail" id="userEmail"/>
-        <br>
-        <button id="sendAuthKeyBtn">인증번호 받기</button>
-        <br>
-        <label>연락처</label>
-        <input type="password" name="userPhone" id="userPhone"/>
-    </form>
+    <div class="register-form-container" id="registerForm">
+        <form>
+            <div class="form-box">
+                <label>이름<span class="required">*</span></label>
+                <input type="text" name="username" id="username"/>
+                <div class="alertBox" id="nameAlert"></div>
+            </div>
+
+            <div class="form-box">
+                <label>아이디<span class="required">*</span></label>
+                <input type="text" name="userId" id="userId"/>
+                <div class="alertBox" id="idAlert"></div>
+            </div>
+
+            <div class="form-box">
+                <label>비밀번호<span class="required">*</span></label>
+                <input type="password" name="userPassword" id="userPassword"/>
+                <div class="alertBox" id="pwAlert"></div>
+            </div>
+
+            <div class="form-box">
+                <label>비밀번호 확인<span class="required">*</span></label>
+                <input type="password" name="userPasswordCheck" id="userPasswordCheck"/>
+                <div class="alertBox" id="pwChkAlert"></div>
+            </div>
+
+            <div class="form-box">
+                <div class="form-item">
+                    <label>이메일<span class="required">*</span></label>
+                    <input type="text" name="userEmail" id="userEmail"/>
+                </div>
+
+                <div class="form-item">
+                    <button id="sendAuthKeyBtn">본인인증</button>
+                    <div class="alertBox" id="emailAlert"></div>
+                </div>
+            </div>
+
+            <div class="form-box">
+                <div class="form-item">
+                    <label>인증번호<span class="required">*</span></label>
+                    <input type="text" name="inputAuthKey" id="authKey"/>
+                </div>
+
+                <div class="form-item">
+                    <button id="checkAuthKeyBtn">인증하기</button>
+                    <div class="alertBox" id="authAlert"></div>
+                </div>
+
+                <span id="countdown"></span>
+            </div>
+
+            <div class="form-box">
+                <label>연락처</label>
+                <input type="text" name="userPhone" id="userPhone"/>
+                <div class="alertBox" id="phoneAlert"></div>
+            </div>
+        </form>
+    </div>
 
 
+    <script>
+        const username = document.querySelector("#registerForm input[name=username]");
+        const userId = document.querySelector("#registerForm input[name=userId]");
+        const userPw = document.querySelector("#registerForm input[name=userPassword]");
+        const userPwChk = document.querySelector("#registerForm input[name=userPasswordCheck]");
+        const userEmail = document.querySelector("#registerForm input[name=userEmail]");
+        const sendAuthKeyBtn = document.querySelector("#sendAuthKeyBtn");
+        const inputAuthKey = document.querySelector("#registerForm input[name=inputAuthKey]");
+        const checkAuthBtn = document.querySelector("#checkAuthKeyBtn");
+        const countdown = document.querySelector("#countdown");
+        const userPhone = document.querySelector("#userPhone");
+        const alertKey = {
+            "name": "name",
+            "id": "id",
+            "pw": "pw",
+            "email": "email",
+            "auth": "auth",
+            "phone": "phone"
+        }
+        const chkObj = {
+            "username": false,
+            "userId": false,
+            "userPw": false,
+            "userPwChk": false,
+            "userEmail": false,
+            "inputAuthKey": false,
+            "userPhone": false,
+            "inputAuthKey": false
+        }
+        // 인증번호 관련 메세지
+        const initMin = 4;
+        const initSec = 59;
+        const initTime = "05:00";
+        let authTimer; // setInterval 저장
+        let min = initMin;
+        let sec = initSec;
+
+        // 이메일 인증번호 발송
+        sendAuthKeyBtn.addEventListener("click", async () => {
+            chkObj.inputAuthKey = false;
+            document.querySelector("#authAlert").innerText = '';
+
+            min = initMin;
+            clearInterval(authTimer);
+            chkObj.inputAuthKey = false;
+
+            try {
+                const res = await fetch("/api/send-email-code", {
+                    method: "POST",
+                    headers: {"Content-Type" : "application/json"},
+                    body: JSON.stringify(userEmail.value),
+                });
+
+                if (res.ok) {
+                    console.log("인증번호 발송 성공");
+                }else {
+                    console.log("인증번호 발송 실패");
+                }
+                countdown.innerText = initTime;  // 시간 세팅
+                countdown.classList.remove("confirm", "error");
+
+                alert("인증번호가 발송되었습니다.");
+
+                // 제한시간 5분
+                authTimer = setInterval(() => {
+                    countdown.innerText = `${zeroplus(min)}:${zeroplus(sec)}`;
+                    if(min == 0 && sec == 0) {
+                        chkObj.inputAuthKey = false;
+                        clearInterval(authTimer);
+                        countdown.classList.add("error");
+                        countdown.classList.remove("confirm");
+                    }
+                    if(sec == 0) {
+                        sec = 60;
+                        min--;
+                    }
+                    sec--;
+                }, 1000);
+            } catch(err) {
+
+            }
+
+        })
+
+        function zeroplus(number) {
+            if(number < 10) return "0" + number;
+            else return number;
+        }
+
+        async function registerUser(e) {
+            e.preventDefault();
+
+
+
+        }
+    </script>
 
 </body>
 </html>
