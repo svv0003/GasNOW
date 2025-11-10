@@ -312,6 +312,32 @@
             <text id="label-KR49" x="333" y="930" class="label">제주</text>
         </svg>
     </div>
+    <div class="container">
+        <h1>유가추이</h1>
+        <hr style="margin-bottom: 15px; border: none; border-top: 2px solid #333;">
+
+        <div class="tabs">
+            <button class="tab" onclick="changeTab('1주')">1주</button>
+            <button class="tab active" onclick="changeTab('1개월')">1개월</button>
+            <button class="tab" onclick="changeTab('1년')">1년</button>
+            <button class="tab" onclick="changeTab('3년')">3년</button>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-line" style="background: #4A90E2;"></div>
+                <span>전국</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #F5A623;"></div>
+                <span>서울</span>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 <script>
@@ -349,6 +375,7 @@
     let selectedOil = "B027";
     let selectedArea = "01";
     const defaultDiffArea = "00";
+    let selectedPeriod = "week";
 
     /*=================================================
     HTML
@@ -482,9 +509,7 @@
             selectedArea = pathId_to_SIDOCD[$(this).attr("id")];
             // console.log("지역 선택 (SVG pathId):", pathId);
             // console.log("지역 선택 (API SIDOCD):", selectedArea);
-            /*=====================================
-            추후 차트 그래프 기능에 사용할 예정이다.
-            =====================================*/
+            updateChart(selectedArea);
         });
 
         /*================================================================================================
@@ -509,6 +534,18 @@
         $(".diff-box").on("click", function () {
             $(".oil-btn").removeClass("on");
             $(".diff-box").removeClass("on");
+            const boxId = $(this).attr("id");
+            const boxOil = boxId.replace("DiffBox", "");
+            $("#" + boxOil + "Btn").addClass("on");
+            $("#" + boxOil + "DiffBox").addClass("on");
+            selectedOil = boxOil;
+            updateDisplay(selectedOil);
+            console.log(boxOil);
+            console.log($("#" + "btn-" + boxOil).attr("class"));
+        });
+
+        $(".chart-btn").on("click", function () {
+            $(".chart-btn").removeClass("on");
             const boxId = $(this).attr("id");
             const boxOil = boxId.replace("DiffBox", "");
             $("#" + boxOil + "Btn").addClass("on");
@@ -772,6 +809,21 @@
 
             }, tickerTransitionTime); // CSS transition 시간과 동일하게
         }
+    }
+
+    /*================================================================================================
+    차트 생성하기
+    1. HTML에서 지역 <path> 기간 <button> 선택 값을 변수에 저장한다.
+    2. JS에서 RestController GetMapping endpoint API를 Fetch로 데이터 요청을 보낸다.
+    3. RestController에서 전달 받은 선택 값을 파라미터로, DB 데이터를 조회하는 Mapper를 호출한다.
+    4. Spring Boot가 DB 조회 결과 (List<Chart>)를 JSON 배열로 변환하여 응답한다.
+    5. fetch의 .then() (또는 await 이후)에서 이 JSON 배열을 Chart.js가 요구하는 포맷(labels 배열, data 배열)으로 변환한다.
+    6. 변환된 데이터로 Chart.js 차트를 그리거나 업데이트합니다.
+    ================================================================================================*/
+    function updateChart (selectedArea, selectedPeriod) {
+        /*
+        지역과 기간 버튼 둘 중 하나라도 새로운 입력값이 생긴다면 함수를 재실행해야 한다.
+         */
     }
 </script>
 </html>
