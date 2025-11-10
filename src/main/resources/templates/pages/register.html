@@ -64,6 +64,8 @@
                 <input type="text" name="userPhone" id="userPhone"/>
                 <div class="alertBox" id="phoneAlert"></div>
             </div>
+
+            <button>회원가입</button>
         </form>
     </div>
 
@@ -79,14 +81,6 @@
         const checkAuthBtn = document.querySelector("#checkAuthKeyBtn");
         const countdown = document.querySelector("#countdown");
         const userPhone = document.querySelector("#userPhone");
-        const alertKey = {
-            "name": "name",
-            "id": "id",
-            "pw": "pw",
-            "email": "email",
-            "auth": "auth",
-            "phone": "phone"
-        }
         const chkObj = {
             "username": false,
             "userId": false,
@@ -97,7 +91,7 @@
             "userPhone": false,
             "inputAuthKey": false
         }
-        // 인증번호 관련 메세지
+        // 인증번호 시간 관련
         const initMin = 4;
         const initSec = 59;
         const initTime = "05:00";
@@ -106,13 +100,19 @@
         let sec = initSec;
 
         // 이메일 인증번호 발송
-        sendAuthKeyBtn.addEventListener("click", async () => {
+        sendAuthKeyBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
             chkObj.inputAuthKey = false;
             document.querySelector("#authAlert").innerText = '';
 
             min = initMin;
             clearInterval(authTimer);
             chkObj.inputAuthKey = false;
+
+            if(userEmail.value.trim() === '') {
+                alert("이메일을 입력해주세요.");
+                return;
+            }
 
             try {
                 const res = await fetch("/api/send-email-code", {
@@ -147,15 +147,20 @@
                     sec--;
                 }, 1000);
             } catch(err) {
-
+                document.querySelector("#emailAlert").innerHTML = `<div class="alert-error">오류: ${err.message}</div>`
+                console.error("Fetch error:", err);
             }
-
         })
 
         function zeroplus(number) {
             if(number < 10) return "0" + number;
             else return number;
         }
+
+        // 이메일 인증번호 일치 확인
+        checkAuthBtn.addEventListener("click", async () => {
+
+        })
 
         async function registerUser(e) {
             e.preventDefault();
