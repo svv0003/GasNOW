@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService {
             userPointHistory.setUserId(userId);
             userPointHistory.setPointChange(30);
             userPointHistory.setPointType("EARN");
-            userPointHistory.setDescription("출첵");
+            userPointHistory.setDescription("출석체크");
             userPointMapper.insertPointHistory(userPointHistory);
             // 총 적립 포인트 변경
             int currentPoint = userPointMapper.getCurrentPoint(userId);
