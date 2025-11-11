@@ -11,7 +11,7 @@ public interface UserService {
      * 회원가입 메서드
      * @param user 클라이언트가 view에서 form에 작성한 정보를 User 객체로 받아옴
      */
-    void register(User user);
+    int register(User user);
        
     /**
      * 아이디 중복 체크 메서드<br>

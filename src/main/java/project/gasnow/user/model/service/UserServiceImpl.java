@@ -43,40 +43,40 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     @Override
-    public void register(User user) {
+    public int register(User user) {
         // 아이디 유효성 검사
         if(user.getUserId() == null) {
-            throw new IllegalArgumentException("아이디는 비워둘 수 없습니다.");
+            return 0;
         }
         if(user.getUserId().length() < 6) {
-            throw new IllegalArgumentException("아이디는 최소 6글자 이상이어야 합니다.");
+            return 0;
         }
         // 아이디 중복 체크
         if(!checkUserIdDuplicate(user.getUserId())) {
-            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+            return 0;
         }
 
         // 이름 유효성 검사
         if(user.getUserName() == null) {
-            throw new IllegalArgumentException("이름은 비워둘 수 없습니다.");
+            return 0;
         }
 
         // 비밀번호 유효성 검사
         if(user.getUserPassword() == null) {
-            throw new IllegalArgumentException("비밀번호는 비워둘 수 없습니다.");
+            return 0;
         }
         String pattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'<>,.?/]).{8,16}$";
         if(!user.getUserPassword().matches(pattern)) {
-            throw new IllegalArgumentException("영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)");
+            return 0;
         }
 
         // 연락처 유효성 검사
         if(user.getUserPhone() == null) {
-            throw new IllegalArgumentException("연락처를 정확히 입력해주세요.");
+            return 0;
         }
         // 연락처 중복 체크
         if(!checkPhoneDuplicate(user.getUserPhone())) {
-            throw new IllegalArgumentException("이미 등록된 연락처입니다.");
+            return 0;
         }
 
         // 비밀번호 암호화
@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
         userPointHistory.setPointType("EARN");
         userPointHistory.setDescription("REGISTER");
         userPointMapper.insertPointHistory(userPointHistory);
+        return 1;
     }
 
     /**

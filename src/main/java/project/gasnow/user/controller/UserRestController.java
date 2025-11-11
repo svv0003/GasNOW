@@ -93,8 +93,8 @@ public class UserRestController {
      * @param user js에서 body에 담아서 보낸 User 객체
      */
     @PostMapping("/api/register")
-    public void register(@RequestBody User user) {
-        userService.register(user);
+    public int register(@RequestBody User user) {
+        return userService.register(user);
     };
 
     /**
