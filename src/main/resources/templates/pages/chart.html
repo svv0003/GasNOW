@@ -84,6 +84,21 @@
             width: 20px;
             height: 2px;
         }
+
+        .loading, .error {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .loading {
+            color: #666;
+        }
+
+        .error {
+            color: #e74c3c;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -91,18 +106,21 @@
     <h1>유가추이</h1>
     <hr style="margin-bottom: 15px; border: none; border-top: 2px solid #333;">
 
-    <div class="tabs">
+    <div class="loading" id="loading">데이터를 불러오는 중...</div>
+    <div class="error" id="error"></div>
+
+    <div class="tabs" id="tabs" style="display: none;">
         <button class="tab" onclick="changeTab('1주')">1주</button>
         <button class="tab active" onclick="changeTab('1개월')">1개월</button>
         <button class="tab" onclick="changeTab('1년')">1년</button>
         <button class="tab" onclick="changeTab('3년')">3년</button>
     </div>
 
-    <div class="chart-container">
+    <div class="chart-container" id="chartContainer" style="display: none;">
         <canvas id="priceChart"></canvas>
     </div>
 
-    <div class="legend">
+    <div class="legend" id="legend" style="display: none;">
         <div class="legend-item">
             <div class="legend-line" style="background: #4A90E2;"></div>
             <span>전국</span>
@@ -115,30 +133,33 @@
 </div>
 
 <script>
-    let chart;
+    let chart = null;
+    let chartData = null;
 
-    const data = {
-        '1주': {
-            labels: ['9.24', '9.25', '9.26', '9.27', '9.28', '9.29', '9.30'],
-            전국: [1660, 1659, 1660, 1662, 1663, 1664, 1665],
-            서울: [1720, 1719, 1720, 1722, 1723, 1724, 1725]
-        },
-        '1개월': {
-            labels: ['9.3', '9.6', '9.9', '9.12', '9.15', '9.18', '9.21', '9.24', '9.27', '9.30'],
-            전국: [1658, 1660, 1659, 1661, 1660, 1662, 1661, 1663, 1664, 1665],
-            서울: [1718, 1720, 1719, 1721, 1720, 1722, 1721, 1723, 1724, 1725]
-        },
-        '1년': {
-            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월'],
-            전국: [1650, 1655, 1658, 1660, 1659, 1661, 1662, 1663, 1665],
-            서울: [1710, 1715, 1718, 1720, 1719, 1721, 1722, 1723, 1725]
-        },
-        '3년': {
-            labels: ['2022', '2022.6', '2023', '2023.6', '2024', '2024.6', '2024.9'],
-            전국: [1600, 1620, 1640, 1650, 1655, 1660, 1665],
-            서울: [1660, 1680, 1700, 1710, 1715, 1720, 1725]
+    async function fetchChartData() {
+        try {
+            const res = await fetch('http://localhost:8080/api/chart');
+            if (!res.ok) {
+                throw new Error("데이터를 가져오는데 실패했습니다");
+            }
+            chartData = await res.json();
+            console.log("받은 데이터:", chartData);
+
+            // 로딩 숨기고 차트 표시
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('tabs').style.display = 'flex';
+            document.getElementById('chartContainer').style.display = 'block';
+            document.getElementById('legend').style.display = 'flex';
+
+            // 초기 차트 렌더링 (1개월)
+            initChart('1개월');
+        } catch (err) {
+            console.error("에러:", err);
+            document.getElementById("loading").style.display = 'none';
+            document.getElementById('error').textContent = '데이터를 불러오는데 실패했습니다: ' + err.message;
+            document.getElementById('error').style.display = 'block';
         }
-    };
+    }
 
     function initChart(period) {
         const ctx = document.getElementById('priceChart').getContext('2d');
@@ -147,13 +168,27 @@
             chart.destroy();
         }
 
+        // 기간에 맞는 키 찾기
+        const periodKey = period === '1주' ? '1주' :
+            period === '1개월' ? '1개월' :
+                period === '1년' ? '1년' : '3년';
+
+        const data = chartData[periodKey];
+
+        if (!data) {
+            console.error('데이터가 없습니다:', periodKey);
+            return;
+        }
+
+        console.log('사용할 데이터:', data);
+
         chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: data[period].labels,
+                labels: data.labels,
                 datasets: [{
                     label: '전국',
-                    data: data[period].전국,
+                    data: data.전국,
                     borderColor: '#4A90E2',
                     backgroundColor: '#4A90E2',
                     tension: 0.4,
@@ -166,7 +201,7 @@
                     fill: false
                 }, {
                     label: '서울',
-                    data: data[period].서울,
+                    data: data.서울,
                     borderColor: '#F5A623',
                     backgroundColor: '#F5A623',
                     tension: 0.4,
@@ -240,7 +275,7 @@
         initChart(period);
     }
 
-    initChart('1개월');
+    window.addEventListener('load', fetchChartData);
 </script>
 </body>
 </html>
