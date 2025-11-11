@@ -18,6 +18,7 @@
             <div class="form-box">
                 <label>아이디<span class="required">*</span></label>
                 <input type="text" name="userId" id="userId"/>
+                <button type="button" id="idDblChkBtn">중복확인</button>
                 <div class="alertBox" id="idAlert"></div>
             </div>
 
@@ -25,7 +26,7 @@
                 <label>비밀번호<span class="required">*</span></label>
                 <input type="password" name="userPassword" id="userPassword"/>
                 <div class="alertBox" id="pwAlert">
-                    <div class="alert">
+                    <div class="alert" id="pwAlertItem">
                         영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)
                     </div>
                 </div>
@@ -41,9 +42,6 @@
                 <div class="form-item">
                     <label>이메일<span class="required">*</span></label>
                     <input type="text" name="userEmail" id="userEmail"/>
-                </div>
-
-                <div class="form-item">
                     <button type="button" id="sendAuthKeyBtn">본인인증</button>
                     <div class="alertBox" id="emailAlert"></div>
                 </div>
@@ -53,23 +51,20 @@
                 <div class="form-item">
                     <label>인증번호<span class="required">*</span></label>
                     <input type="text" name="inputAuthKey" id="authKey"/>
-                </div>
-
-                <div class="form-item">
                     <button type="button" id="checkAuthKeyBtn">인증하기</button>
                     <div class="alertBox" id="authAlert"></div>
                 </div>
-
                 <span id="countdown"></span>
             </div>
 
             <div class="form-box">
                 <label>연락처</label>
                 <input type="text" name="userPhone" id="userPhone"/>
+                <button type="button" id="phoneDblChkBtn">중복확인</button>
                 <div class="alertBox" id="phoneAlert"></div>
             </div>
 
-            <button>회원가입</button>
+            <button id="registerBtn" type="submit">회원가입</button>
         </form>
     </div>
 
@@ -85,9 +80,11 @@
         const checkAuthBtn = document.querySelector("#checkAuthKeyBtn");
         const countdown = document.querySelector("#countdown");
         const userPhone = document.querySelector("#userPhone");
+        const registerBtn = document.querySelector("#registerBtn");
         const chkObj = {
             "username": false,
             "userId": false,
+            "userIdDblChk": false,
             "userPw": false,
             "userPwChk": false,
             "userEmail": false,
@@ -114,17 +111,21 @@
         })
 
 
-        // 아이디 중복 확인
+        // 아이디 유효성 검사
         userId.addEventListener("input", async () => {
             const idAlert = document.querySelector("#idAlert");
-            if(userId.value.trim() === '') {
+            if (userId.value.trim() === '') {
                 idAlert.innerHTML = `<div class="alert error">아이디는 비워둘 수 없습니다.</div>`
-            } else if(userId.value.trim().length < 6) {
+            } else if (userId.value.trim().length < 6) {
                 idAlert.innerHTML = `<div class="alert error">아이디는 최소 6글자 이상이어야 합니다.</div>`
-            } else{
+            } else {
                 idAlert.innerText = '';
             }
+        });
 
+        // 아이디 중복확인
+        const idDblChkBtn = document.querySelector("#idDblChkBtn");
+        idDblChkBtn.addEventListener("click", async () => {
             const res = await fetch(`/api/check-userid?userId=${encodeURIComponent(userId.value)}`, {
                 method: "GET",
                 headers: {"Content-Type" : "application/json"},
@@ -137,22 +138,23 @@
             } else {
                 idAlert.innerHTML = `<div class="alert confirm">사용 가능한 아이디입니다.</div>`
                 chkObj.userId = true;
+                chkObj.userIdDblChk = true;
             }
-        })
+        });
 
         // 비밀번호 유효성 검사
         userPw.addEventListener("input", () => {
-            const pwAlert = document.querySelector("#pwAlert div[class='alert']");
-            const pw = userPw.value();
+            const pwAlert = document.querySelector("#pwAlertItem");
+            const pw = userPw.value;
 
             const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'",.<>/?\\|`~]).{8,16}$/;
 
             if (!pwRegex.test(pw)) {
-                pwAlert.removeClass("confirm");
-                pwAlert.addClass("error");
+                pwAlert.classList.remove("confirm");
+                pwAlert.classList.add("error");
             } else {
-                pwAlert.removeClass("error");
-                pwAlert.addClass("confirm");
+                pwAlert.classList.remove("error");
+                pwAlert.classList.add("confirm");
                 pwAlert.innerText = "사용 가능한 비밀번호입니다.";
                 chkObj.userPw = true;
             }
@@ -162,7 +164,7 @@
         // 비밀번호 확인
         userPwChk.addEventListener("input", () => {
             const pwAlert = document.querySelector("#pwChkAlert");
-            if(!userPw.value.trim().equals(userPwChk.value.trim())) {
+            if(!(userPw.value.trim() === (userPwChk.value.trim()))) {
                 pwAlert.innerHTML = `<div class="alert error">비밀번호가 일치하지 않습니다.</div>`
                 userPwChk.focus();
             } else {
@@ -193,7 +195,7 @@
                 const res = await fetch("/api/send-email-code", {
                     method: "POST",
                     headers: {"Content-Type" : "application/json"},
-                    body: JSON.stringify(userEmail.value),
+                    body: JSON.stringify({userEmail: userEmail.value}),
                 });
 
                 if (res.ok) {
@@ -204,7 +206,7 @@
                 countdown.innerText = initTime;  // 시간 세팅
                 emailAlert.classList.remove("confirm", "error");
 
-                const result = res.text();
+                const result = await res.text();
                 alert("인증번호가 발송되었습니다.");
                 console.log("result: ", result);
 
@@ -251,59 +253,66 @@
                 const res = await fetch("/api/verify-email-code", {
                     method: "POST",
                     headers: {"Content-Type" : "application/json"},
-                    body: JSON.stringify({"userEmail": userEmail, "inputCode": inputAuthKey}),
+                    body: JSON.stringify({"userEmail": userEmail.value, "inputCode": inputAuthKey.value}),
                 })
-                const result = res.text();
+                const result = await res.text();
 
                 if(result == 0) {
                     authAlert.innerHTML = `<div class="alert error">인증번호가 일치하지 않습니다.</div>`
                     chkObj.inputAuthKey = false;
                     console.log("검증 실패");
+                } else {
+                    clearInterval(authTimer);
+                    authAlert.innerHTML = `<div class="alert confirm">인증번호가 일치합니다.</div>`
+                    console.log("검증 성공");
+
+                    authAlert.classList.remove("error");
+                    authAlert.classList.add("confirm");
+                    chkObj.inputAuthKey = true;
                 }
-
-                clearInterval(authTimer);
-                authAlert.innerHTML = `<div class="alert confirm">인증번호가 일치합니다.</div>`
-                console.log("검증 성공");
-
-                authAlert.classList.remove("error");
-                authAlert.classList.add("confirm");
-                chkObj.inputAuthKey = true;
             } catch (err) {
-
+                console.error(err);
+                alert("인증 요청 중 오류가 발생했습니다. 다시 시도해주세요.");
             }
         })
 
-        // 연락처 중복 확인
+        // 연락처 유효성검사
+        const phoneAlert = document.querySelector("#phoneAlert");
         userPhone.addEventListener("input", async () => {
-            const pwAlert = document.querySelector("#pwAlert");
-
-            if(userPhone.value.trim() === '') {
-                pwAlert.innerHTML = `<div class="alert error">연락처는 비워둘 수 없습니다.</div>`;
+            if (userPhone.value.trim() === '') {
+                phoneAlert.innerHTML = `<div class="alert error">연락처는 비워둘 수 없습니다.</div>`;
             } else {
-                pwAlert.innerHTML = '';
+                phoneAlert.innerHTML = '';
             }
+        });
 
+        // 연락처 중복 확인
+        const phoneDblChkBtn = document.querySelector("#phoneDblChkBtn");
+        phoneDblChkBtn.addEventListener("click", async () => {
             const res = await fetch(`/api/check-phone?userPhone=${encodeURIComponent(userPhone.value)}`)
-            const isDuplicatePhone = res.json();
+            const isDuplicatePhone = await res.json();
+
             if(!isDuplicatePhone) {  // 연락처 중복
-                pwAlert.innerHTML = `<div class="alert error">이미 등록된 연락처입니다.</div>`;
+                phoneAlert.innerHTML = `<div class="alert error">이미 등록된 연락처입니다.</div>`;
                 userPhone.value = '';
                 userPhone.focus();
             } else {
-                pwAlert.innerHTML = `<div class="alert confirm">사용 가능한 연락처입니다.</div>`
+                phoneAlert.innerHTML = `<div class="alert confirm">사용 가능한 연락처입니다.</div>`
                 chkObj.userPhone = true;
             }
-        })
+        });
 
-        async function registerUser(e) {
+        // 회원가입
+        const registerForm = document.querySelector("#registerForm")
+        registerForm.addEventListener("submit", async e => {
             e.preventDefault();
 
             if(Object.values(chkObj).every( v => v === true)){
                 console.log("모든 항목이 true");
                 const body = {
-                    username: username.value.trim(),
                     userId: userId.value.trim(),
-                    userPw: userPw.value.trim(),
+                    userName: username.value.trim(),
+                    userPassword: userPw.value.trim(),
                     userEmail: userEmail.value.trim(),
                     userPhone: userPhone.value.trim()
                 }
@@ -314,6 +323,13 @@
                     body: JSON.stringify(body),
                 });
 
+                if(!res.ok) {
+                    const errorText = await res.text();
+                    console.error("서버 오류 응답: ", errorText);
+                    alert("회원가입 중 서버 오류 발생");
+                    return;
+                }
+
                 const result = await res.json();
 
                 if(result === 1) {
@@ -322,9 +338,10 @@
                     window.location.href = "login.html";
                 } else {
                     console.log("회원가입 실패");
+                    alert("회원가입 실패");
                 }
             }
-        }
+        });
     </script>
 
 </body>

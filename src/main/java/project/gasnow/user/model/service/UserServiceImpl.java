@@ -11,19 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import project.gasnow.common.util.SessionUtil;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
 import project.gasnow.user.model.dto.UserPointHistory;
-import project.gasnow.user.model.mapper.EmailMapper;
 import project.gasnow.user.model.mapper.UserMapper;
 import project.gasnow.user.model.mapper.UserPointMapper;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -32,9 +28,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserPointMapper userPointMapper;
-    private final EmailMapper emailMapper;
     private final JavaMailSender javaMailSender;
-    private SpringTemplateEngine templateEngine; // auth/signup.html 에 있는 HTML 코드를 Java로 변환
+    private final SpringTemplateEngine templateEngine; // auth/signup.html 에 있는 HTML 코드를 Java로 변환
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     /**
@@ -93,7 +88,7 @@ public class UserServiceImpl implements UserService {
         userPointHistory.setUserId(user.getUserId());
         userPointHistory.setPointChange(300);
         userPointHistory.setPointType("EARN");
-        userPointHistory.setDescription("REGISTER");
+        userPointHistory.setDescription("회원가입");
         userPointMapper.insertPointHistory(userPointHistory);
         return 1;
     }
@@ -148,8 +143,8 @@ public class UserServiceImpl implements UserService {
             helper.setText(loadHtml(authKey, htmlName), true);
 
             javaMailSender.send(mimeMessage);
+            log.info("메일 전송 완료: {}", userEmail);
             return authKey;
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -229,7 +224,7 @@ public class UserServiceImpl implements UserService {
             userPointHistory.setUserId(userId);
             userPointHistory.setPointChange(30);
             userPointHistory.setPointType("EARN");
-            userPointHistory.setDescription("LOGIN");
+            userPointHistory.setDescription("출첵");
             userPointMapper.insertPointHistory(userPointHistory);
             // 총 적립 포인트 변경
             int currentPoint = userPointMapper.getCurrentPoint(userId);

@@ -44,12 +44,13 @@ public class UserRestController {
 
     /**
      * 이메일 전송 메서드
-     * @param userEmail
+     * @param body
      * @return 이메일 전송 성공 시 1, 실패 시 0
      */
     @PostMapping("/api/send-email-code")
-    public int sendEmailCode(@RequestBody String userEmail, HttpSession session) {
-        String authKey = userService.sendEmail("register", userEmail);
+    public int sendEmailCode(@RequestBody Map<String, String> body, HttpSession session) {
+        String userEmail = body.get("userEmail");
+        String authKey = userService.sendEmail("email", userEmail);
 
         if(authKey == null) return 0;
 
@@ -75,6 +76,8 @@ public class UserRestController {
 
         String savedCode = (String) session.getAttribute("authKey:" + email);  // 세션에 저장된 인증키
         Long authTime = (Long) session.getAttribute("authTime:" + email);      // 세션에 저장된 전송 시각
+
+        log.info("세션에 저장된 인증키: {}", savedCode);
 
         // 유효시간 5분
         if (savedCode != null && authTime != null && (System.currentTimeMillis() - authTime) <= 5 * 60000) {
