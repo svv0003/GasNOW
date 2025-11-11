@@ -16,9 +16,15 @@
         WHERE GS_ID = #{gsId}
     </select>
 
+    <select id="ratingCount" resultType="int">
+        SELECT count(*)
+        FROM gs_rating
+        WHERE GS_ID = #{gsId}
+    </select>
+
     <!-- 금일 평점 작성했는지 -->
     <select id="checkingInputRating" resultType="java.util.Date">
-        SELECT CREATED_AT
+        SELECT CONVERT_TZ(CREATED_AT, '+00:00', '+09:00') AS kst_time
         FROM gs_rating
         WHERE GS_ID = #{gsId} AND USER_ID = #{userId}
     </select>

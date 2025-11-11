@@ -19,7 +19,14 @@ public class RatingServiceImpl implements RatingService{
 
     @Override
     public double getAvgRating(String gsId) {
-        return ratingMapper.getAvgRating(gsId);
+        Double avgRating = ratingMapper.getAvgRating(gsId);
+        return avgRating != null ? avgRating : 0.0;
+    }
+
+
+    @Override
+    public int ratingCount(String gsId){
+        return ratingMapper.ratingCount(gsId);
     }
 
     @Override
@@ -41,12 +48,13 @@ public class RatingServiceImpl implements RatingService{
             if (calCreated.get(Calendar.YEAR) == calToday.get(Calendar.YEAR)
                     && calCreated.get(Calendar.MONTH) == calToday.get(Calendar.MONTH)
                     && calCreated.get(Calendar.DAY_OF_MONTH) == calToday.get(Calendar.DAY_OF_MONTH)) {
-                return "이미 평점을 입력했습니다";
+
+                return "오늘 이 주유소에 이미 평점을 입력했습니다. ";
             }
         }
 
         ratingMapper.addRating(rating);
-        return "평점이 정상적으로 등록되었습니다";
+        return "평점이 등록되었습니다";
     }
 
 

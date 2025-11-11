@@ -10,6 +10,7 @@ import project.gasnow.rating.model.mapper.RatingMapper;
 import project.gasnow.rating.model.service.RatingService;
 
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("/api")
@@ -20,29 +21,44 @@ public class MapRestController{
     public final RatingService ratingService;
     public final FavoriteService favoriteService;
 
-    @GetMapping("getRating")
+    @GetMapping("/getRating")
     public double getAvgRating(@RequestParam String gsId) {
         return  ratingService.getAvgRating(gsId);
     }
 
-    @GetMapping("ratingDate")
-    public Date checkingInputRating(@RequestParam String gsId, String userId) {
+    @GetMapping("/ratingCount")
+    public int ratingCount(String gsId){
+        return ratingService.ratingCount(gsId);
+    }
+
+
+    @GetMapping("/ratingDate")
+    public Date checkingInputRating(@RequestParam String gsId, @RequestParam String userId) {
         return  ratingService.checkingInputRating(gsId, userId);
     }
 
-    @PostMapping("addRating")
+    @PostMapping("/addRating")
     public String  addRating(@RequestBody Rating rating) {
         return  ratingService.addRating(rating);
     }
 
-    @GetMapping("isFav")
-    public String getFavorite(@RequestParam String userId, String gsId){
+
+
+    @GetMapping("/isFav")
+    public String getFavorite(@RequestParam String userId, @RequestParam String gsId){
         return favoriteService.getFavorite(userId, gsId);
     }
 
-    @PostMapping("addFav")
+    @PostMapping("/addFav")
     public void addFavorite(@RequestBody Favorite favorite) {
         favoriteService.addFavorite(favorite);
     }
+
+    @GetMapping("/favList")
+    public List<String> getFavoriteList(@RequestParam String userId) {
+        List<String> favoriteList = favoriteService.getFavoriteList(userId);
+        return favoriteList;
+    }
+
 
 }

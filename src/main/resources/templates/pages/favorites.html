@@ -61,15 +61,14 @@
     <div class="gas-info">
         <div class="info-top">
 
-            <h1>즐겨찾기 목록</h1>
+            <h1 >즐겨찾기 목록</h1>
         </div>
 
 
 
         <div class="gs-detail">
             <div class="detail-top">
-                <span id="gsId">abc123</span>
-                <span id="userId">bbb</span>
+                <span id="userId">hong</span>
                 <h3 id="info-gsName"></h3>
                 <button id="outInfo">X</button>
                 <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
@@ -164,6 +163,8 @@
 </body>
 
 <script>
+
+    const API_BASE_URL1 = "http://localhost:8080/api";
     // --- 1. 카카오맵 생성 ---
 
     // 마커들을 담을 배열입니다
@@ -676,6 +677,29 @@
             }
         });
     });
+    favList();
+    async function favList() {
+        const userId = document.getElementById("userId").innerText;
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/favList?userId=${userId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            const favoriteList = await response.json(); // 백엔드가 double 반환하므로 text()로 받음
+            console.log("즐겨찾기한 주유소 ID:", favoriteList);
+            favoriteList.forEach(gsId => {
+                console.log("즐겨찾기한 주유소 ID:", favoriteList);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
 
 //     -----------------------------------------------------------윤선
 

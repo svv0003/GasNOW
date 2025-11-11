@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Rating {
+    private int ratingId;
     private String gsId;
     private String userId;
     private double rating;
