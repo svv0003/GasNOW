@@ -44,12 +44,12 @@
 
                 if(saveId != undefined) {
                     loginId.value = saveId;  // 쿠키에 저장된 값으로 채워놓기
-
                     document.querySelector("#saveId").checked = true;
                 }
             }
         }
 
+        // 유효성 검사
         const loginForm = document.querySelector("#loginForm");
         const loginPw = document.querySelector("#userPw");
 
@@ -68,7 +68,33 @@
                     loginPw.focus();
                     return;
                 }
-            };
+            })
+        }
+
+        const saveIdChk = document.querySelector("#saveId").checked;
+        const saveIdValue = saveId ? "on" : "off";
+
+        const body = {
+            userId: loginId.value.trim(),
+            userPassword: loginPw.value.trim(),
+        }
+        try {
+            const res = await fetch(`/api/login?saveId=${encodeURIComponent(saveIdValue)}`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body),
+            })
+
+            if(!res.ok) {
+                throw new Error(`서버 오류: ${res.status}`);
+            }
+
+            const result = await res.json();
+
+
+
+        } catch{
+
         }
     </script>
 </body>
