@@ -134,6 +134,7 @@
             text-align: left;
             align-content: center;
         }
+
         .ticker-percent {
             width: 70px;
             font-size: 0.7rem;
@@ -170,7 +171,7 @@
             margin-bottom: 20px;
         }
 
-        .tab {
+        .period-btn {
             flex: 1;
             padding: 10px;
             text-align: center;
@@ -182,11 +183,11 @@
             border-right: 1px solid #ddd;
         }
 
-        .tab:last-child {
+        .period-btn:last-child {
             border-right: none;
         }
 
-        .tab.active {
+        .period-btn.on {
             background: #555;
             color: white;
             font-weight: bold;
@@ -215,6 +216,7 @@
             width: 20px;
             height: 2px;
         }
+
     </style>
 </head>
 <body>
@@ -396,14 +398,14 @@
         <div class="error" id="error"></div>
 
         <div class="tabs" id="tabs" style="display: none;">
-            <button class="tab" onclick="changeTab('1주')">1주</button>
-            <button class="tab active" onclick="changeTab('1개월')">1개월</button>
-            <button class="tab" onclick="changeTab('1년')">1년</button>
-            <button class="tab" onclick="changeTab('3년')">3년</button>
+            <button class="period-btn" id="week">1주</button>
+            <button class="period-btn on" id="month">1개월</button>
+            <button class="period-btn" id="year">1년</button>
+            <button class="period-btn" id="all">전체</button>
         </div>
 
         <div class="chart-container" id="chartContainer" style="display: none;">
-            <canvas id="priceChart"></canvas>
+            <canvas id="priceChart" width="800" height="400"></canvas>
         </div>
 
         <div class="legend" id="legend" style="display: none;">
@@ -413,7 +415,7 @@
             </div>
             <div class="legend-item">
                 <div class="legend-line" style="background: #F5A623;"></div>
-                <span>서울</span>
+                <span id="localName">지역</span>
             </div>
         </div>
     </div>
@@ -424,25 +426,47 @@
     차트
     ================================================================================================*/
     let chart = null;
-    let chartData = null;
 
-    async function fetchChartData() {
+    const areaCodeToName = {
+        "01" : "서울",
+        "10" : "부산",
+        "14" : "대구",
+        "15" : "인천",
+        "16" : "광주",
+        "17" : "대전",
+        "18" : "울산",
+        "02" : "경기",
+        "03" : "강원",
+        "04" : "충북",
+        "05" : "충남",
+        "06" : "전북",
+        "07" : "전남",
+        "08" : "경북",
+        "09" : "경남",
+        "11" : "제주",
+        "19" : "세종"
+    };
+    /*
+    async function updateChart() {
+        const selectedKoreanArea = areaCodeToName[selectedArea];
+        // 선택된 유종, 지역, 기간으로 API URL 결정한다.
+        const chartURL = `http://localhost:8080/api/chart/data?oilCategory=${selectedOil}&areaName=${selectedKoreanArea}&period=${selectedPeriod}`;
         try {
-            const res = await fetch('http://localhost:8080/api/chart');
+            const res = await fetch(chartURL);
             if (!res.ok) {
                 throw new Error("데이터를 가져오는데 실패했습니다");
+                console.log("데이터 가져오는데 실패");
             }
-            chartData = await res.json();
-            console.log("받은 데이터:", chartData);
-
-            // 로딩 숨기고 차트 표시
+            const chartData = await res.json();
+            console.log("서버 응답 데이터:", chartData);
             document.getElementById('loading').style.display = 'none';
             document.getElementById('tabs').style.display = 'flex';
             document.getElementById('chartContainer').style.display = 'block';
             document.getElementById('legend').style.display = 'flex';
-
-            // 초기 차트 렌더링 (1개월)
-            initChart('1개월');
+            renderChart(chartData, selectedArea);
+            console.log("selectedArea (코드):", selectedArea);           // "01"
+            console.log("selectedKoreanArea (한글):", selectedKoreanArea); // "서울"
+            console.log("응답 데이터 키:", Object.keys(chartData.week));   // ["labels", "전국", "서울"]
         } catch (err) {
             console.error("에러:", err);
             document.getElementById("loading").style.display = 'none';
@@ -450,126 +474,237 @@
             document.getElementById('error').style.display = 'block';
         }
     }
+     */
+    async function updateChart() {
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const tabs = document.getElementById('tabs');
+        const chartContainer = document.getElementById('chartContainer');
+        const legend = document.getElementById('legend');
+        const localAreaName = document.getElementById('localAreaName');
 
-    function initChart(period) {
-        const ctx = document.getElementById('priceChart').getContext('2d');
+        // 초기화
+        loading.style.display = 'block';
+        error.textContent = '';
+        error.style.display = 'none';
+        tabs.style.display = 'none';
+        chartContainer.style.display = 'none';
+        legend.style.display = 'none';
 
-        if (chart) {
-            chart.destroy();
-        }
-
-        // 기간에 맞는 키 찾기
-        const periodKey = period === '1주' ? '1주' :
-            period === '1개월' ? '1개월' :
-                period === '1년' ? '1년' : '3년';
-
-        const data = chartData[periodKey];
-
-        if (!data) {
-            console.error('데이터가 없습니다:', periodKey);
+        const selectedKoreanArea = areaCodeToName[selectedArea];
+        if (!selectedKoreanArea) {
+            loading.style.display = 'none';
+            error.textContent = '지역을 선택해주세요.';
+            error.style.display = 'block';
             return;
         }
 
-        console.log('사용할 데이터:', data);
+        $("#localName").text(selectedKoreanArea);
+        const chartURL = `http://localhost:8080/api/chart/data?oilCategory=${selectedOil}&areaName=${selectedKoreanArea}&period=${selectedPeriod}`;
+        console.log("요청 URL:", chartURL);
 
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: data.labels,
-                datasets: [{
-                    label: '전국',
-                    data: data.전국,
-                    borderColor: '#4A90E2',
-                    backgroundColor: '#4A90E2',
-                    tension: 0.4,
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBackgroundColor: '#4A90E2',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    fill: false
-                }, {
-                    label: '서울',
-                    data: data.서울,
-                    borderColor: '#F5A623',
-                    backgroundColor: '#F5A623',
-                    tension: 0.4,
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBackgroundColor: '#F5A623',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12,
-                        titleFont: {
-                            size: 13
+        try {
+            const res = await fetch(chartURL);
+            if (!res.ok) {
+                throw new Error(`서버 오류: ${res.status}`);
+            }
+
+            const chartData = await res.json();
+            console.log("서버 응답 데이터:", chartData);
+
+            // 데이터 유효성 검사 (핵심!)
+            if (!chartData || typeof chartData !== 'object') {
+                throw new Error("응답 데이터가 비어 있습니다.");
+            }
+
+            // period 키 추출 (week, month, year, all)
+            const periodKey = selectedPeriod; // 백엔드에서 period 그대로 키로 사용
+            if (!chartData[periodKey]) {
+                throw new Error(`기간 데이터 없음: ${periodKey}`);
+            }
+
+            const periodData = chartData[periodKey];
+            if (!periodData.labels || !periodData.전국 || !periodData[selectedKoreanArea]) {
+                throw new Error("필수 데이터 누락");
+            }
+
+            // UI 보이기
+            loading.style.display = 'none';
+            tabs.style.display = 'flex';
+            chartContainer.style.display = 'block';
+            legend.style.display = 'flex';
+            if (localAreaName) localAreaName.textContent = selectedKoreanArea;
+
+            // 차트 렌더링
+            renderChart(chartData, selectedArea, periodKey);
+
+            // 차트 강제 리사이즈
+            setTimeout(() => {
+                if (chart) chart.resize();
+            }, 100);
+
+            console.log("selectedArea (코드):", selectedArea);
+            console.log("selectedKoreanArea (한글):", selectedKoreanArea);
+            console.log("응답 데이터 키:", Object.keys(periodData));
+
+        } catch (err) {
+            loading.style.display = 'none';
+            error.textContent = err.message || '데이터를 불러오는데 실패했습니다.';
+            error.style.display = 'block';
+            console.error("에러:", err);
+        }
+    }
+    /*==========================================
+    차트 데이터와 지역 값을 받아와서 차트 렌더링한다.
+    기존 존재하던 차트는 제거한다.
+    ==========================================*/
+    function renderChart(data, areaCode, periodKey) {
+        console.log("renderChart 시작");
+
+        const canvas = document.getElementById('priceChart');
+        if (!canvas) {
+            console.error("캔버스 요소 없음! #priceChart 확인");
+            return;
+        }
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+            console.error("2D 컨텍스트 생성 실패");
+            return;
+        }
+
+        if (chart) {
+            console.log("기존 차트 제거");
+            chart.destroy();
+        }
+
+        const chartData = data[periodKey];
+        const koreanArea = areaCodeToName[areaCode];
+        if (!koreanArea) return console.error("매핑 실패:", areaCode);
+        if (!chartData[koreanArea]) return console.error("데이터 없음:", koreanArea);
+
+        const xTicksOptions = {
+            grid: { display: false },
+            ticks: {
+                autoSkip: true, // 겹치면 자동 건너뛰기 (기본값)
+                padding: 10,    // 레이블과 차트 축 사이의 간격
+            }
+        };
+
+        // '1년'이나 '전체'일 때 X축 레이블 최대 개수 제한
+        if (periodKey === 'year') {
+            // 1년치 데이터는 월별로 보이도록 13개 (12개+@)로 제한
+            xTicksOptions.ticks.maxTicksLimit = 13;
+        } else if (periodKey === 'all') {
+            // 전체 데이터는 적절히 10~12개 정도로 분할 (데이터 양에 따라 조절)
+            xTicksOptions.ticks.maxTicksLimit = 12;
+        }
+        // 'week'나 'month'는 autoSkip 기본값으로도 충분히 잘 나온다.
+
+        console.log("차트 데이터 준비 완료", {
+            labels: chartData.labels.length,
+            전국: chartData.전국.length,
+            [koreanArea]: chartData[koreanArea].length
+        });
+
+        try {
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [
+                        {
+                            label: '전국',
+                            data: chartData['전국'] || [],
+                            borderColor: '#4A90E2',
+                            backgroundColor: '#4A90E2',
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 4, // 포인트를 약간 줄여서 깔끔하게
+                            pointHoverRadius: 4,
+                            pointBackgroundColor: '#4A90E2',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            fill: false
                         },
-                        bodyFont: {
-                            size: 13
-                        },
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.parsed.y + '원';
-                            }
+                        {
+                            label: koreanArea,
+                            data: chartData[koreanArea] || [],
+                            borderColor: '#F5A623',
+                            backgroundColor: '#F5A623',
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 4, // 포인트를 약간 줄여서 깔끔하게
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: '#F5A623',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            fill: false
                         }
-                    }
+                    ]
                 },
-                scales: {
-                    y: {
-                        min: 1640,
-                        max: 1740,
-                        ticks: {
-                            stepSize: 10,
-                            font: {
-                                size: 11
-                            }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
                         },
-                        grid: {
-                            color: '#f0f0f0'
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: {
+                                size: 13
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
+                            callbacks: {
+                                label: function (context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '원';
+                                }
+                            }
                         }
                     },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: 11
-                            }
+                    scales: {
+                        // y: { min: 1640, max: 1740, ticks: { stepSize: 10 } },
+                        // y: { grace: '10%' }, // 데이터 기준 min/max 값에서 10%의 여유 공간을 줌
+                        // x: { grid: { display: false } }
+                        // x: xTicksOptions
+                        y: {
+                            ticks: {
+                                font: {
+                                    size: 11
+                                }
+                            },
+                            grid: {
+                                color: '#f0f0f0'
+                            },
+                            grace:
+                                '10%',
                         },
-                        grid: {
-                            display: false
+                        x: {
+                            type: 'category',
+                            ticks: {
+                                font: {
+                                    size: 11
+                                },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+            console.log("차트 생성 성공!", chart);
+        } catch (err) {
+            console.error("Chart.js 생성 실패:", err);
+        }
     }
-
-    function changeTab(period) {
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        event.target.classList.add('active');
-        initChart(period);
-    }
-
-    window.addEventListener('load', fetchChartData);
-
-
-
-
     /*================================================================================================
     공통 변수, 객체, 배열
     ================================================================================================*/
@@ -603,8 +738,8 @@
     // 선택한 지역, 유종을 저장할 변수 (기본값 = 휘발유, 서울)
     let selectedOil = "B027";
     let selectedArea = "01";
-    const defaultDiffArea = "00";
     let selectedPeriod = "week";
+    const defaultDiffArea = "00";
 
     /*=================================================
     HTML
@@ -708,6 +843,7 @@
                         }
                         updateDisplay(selectedOil);
                         showPrice(defaultDiffArea);
+                        updateChart();
                     } catch (parseError) {
                         console.error("XML 파싱 중 오류 발생:", parseError);
                         alert(
@@ -738,7 +874,7 @@
             selectedArea = pathId_to_SIDOCD[$(this).attr("id")];
             // console.log("지역 선택 (SVG pathId):", pathId);
             // console.log("지역 선택 (API SIDOCD):", selectedArea);
-            updateChart(selectedArea);
+            updateChart();
         });
 
         /*================================================================================================
@@ -758,6 +894,7 @@
             selectedOil = btnOil;
             updateDisplay(selectedOil);
             // console.log("유종 선택:", selectedOil);
+            updateChart();
         });
 
         $(".diff-box").on("click", function () {
@@ -773,16 +910,12 @@
             console.log($("#" + "btn-" + boxOil).attr("class"));
         });
 
-        $(".chart-btn").on("click", function () {
-            $(".chart-btn").removeClass("on");
-            const boxId = $(this).attr("id");
-            const boxOil = boxId.replace("DiffBox", "");
-            $("#" + boxOil + "Btn").addClass("on");
-            $("#" + boxOil + "DiffBox").addClass("on");
-            selectedOil = boxOil;
-            updateDisplay(selectedOil);
-            console.log(boxOil);
-            console.log($("#" + "btn-" + boxOil).attr("class"));
+        $(".period-btn").on("click", function () {
+            $(".period-btn").removeClass("on");
+            $(this).addClass("on");
+            selectedPeriod = $(this).attr("id");
+            console.log(selectedPeriod);
+            updateChart();
         });
     });
 
@@ -1049,10 +1182,6 @@
     5. fetch의 .then() (또는 await 이후)에서 이 JSON 배열을 Chart.js가 요구하는 포맷(labels 배열, data 배열)으로 변환한다.
     6. 변환된 데이터로 Chart.js 차트를 그리거나 업데이트합니다.
     ================================================================================================*/
-    function updateChart (selectedArea, selectedPeriod) {
-        /*
-        지역과 기간 버튼 둘 중 하나라도 새로운 입력값이 생긴다면 함수를 재실행해야 한다.
-         */
-    }
+
 </script>
 </html>
