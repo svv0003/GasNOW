@@ -692,7 +692,17 @@
                             <td class="center-text">${formattedDistance}</td>
                         </tr>
                     `;
-
+                // const $newRow = $(newRow);
+                // $newRow.on('click', function() {
+                //     stationId = $(this).attr('data-station-id');
+                //
+                //     const targetMarker = gasStationMarkers.find(m=>m.gs_id == stationId);
+                //     if (targetMarker) {
+                //         kakao.maps.event.trigger(targetMarker, 'click');
+                //     } else {
+                //         console.log("마커 찾기 오류");
+                //     }
+                // })
                 $(".list-table tbody").append(newRow);
 
                 var imageSize = new kakao.maps.Size(36, 48),
@@ -714,10 +724,10 @@
                     title: name,
                     image: normalImage,
                     clickable: true,
-                    gs_id: uni_id
                 });
                 marker.normalImage = normalImage;
                 marker.clickedImage = clickedImage;
+                marker.gs_id=uni_id;
                 gasStationMarkers.push(marker); // 배열에 마커 추가
 
                 // 인포윈도우를 생성합니다
@@ -1106,7 +1116,14 @@
         // .gs-detail을 보여주기
         $('.rating-info').css('display', 'none');
         $('.gs-detail').css('display', 'block');
-
+        stationId = $(this).closest('tr').data('station-id');
+        const targetMarker = gasStationMarkers.find(m=>m.gs_id == stationId);
+        if (targetMarker) {
+            kakao.maps.event.trigger(targetMarker, 'click');
+            }
+        else {
+            console.log("마커 찾기 오류");
+        }
     });
 
     $('#outInfo').on('click', function () {
@@ -1136,7 +1153,6 @@
         console.log("클릭한 주유소 ID:", stationId);
         getGsInfo(stationId)
         isFav(stationId);
-
 
     });
 
