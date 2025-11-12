@@ -4,10 +4,80 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>마이페이지</title>
+    <style>
+        .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
 
+        .collapsible:after {
+            content: '\02795'; /* Unicode character for "plus" sign (+) */
+            font-size: 13px;
+            color: white;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        .active, .collapsible:hover {
+            background-color: #ccc;
+        }
+
+        .content {
+            padding: 0 18px;
+            /*display: none;*/
+            overflow: hidden;
+            background-color: #f1f1f1;
+
+            /* 내려오는 효과 */
+            max-height: 0;
+            transition: max-height 0.2s ease-out;
+        }
+    </style>
 </head>
 <body>
+<div class="mypage-container">
+    <div class="menu-container">
+        <button type="button" class="collapsible">나의 리뷰</button>
+        <div class="content">
+            <h4>나의 리뷰</h4>
+            <ul class="review-list" id="reviewList">
+            </ul>
+        </div>
+    </div>
 
+</div>
+
+<script>
+    // 아코디언 메뉴 열리는 효과
+    let col1 = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i=0; i<col1.length; i++) {
+        col1[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            let content = this.nextElementSibling;
+            if(content.style.maxHeight) {
+                content.style.maxHeight = null;
+                // content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        })
+    }
+
+
+</script>
 
 </body>
 </html>
