@@ -18,11 +18,15 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/mypage")
 @Slf4j
 public class MyPageRestController {
     private final MyPageService myPageService;
 
+    /**
+     * 세션에서 loginUser 데이터 가져오는 메서드
+     * @param session
+     * @return
+     */
     private String getLoginUserId(HttpSession session) {
         User loginUser = (User)session.getAttribute("loginUser");
         return loginUser.getUserId();

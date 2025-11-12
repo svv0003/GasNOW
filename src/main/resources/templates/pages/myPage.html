@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>마이페이지</title>
     <style>
+        button {
+            background-color: #ffffff;
+        }
+
         .menu-container .collapsible {
-            /*background-color: #eee;*/
             color: #444;
             cursor: pointer;
             padding: 18px;
@@ -107,6 +110,23 @@
         })
     }
 
+    window.addEventListener("load", () => {
+        console.log("리소스 로딩 시작");
+        // 리뷰 목록 기능
+        showReviewList();
+
+    })
+
+    // 리뷰 목록 기능
+    async function showReviewList() {
+        const res = await fetch("/api/mypage/reviews", {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        })
+
+        const result = res.json();
+        console.log("fetch 결과: {}", result);
+    }
 
 </script>
 
