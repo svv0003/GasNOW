@@ -82,8 +82,8 @@
                             <thead>
                                 <tr>
                                     <th class="left-text">주유소명</th>
-                                    <th class="center-text">고급</th>
-                                    <th class="center-text">보통</th>
+                                    <th class="center-text">유종</th>
+                                    <th class="center-text">거리</th>
                                 </tr>
                             </thead>
 
@@ -151,6 +151,7 @@
 
                     <div class="rating-info">
 
+                        <span id="myScore">0.0</span>
                         <button id="outRating">X</button>
                         <div id="ratingScore">
                             <span class="star" data-value="1">★</span>
@@ -1028,6 +1029,8 @@
             const isHalf = (e.clientX - rect.left) < rect.width / 2;
             currentScore = idx + (isHalf ? 0.5 : 1);
             updateStars(0, false, true);
+
+            document.getElementById('myScore').innerText = `${currentScore}`;
         });
     });
 
@@ -1037,7 +1040,7 @@
         addRating().then(() => {
             // 서버 반영 끝나고
             $('.rating-info').css('display', 'none');
-            ratingScore();
+            gsRatingScore();
             ratingCount();
         }).catch(err => console.error(err));
     });
@@ -1135,7 +1138,7 @@
 
     $('#rating-btn').on('click', function () {
         // .rating-info을 보여주기
-        ratingDate();
+        $('.rating-info').css('display', 'block');
 
 
     });
@@ -1222,7 +1225,7 @@
                     const price = parseInt($priceInfo.find('PRICE').text(), 10);
                     stationInfo.prices[productCode] = price;
                 });
-                ratingScore();
+                gsRatingScore();
                 ratingCount();
 
                 console.log(stationInfo);
@@ -1319,7 +1322,7 @@
 
 
     // ---------------------------- rating 관련 js
-    async function ratingScore() {
+    async function gsRatingScore() {
         const gsId = stationId
 
         // 2. API 호출
@@ -1369,50 +1372,50 @@
 
 
 
-    async function ratingDate() {
-        const gsId = stationId;
-        const userId = document.getElementById("userId").innerText;
-
-
-        // 2. API 호출
-        try {
-            const response = await fetch(`${API_BASE_URL1}/ratingDate?gsId=${gsId}&userId=${userId}`);
-
-            if (!response.ok) {
-                throw new Error("서버 요청 실패");
-            }
-
-            // 3. 결과값 받기
-            const ratingDate = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
-            const dateOnly = ratingDate.slice(1, 11);
-
-
-
-            // 오늘 날짜 구하기
-            // const today = new Date();
-            // const year = today.getFullYear();
-            // const month = String(today.getMonth() + 1).padStart(2, '0');
-            // const day = String(today.getDate()).padStart(2, '0');
-            // const todayStr = `${year}-${month}-${day}`;
-            //
-            // console.log("입력날짜",ratingDate)
-            // console.log("오늘날짜",todayStr)
-            //
-            // if (dateOnly === todayStr) {
-            //     console.log("오늘 날짜와 같습니다!");
-            //     alert("오늘 이 주유소에 이미 평점을 입력했습니다.")
-            // } else {
-            //     console.log("오늘 날짜가 아닙니다.");
-            // }
-
-                $('.rating-info').css('display', 'block');
-
-        } catch (error) {
-            console.error(error);
-        }
-
-
-    }
+    // async function ratingDate() {
+    //     const gsId = stationId;
+    //     const userId = document.getElementById("userId").innerText;
+    //
+    //
+    //     // 2. API 호출
+    //     try {
+    //         const response = await fetch(`${API_BASE_URL1}/ratingDate?gsId=${gsId}&userId=${userId}`);
+    //
+    //         if (!response.ok) {
+    //             throw new Error("서버 요청 실패");
+    //         }
+    //
+    //         // 3. 결과값 받기
+    //         const ratingDate = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
+    //         const dateOnly = ratingDate.slice(1, 11);
+    //
+    //
+    //
+    //         // 오늘 날짜 구하기
+    //         // const today = new Date();
+    //         // const year = today.getFullYear();
+    //         // const month = String(today.getMonth() + 1).padStart(2, '0');
+    //         // const day = String(today.getDate()).padStart(2, '0');
+    //         // const todayStr = `${year}-${month}-${day}`;
+    //         //
+    //         // console.log("입력날짜",ratingDate)
+    //         // console.log("오늘날짜",todayStr)
+    //         //
+    //         // if (dateOnly === todayStr) {
+    //         //     console.log("오늘 날짜와 같습니다!");
+    //         //     alert("오늘 이 주유소에 이미 평점을 입력했습니다.")
+    //         // } else {
+    //         //     console.log("오늘 날짜가 아닙니다.");
+    //         // }
+    //
+    //             $('.rating-info').css('display', 'block');
+    //
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    //
+    //
+    // }
 
     async function addRating() {
         const gsId = stationId;
@@ -1437,10 +1440,10 @@
                 const result = await response.text();
                 alert(result);
             } else {
-                alert("등록 실패: " + response.status);
+                alert(result);
             }
         } catch (error) {
-            console.error(error);
+            console.error("에러 발생");
         }
 
 
