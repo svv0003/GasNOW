@@ -71,8 +71,10 @@
         <button type="button" class="collapsible">보유 포인트</button>
         <div class="content">
             <h4>보유 포인트</h4>
-            <p id="totalPoint">test</p>
-            <button type="button" id="pointListBtn">포인트 적립 / 사용내역</button>
+            <strong id="totalPoint">test P</strong>
+            <div class="content-btn" id="pointBtn">
+                <button type="button" id="pointListBtn">포인트 적립 / 사용내역</button>
+            </div>
         </div>
     </div>
     <div class="menu-container">
@@ -115,6 +117,9 @@
         // 리뷰 목록 기능
         showReviewList();
 
+        // 보유 포인트 조회 기능
+        showCurrentPoint();
+
     })
 
     // 리뷰 목록 기능
@@ -147,6 +152,26 @@
                 <span>${item.ratingScore}</span>
             </li>
         `).join("");
+    }
+
+    // 보유 포인트 조회 기능
+    async function showCurrentPoint() {
+        const res = await fetch("/api/mypage/point", {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+            credentials: "include",
+        })
+        // 여기부터 작업
+    }
+
+    // 포인트 변동 내역 조회 기능
+    async function showPointHistory() {
+        const res = await fetch("api/mypage/point/detail", {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+            credentials: "include",
+        })
+        // 여기부터 작업
     }
 
 </script>

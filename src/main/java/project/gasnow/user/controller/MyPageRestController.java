@@ -72,7 +72,7 @@ public class MyPageRestController {
      * @param session
      * @return
      */
-    @GetMapping("/point/detail")
+    @GetMapping("api/mypage/point/detail")
     public List<UserPointHistory> getUserPointHistory(HttpSession session) {
         String userId = getLoginUserId(session);
         return myPageService.getUserPointHistory(userId);
