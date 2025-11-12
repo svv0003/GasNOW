@@ -463,8 +463,15 @@
                     selectedMarker = marker;
                     map.panTo(marker.getPosition());
 
+                    if (window.innerWidth <= 768) {
+                        const mapHeight = window.innerHeight;
+                        const offset = mapHeight * 0.1;
+
+                        map.panBy(0, offset);
+                    }
                     getDetailById(uni_id);
                     $('.gs-detail').css('display', 'block');
+                    stationId = uni_id;
                     isFav(stationId);
                     // getGsInfo(uni_id);
                 })
