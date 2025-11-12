@@ -272,6 +272,7 @@
 
     .gas-info.hidden {
         transform: translateX(100%); /* 화면 밖으로 이동 */
+
     }
 
     .list-hide-desktop {
