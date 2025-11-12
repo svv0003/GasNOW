@@ -22,7 +22,7 @@
 
     <!-- user_point 테이블 - 회원가입 시 행 추가 (insert) -->
     <insert id="insertNewUserPoint" parameterType="String">
-        INSERT INTO user_point(userId, point, total_earned, total_used)
+        INSERT INTO user_point(user_id, point, total_earned, total_used)
         VALUES(
                #{userId}, 300, 300, 0
               )
@@ -62,7 +62,7 @@
 
     <!-- point_history 테이블에 포인트 적립/사용 내역 추가 (insert) -->
     <insert id="insertPointHistory" parameterType="UserPointHistory">
-        INSERT INTO point_history(userId, pointChange, pointType, description)
+        INSERT INTO point_history(user_id, point_change, point_type, description)
         VALUES(
                #{userId}, #{pointChange}, #{pointType}, #{description}
               )

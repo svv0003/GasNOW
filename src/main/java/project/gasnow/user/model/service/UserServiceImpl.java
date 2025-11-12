@@ -11,19 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import project.gasnow.common.util.SessionUtil;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
 import project.gasnow.user.model.dto.UserPointHistory;
-import project.gasnow.user.model.mapper.EmailMapper;
 import project.gasnow.user.model.mapper.UserMapper;
 import project.gasnow.user.model.mapper.UserPointMapper;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -32,9 +28,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserPointMapper userPointMapper;
-    private final EmailMapper emailMapper;
     private final JavaMailSender javaMailSender;
-    private SpringTemplateEngine templateEngine; // auth/signup.html 에 있는 HTML 코드를 Java로 변환
+    private final SpringTemplateEngine templateEngine; // auth/signup.html 에 있는 HTML 코드를 Java로 변환
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     /**
@@ -43,40 +38,40 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     @Override
-    public void register(User user) {
+    public int register(User user) {
         // 아이디 유효성 검사
         if(user.getUserId() == null) {
-            throw new IllegalArgumentException("아이디는 비워둘 수 없습니다.");
+            return 0;
         }
         if(user.getUserId().length() < 6) {
-            throw new IllegalArgumentException("아이디는 최소 6글자 이상이어야 합니다.");
+            return 0;
         }
         // 아이디 중복 체크
         if(!checkUserIdDuplicate(user.getUserId())) {
-            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+            return 0;
         }
 
         // 이름 유효성 검사
         if(user.getUserName() == null) {
-            throw new IllegalArgumentException("이름은 비워둘 수 없습니다.");
+            return 0;
         }
 
         // 비밀번호 유효성 검사
         if(user.getUserPassword() == null) {
-            throw new IllegalArgumentException("비밀번호는 비워둘 수 없습니다.");
+            return 0;
         }
         String pattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'<>,.?/]).{8,16}$";
         if(!user.getUserPassword().matches(pattern)) {
-            throw new IllegalArgumentException("영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)");
+            return 0;
         }
 
         // 연락처 유효성 검사
         if(user.getUserPhone() == null) {
-            throw new IllegalArgumentException("연락처를 정확히 입력해주세요.");
+            return 0;
         }
         // 연락처 중복 체크
         if(!checkPhoneDuplicate(user.getUserPhone())) {
-            throw new IllegalArgumentException("이미 등록된 연락처입니다.");
+            return 0;
         }
 
         // 비밀번호 암호화
@@ -93,8 +88,9 @@ public class UserServiceImpl implements UserService {
         userPointHistory.setUserId(user.getUserId());
         userPointHistory.setPointChange(300);
         userPointHistory.setPointType("EARN");
-        userPointHistory.setDescription("REGISTER");
+        userPointHistory.setDescription("회원가입");
         userPointMapper.insertPointHistory(userPointHistory);
+        return 1;
     }
 
     /**
@@ -147,8 +143,8 @@ public class UserServiceImpl implements UserService {
             helper.setText(loadHtml(authKey, htmlName), true);
 
             javaMailSender.send(mimeMessage);
+            log.info("메일 전송 완료: {}", userEmail);
             return authKey;
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -228,7 +224,7 @@ public class UserServiceImpl implements UserService {
             userPointHistory.setUserId(userId);
             userPointHistory.setPointChange(30);
             userPointHistory.setPointType("EARN");
-            userPointHistory.setDescription("LOGIN");
+            userPointHistory.setDescription("출석체크");
             userPointMapper.insertPointHistory(userPointHistory);
             // 총 적립 포인트 변경
             int currentPoint = userPointMapper.getCurrentPoint(userId);

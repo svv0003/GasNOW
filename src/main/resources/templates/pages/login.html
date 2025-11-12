@@ -7,6 +7,96 @@
 
 </head>
 <body>
+    <form id="loginForm">
+        <label>아이디</label>
+        <input type="text" name="userId" id="userId"/>
+        <label>
+            <input type="checkbox" id="saveId" name="saveId"> 아이디 저장
+        </label>
+        <br>
+        <label>비밀번호</label>
+        <input type="password" name="userPw" id="userPw"/>
+    </form>
+    <script>
+        const getCookie = (key) => {
+            const cookies = document.cookie;
+            console.log("cookies: ", cookies);
+            const cookieList = cookie.split(";").map(el => el.trim().split("="));
+            console.log("cookies: ", cookies);
 
+            const obj = {};
+
+            for(let i=0; i<cookieList.length; i++) {
+                const k = cookieList[i][0].trim(); // key
+                const v = cookieList[9][1].trim(); // value
+                obj[k] = v;
+            }
+
+            return obj[key];
+        }
+
+        const loginId = document.querySelector("#userId");
+
+        if(loginId != null) {
+            const saveId = getCookie("saveId");
+            if(saveId != null) {
+                const saveId = getCookie("saveId");
+
+                if(saveId != undefined) {
+                    loginId.value = saveId;  // 쿠키에 저장된 값으로 채워놓기
+                    document.querySelector("#saveId").checked = true;
+                }
+            }
+        }
+
+        // 유효성 검사
+        const loginForm = document.querySelector("#loginForm");
+        const loginPw = document.querySelector("#userPw");
+
+        if(loginForm != null) {
+            loginForm.addEventListener("submit", e => {
+                if(loginId.value.trim().length === 0) {
+                    alert("아이디를 작성해주세요.");
+                    e.preventDefault();
+                    loginId.focus();
+                    return;
+                }
+
+                if(loginPw.value.trim().length === 0) {
+                    alert("비밀번호를 작성해주세요.");
+                    e.preventDefault();
+                    loginPw.focus();
+                    return;
+                }
+            })
+        }
+
+        const saveIdChk = document.querySelector("#saveId").checked;
+        const saveIdValue = saveId ? "on" : "off";
+
+        const body = {
+            userId: loginId.value.trim(),
+            userPassword: loginPw.value.trim(),
+        }
+        try {
+            const res = await fetch(`/api/login?saveId=${encodeURIComponent(saveIdValue)}`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body),
+            })
+
+            if(!res.ok) {
+                throw new Error(`서버 오류: ${res.status}`);
+            }
+
+            const result = await res.json();
+            // 여기부터 작성
+
+
+
+        } catch{
+
+        }
+    </script>
 </body>
 </html>

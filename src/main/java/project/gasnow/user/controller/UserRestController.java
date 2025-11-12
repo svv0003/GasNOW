@@ -44,19 +44,19 @@ public class UserRestController {
 
     /**
      * 이메일 전송 메서드
-     * @param user
+     * @param body
      * @return 이메일 전송 성공 시 1, 실패 시 0
      */
     @PostMapping("/api/send-email-code")
-    public int sendEmailCode(@RequestBody User user, HttpSession session) {
-        String email = user.getUserEmail();
-        String authKey = userService.sendEmail("register", email);
+    public int sendEmailCode(@RequestBody Map<String, String> body, HttpSession session) {
+        String userEmail = body.get("userEmail");
+        String authKey = userService.sendEmail("email", userEmail);
 
         if(authKey == null) return 0;
 
         // 세션에 인증번호 저장
-        session.setAttribute("authKey:" + email, authKey);
-        session.setAttribute("authTime:" + email, System.currentTimeMillis());  // 이메일 전송 시각 저장
+        session.setAttribute("authKey:" + userEmail, authKey);
+        session.setAttribute("authTime:" + userEmail, System.currentTimeMillis());  // 이메일 전송 시각 저장
 
         return 1;
     }
@@ -77,6 +77,8 @@ public class UserRestController {
         String savedCode = (String) session.getAttribute("authKey:" + email);  // 세션에 저장된 인증키
         Long authTime = (Long) session.getAttribute("authTime:" + email);      // 세션에 저장된 전송 시각
 
+        log.info("세션에 저장된 인증키: {}", savedCode);
+
         // 유효시간 5분
         if (savedCode != null && authTime != null && (System.currentTimeMillis() - authTime) <= 5 * 60000) {
             if(savedCode.equals(inputCode)) {
@@ -94,8 +96,8 @@ public class UserRestController {
      * @param user js에서 body에 담아서 보낸 User 객체
      */
     @PostMapping("/api/register")
-    public void register(@RequestBody User user) {
-        userService.register(user);
+    public int register(@RequestBody User user) {
+        return userService.register(user);
     };
 
     /**
