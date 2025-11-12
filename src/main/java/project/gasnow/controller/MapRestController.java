@@ -38,15 +38,58 @@ public class MapRestController{
     }
 
 
+//    @GetMapping("/ratingDate")
+//    public Date checkingInputRating(@RequestParam String gsId, @RequestParam String userId) {
+//        return  ratingService.checkingInputRating(gsId, userId);
+//    }
     @GetMapping("/ratingDate")
-    public Date checkingInputRating(@RequestParam String gsId, @RequestParam String userId) {
-        return  ratingService.checkingInputRating(gsId, userId);
+    public ResponseEntity<Date> checkingInputRating(@RequestParam String gsId, HttpSession session) {
+        // 세션에서 로그인 사용자 정보 가져오기
+        User loginUser = SessionUtil.getLoginUser(session);
+
+        if (loginUser == null) {
+            // 로그인되지 않았으면 에러 응답
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        // 서비스 호출 시 세션에서 가져온 userId 사용
+        Date ratingDate = ratingService.checkingInputRating(gsId, loginUser.getUserId());
+
+        return ResponseEntity.ok(ratingDate);
     }
 
+
+
+
+//    @PostMapping("/addRating")
+//    public String  addRating(@RequestBody Rating rating) {
+//        return  ratingService.addRating(rating);
+//    }
+
     @PostMapping("/addRating")
-    public String  addRating(@RequestBody Rating rating) {
-        return  ratingService.addRating(rating);
+    public ResponseEntity<String> addRating(@RequestBody Rating rating, HttpSession session) {
+        // 세션에서 로그인 사용자 정보 가져오기
+        User loginUser = SessionUtil.getLoginUser(session);
+
+        if (loginUser == null) {
+            // 로그인되지 않았으면 에러 응답
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 필요");
+        }
+
+        // rating 객체에 userId 세팅
+        rating.setUserId(loginUser.getUserId());
+
+        // 서비스 호출
+        String result = ratingService.addRating(rating);
+
+        return ResponseEntity.ok(result);
     }
+
+
+
+
+
+
 
 
 //      @GetMapping("/isFav")
@@ -90,10 +133,26 @@ public class MapRestController{
     }
 
 
+//    @GetMapping("/favList")
+//    public List<String> getFavoriteList(@RequestParam String userId) {
+//        List<String> favoriteList = favoriteService.getFavoriteList(userId);
+//        return favoriteList;
+//    }
+
     @GetMapping("/favList")
-    public List<String> getFavoriteList(@RequestParam String userId) {
-        List<String> favoriteList = favoriteService.getFavoriteList(userId);
-        return favoriteList;
+    public ResponseEntity<List<String>> getFavoriteList(HttpSession session) {
+        // 세션에서 로그인 사용자 정보 가져오기
+        User loginUser = SessionUtil.getLoginUser(session);
+
+        if (loginUser == null) {
+            // 로그인되지 않았으면 에러 응답
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        // 서비스 호출 시 세션에서 가져온 userId 사용
+        List<String> favoriteList = favoriteService.getFavoriteList(loginUser.getUserId());
+
+        return ResponseEntity.ok(favoriteList);
     }
 
 
