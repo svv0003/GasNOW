@@ -58,12 +58,14 @@
 
 <aside class="right-info">
     <button class="list-hide"></button>
-    <div class="gas-info">
-        <div class="info-top">
+    <div class="gas-info"> <div class="info-top">
+        <h1>즐겨찾기 목록</h1>
+    </div>
 
-            <h1 >즐겨찾기 목록</h1>
+        <div id="favorites-list-container">
         </div>
-        <div class="gs-detail">
+
+        <div class="gs-detail" style="display: none;">
             <div class="detail-top">
                 <span id="userId" style="display: none">hong</span>
                 <h3 id="info-gsName"></h3>
@@ -75,8 +77,7 @@
                 <button id="rating-btn">리뷰하기</button>
                 <span id="gs-address"></span>
                 <span id="gs-number"></span>
-                <table id="oil-info-table" border="1" cellspacing="0" cellpadding="5">
-                    <thead id="oil-info-head">
+                <table id="oil-info-table" border="1" cellspacing="0" cellpadding="5">                    <thead id="oil-info-head">
                     <tr>
                         <th>유종</th>
                         <th>경유</th>
@@ -124,13 +125,10 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
-                <!-- <h2><span id="score">0</span></h2> -->
                 <button id="giveRating">확인</button>
             </div>
-        </div>
+        </div> </div> </aside>
 
-    </div>
-</aside>
 
 
 
@@ -372,17 +370,40 @@
 
                 /* ----------------------------------------윤선*/
                 var imageSrc = './icon_map/fav.png';
-                const formattedDistance = distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km';
-                const newRow = `
-                        <tr data-station-id="${uni_id}">
-                            <td class="left-text">${name}</td>
-                            <td class="center-text">${price}</td>
-                            <td class="center-text">${formattedDistance}</td>
-                        </tr>
-                    `;
+                const newListItem =$(`
+                    <div class="favorite-item" data-station-id="${uni_id}">
+                        <i class="fa-solid fa-star gold-star"></i> ${name}
+                    </div>
+                `);
 
-                $(".list-table tbody").append(newRow);
+                newListItem.on('click', function() {
+                    // 2-1. 클릭된 아이템의 ID 가져오기
+                    const stationId = $(this).attr('data-station-id');
 
+                    // 2-2. gasStationMarkers 배열에서 일치하는 마커 찾기
+                    const targetMarker = gasStationMarkers.find(m => m.gs_id == stationId);
+
+                    if (targetMarker) {
+                        // 2-3. 해당 마커의 'click' 이벤트 강제 실행
+                        kakao.maps.event.trigger(targetMarker, 'click');
+                    } else {
+                        // [실패] 디버깅 로그 출력
+                        console.error(`--- [DEBUG] 마커 찾기 실패 ---`);
+                        console.warn(`[1] 찾으려는 ID: ${stationId} (타입: ${typeof stationId})`);
+
+                        console.log(`[2] 현재 'gasStationMarkers' 배열:`);
+                        console.log(gasStationMarkers); // 배열 전체 객체 출력
+
+                        // 배열에 저장된 ID 목록만 따로 추출
+                        const allMarkerIds = gasStationMarkers.map(m => {
+                            return `ID: ${m.gs_id} (타입: ${typeof m.gs_id})`;
+                        });
+                        console.log(`[3] 배열에 저장된 ID 목록:`, allMarkerIds);
+                        console.error(`------------------------------`);
+                        console.warn(`ID(${stationId})와 일치하는 마커를 찾을 수 없습니다.`);
+                    }
+                });
+                $("#favorites-list-container").append(newListItem);
                 var imageSize = new kakao.maps.Size(35, 35),
                     imageOption = {offset: new kakao.maps.Point(17, 17)};
 
@@ -402,10 +423,10 @@
                     title: name,
                     image: normalImage,
                     clickable: true,
-                    gs_id: uni_id
                 });
                 marker.normalImage = normalImage;
                 marker.clickedImage = clickedImage;
+                marker.gs_id = uni_id;
                 gasStationMarkers.push(marker); // 배열에 마커 추가
 
                 // 인포윈도우를 생성합니다
