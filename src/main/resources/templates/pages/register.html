@@ -7,8 +7,8 @@
 
 </head>
 <body>
-    <div class="register-form-container" id="registerForm">
-        <form>
+    <div class="register-form-container">
+        <form id="registerForm">
             <div class="form-box">
                 <label>이름<span class="required">*</span></label>
                 <input type="text" name="username" id="username"/>
@@ -114,8 +114,8 @@
 
 
         // 아이디 유효성 검사
+        const idAlert = document.querySelector("#idAlert");
         userId.addEventListener("input", async () => {
-            const idAlert = document.querySelector("#idAlert");
             if (userId.value.trim() === '') {
                 idAlert.innerHTML = `<div class="alert error">아이디는 비워둘 수 없습니다.</div>`
             } else if (userId.value.trim().length < 6) {
@@ -165,12 +165,12 @@
 
         // 비밀번호 확인
         userPwChk.addEventListener("input", () => {
-            const pwAlert = document.querySelector("#pwChkAlert");
+            const pwChkAlert = document.querySelector("#pwChkAlert");
             if(!(userPw.value.trim() === (userPwChk.value.trim()))) {
-                pwAlert.innerHTML = `<div class="alert error">비밀번호가 일치하지 않습니다.</div>`
+                pwChkAlert.innerHTML = `<div class="alert error">비밀번호가 일치하지 않습니다.</div>`
                 userPwChk.focus();
             } else {
-                pwAlert.innerHTML = `<div class="alert confirm">비밀번호가 일치합니다.</div>`
+                pwChkAlert.innerHTML = `<div class="alert confirm">비밀번호가 일치합니다.</div>`
                 chkObj.userPwChk = true;
             }
         })
@@ -286,6 +286,8 @@
             } else {
                 phoneAlert.innerHTML = '';
             }
+
+            console.log("연락처 유효성 검사 완료");
         });
 
         // 연락처 중복 확인
@@ -302,6 +304,7 @@
                 phoneAlert.innerHTML = `<div class="alert confirm">사용 가능한 연락처입니다.</div>`
                 chkObj.userPhone = true;
             }
+            console.log("연락처 중복확인 완료");
         });
 
         // 회원가입
