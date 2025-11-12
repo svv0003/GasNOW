@@ -120,6 +120,9 @@
         // 보유 포인트 조회 기능
         showCurrentPoint();
 
+        // 포인트 변동 내역 조회 기능
+        showPointHistory();
+
     })
 
     // 리뷰 목록 기능
@@ -162,6 +165,12 @@
             credentials: "include",
         })
         // 여기부터 작업
+
+        const result = await res.json();
+        console.log("현재 포인트: ", result);
+
+        const totalPoint = document.querySelector("#totalPoint");
+        // totalPoint.innerHTML =
     }
 
     // 포인트 변동 내역 조회 기능
@@ -172,6 +181,8 @@
             credentials: "include",
         })
         // 여기부터 작업
+        const result = await res.json();
+        console.log("포인트 변동 이력: ", result);
     }
 
 </script>

@@ -33,6 +33,7 @@ public class MyPageRestController {
         log.info("[MYPAGE] get sessionId={}, hasLoginUser={}",
                 session.getId(), SessionUtil.isLoginUser(session));
         User loginUser = (User)session.getAttribute("loginUser");
+
         if(loginUser == null) {
             return "로그인 정보가 존재하지 않습니다.";
         }
@@ -73,9 +74,15 @@ public class MyPageRestController {
      * @return
      */
     @GetMapping("api/mypage/point/detail")
-    public List<UserPointHistory> getUserPointHistory(HttpSession session) {
-        String userId = getLoginUserId(session);
-        return myPageService.getUserPointHistory(userId);
+    public ResponseEntity<List<UserPointHistory>> getUserPointHistory(HttpSession session) {
+        User loginUser = SessionUtil.getLoginUser(session);
+
+        if(loginUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<UserPointHistory> list = myPageService.getUserPointHistory(loginUser.getUserId());
+        return ResponseEntity.ok(list);
     }
 
     /**
