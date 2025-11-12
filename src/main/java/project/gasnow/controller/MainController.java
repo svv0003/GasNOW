@@ -13,4 +13,7 @@ public class MainController {
 
     @GetMapping("/register")
     public String pageRegister() {return "pages/register";}
+
+    @GetMapping("/chart")
+    public String pageChart() {return "pages/chart";}
 }
