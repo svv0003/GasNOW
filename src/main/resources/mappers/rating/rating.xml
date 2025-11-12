@@ -27,6 +27,8 @@
         SELECT CONVERT_TZ(CREATED_AT, '+00:00', '+09:00') AS kst_time
         FROM gs_rating
         WHERE GS_ID = #{gsId} AND USER_ID = #{userId}
+        ORDER BY CREATED_AT DESC
+        LIMIT 1
     </select>
 
 
