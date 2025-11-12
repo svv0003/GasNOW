@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "OIL")
 public class Chart {
 
     @XmlElement(name = "DATE")

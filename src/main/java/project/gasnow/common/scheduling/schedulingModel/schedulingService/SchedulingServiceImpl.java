@@ -29,7 +29,7 @@ public class SchedulingServiceImpl implements SchedulingService{
     @Override
     public void saveChartData() {
 
-        final String API_URL = "https://www.opinet.co.kr/api/avgRecentPrice.do?out=xml&code=%s" + API_Key;
+        final String API_URL = "https://www.opinet.co.kr/api/avgRecentPrice.do?out=xml&code=" + API_Key;
 
         try {
             // 1. API 호출
