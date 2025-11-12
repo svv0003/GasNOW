@@ -1,8 +1,10 @@
 package project.gasnow.user.controller;
 
+import jakarta.mail.Session;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.gasnow.common.util.SessionUtil;
@@ -28,7 +30,12 @@ public class MyPageRestController {
      * @return
      */
     private String getLoginUserId(HttpSession session) {
+        log.info("[MYPAGE] get sessionId={}, hasLoginUser={}",
+                session.getId(), SessionUtil.isLoginUser(session));
         User loginUser = (User)session.getAttribute("loginUser");
+        if(loginUser == null) {
+            return "로그인 정보가 존재하지 않습니다.";
+        }
         return loginUser.getUserId();
     }
 
@@ -38,9 +45,15 @@ public class MyPageRestController {
      * @return
      */
     @GetMapping("/api/mypage/reviews")
-    public List<ReviewItemDTO> getMyReviews(HttpSession session) {
-        String userId = getLoginUserId(session);
-        return myPageService.getMyReview(userId);
+    public ResponseEntity<List<ReviewItemDTO>> getMyReviews(HttpSession session) {
+        User loginUser = SessionUtil.getLoginUser(session);
+
+        if(loginUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<ReviewItemDTO> list = myPageService.getMyReview(loginUser.getUserId());
+        return ResponseEntity.ok(list);
     }
 
     /**

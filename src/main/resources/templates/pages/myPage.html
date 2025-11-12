@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>마이페이지</title>
     <style>
-        button {
+        .menu-container > button {
             background-color: #ffffff;
         }
 
@@ -122,10 +122,31 @@
         const res = await fetch("/api/mypage/reviews", {
             method: "GET",
             headers: {"Content-Type": "application/json"},
+            credentials: "include",
         })
 
-        const result = res.json();
-        console.log("fetch 결과: {}", result);
+        if(res.status === 401) {
+            alert("로그인이 필요합니다.")
+            location.href = "/login";
+            return;
+        }
+
+        const result = await res.json();
+        console.log("리뷰 목록: ", result);
+
+        const reviewList = document.querySelector("#reviewList");  // <ul> 태그
+        if(!Array.isArray(result) || result.length === 0) {
+            reviewList.innerHTML = `<li>작성한 리뷰가 없습니다.</li>`
+            return;
+        }
+
+        reviewList.innerHTML = result.map(item => `
+            <li class="review-item">
+                <span>${item.createdAt}</span>
+                <span>${item.stationName}</span>
+                <span>${item.ratingScore}</span>
+            </li>
+        `).join("");
     }
 
 </script>

@@ -12,7 +12,7 @@
                S.station_name AS stationName,
                R.rating AS ratingScore
         FROM gs_rating R
-            JOIN gas_staiton S ON S.gs_id = R.gs_id
+            JOIN gas_station S ON S.gs_id = R.gs_id
         WHERE R.user_id = #{userId}
         ORDER BY R.created_at DESC
     </select>

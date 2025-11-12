@@ -137,6 +137,8 @@ public class UserRestController {
 
         model.addAttribute("loginUser", user);
         SessionUtil.setLoginUser(session, user);  // 세션에 저장
+        log.info("[LOGIN] set sessionId={}, hasLoginUser={}",
+                session.getId(), SessionUtil.isLoginUser(session));
 
         // 아이디 저장 체크박스 체크 시 쿠키에 회원 정보 저장
         Cookie userIdCookie = new Cookie("saveId", userId);
