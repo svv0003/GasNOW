@@ -117,6 +117,10 @@ public class UserRestController {
                         HttpServletResponse res,
                         Model model){
 
+        log.info("req userId={}, userPwLen={}", user.getUserId(),
+                user.getUserPassword() == null ? null : user.getUserPassword().length());
+
+
         String userId = user.getUserId();
         String userPassword = user.getUserPassword();
 
@@ -127,7 +131,7 @@ public class UserRestController {
             // HTTP 상태 코드 401
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
                     "ok", "false",
-                    "error", "이메일 또는 비밀번호가 일치하지 않습니다."
+                    "error", "아이디 또는 비밀번호가 일치하지 않습니다."
             ));
         }
 
