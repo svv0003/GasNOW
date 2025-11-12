@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.gasnow.favorite.model.dto.Favorite;
 import project.gasnow.favorite.model.mapper.FavoriteMapper;
 
+import java.util.List;
+
 @Transactional
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -21,6 +23,11 @@ public class FavoriteServiceImpl implements FavoriteService {
         } else {
                 return "0";
          }
+    }
+    @Override
+    public List<String> getFavoriteList(String userId){
+
+        return favoriteMapper.getFavoriteList(userId);
     }
 
     @Override

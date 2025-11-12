@@ -57,19 +57,15 @@
 </aside>
 
 <aside class="right-info">
-    <button class="list-hide">>></button>
+    <button class="list-hide"></button>
     <div class="gas-info">
         <div class="info-top">
 
-            <h1>즐겨찾기 목록</h1>
+            <h1 >즐겨찾기 목록</h1>
         </div>
-
-
-
         <div class="gs-detail">
             <div class="detail-top">
-                <span id="gsId">abc123</span>
-                <span id="userId">bbb</span>
+                <span id="userId" style="display: none">hong</span>
                 <h3 id="info-gsName"></h3>
                 <button id="outInfo">X</button>
                 <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
@@ -138,32 +134,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=536af43f432cf63c34cf438bc785017a&autoload=false"></script>
 </body>
 
 <script>
+
+    const API_BASE_URL1 = "http://localhost:8080/api";
     // --- 1. 카카오맵 생성 ---
 
     // 마커들을 담을 배열입니다
@@ -203,13 +179,7 @@
                 marker.setMap(map);
 
                 // 지도 중심 변경 이벤트
-                kakao.maps.event.addListener(map, 'center_changed', function () {
-                    var level = map.getLevel();
-                    var latlng = map.getCenter();
-                    var message = '<p>지도 레벨은 ' + level + ' 이고, 중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
-                    var resultDiv = document.getElementById('result');
-                    // resultDiv.innerHTML = message;
-                });
+
 
                 // "현재 지도 중심 변환" 버튼 클릭 이벤트 수정
                 $("#convertnow").on("click", function () {
@@ -339,16 +309,21 @@
 
                 // 3. 최종적으로 파싱된 데이터를 확인합니다.
                 console.log(stationInfo);
-                $('#detail_name').text(stationInfo.name);
-                $('#detail_address').text(stationInfo.address);
-                $('#detail_tel').text(stationInfo.tel);
-                $('#detail_gasoline_price').text(stationInfo.prices['B027']);
-                $('#detail_diesel_price').text(stationInfo.prices['D047']);
-                $('#detail_par_price').text(stationInfo.prices['C004']);
-                $('#detail_hgasoline_price').text(stationInfo.prices['B034']);
+                document.getElementById("info-gsName").innerText = stationInfo.name ? stationInfo.name  : 'X';
+                document.getElementById("gs-address").innerText = stationInfo.address ? stationInfo.address  : 'X';
+                document.getElementById("gs-number").innerText = stationInfo.tel ? stationInfo.tel  : 'X';
+
+                // 상제정보 가격 넣기
+                document.getElementById("oil-diesel-price1").innerText = stationInfo.prices['D047'] ? `${stationInfo.prices['D047']}원`  : 'X';
+                document.getElementById("oil-gasoline-price1").innerText = stationInfo.prices['B027'] ? `${stationInfo.prices['B027']}원` : 'X';
+                document.getElementById("oil-premiumGasoline-price1").innerText = stationInfo.prices['B034'] ? `${stationInfo.prices['B034']}원` : 'X';
+                document.getElementById("oil-kerosene-price1").innerText = stationInfo.prices['C004'] ? `${stationInfo.prices['C004']}원` : 'X';
+                document.getElementById("oil-lpg-price1").innerText = stationInfo.prices['K015'] ? `${stationInfo.prices['K015']}원` : 'X';
                 // 이제 stationInfo 객체를 사용하여 화면에 정보를 표시할 수 있습니다.
                 // 예: $('#station-name').text(stationInfo.name);
                 // 예: $('#gasoline-price').text(stationInfo.prices['B027']);
+
+
             }
         })
     }
@@ -357,95 +332,6 @@
     let station_a = [];
     let totalStations = 0;
     let completed = 0;
-    // 가격 평균/ 최저값 구하기 위한 배열 생성
-    // ✅ Opinet API 호출 함수를 Vercel 프록시를 사용하도록 수정
-    function getNearbyGasStations(katecX, katecY, petro_type) {
-        station_a = [];
-        completed = 0;
-        totalStations = 0;
-        // 이전 주유소 마커들 제거
-        clearGasStationMarkers();
-        $('.list-table tbody').empty();
-        switch (petro_type) {
-            case ("B027"):
-                petro_name = "휘발유"
-                break;
-            case ("B034"):
-                petro_name = "고급휘발유"
-                break;
-            case ("D047"):
-                petro_name = "경유"
-                break;
-            case ("C004"):
-                petro_name = "실내등유"
-                break;
-            case ("K105"):
-                petro_name = "LPG"
-                break;
-            default:
-                break;
-        }
-
-        $(".list-table thead").html(`
-                <tr>
-                        <th class="left-text">주유소명</th>
-                        <th class="center-text">${petro_name}</th>
-                        <th class="center-text">거리</th>
-
-                </tr>
-                <tr>
-                        <th class="left-text">평균가격</th>
-                        <td class="center-text" id="avg-price"></td>
-                   </tr>
-            `);
-        $.ajax({
-            method: "GET",
-            // ✅ URL을 새로 만든 프록시 API 엔드포인트로 변경
-            url: `${API_BASE_URL}/api/nearby-gas-stations`,
-            data: {
-                // ✅ 필요한 파라미터만 전달
-                api_key: "F250930867",
-                x: katecX,
-                y: katecY,
-                radius: 5000,
-                prodcd: petro_type
-            },
-            success: function (response) {
-                // ✅ 서버가 JSON으로 한번 감쌌으므로, response.xml_data 에서 XML을 추출
-                const xmlText = response.xml_data;
-                // ✅ jQuery를 사용해 문자열을 XML 객체로 파싱
-                const xmlDoc = $.parseXML(xmlText);
-
-                /*-----------------윤선 --------------------*/
-
-
-                // 주유소 개수 세기
-                totalStations = $(xmlDoc).find('OIL').length;
-                document.getElementById("countGasStation").innerText = totalStations;
-
-                /*----------------------------------윤선*/
-                // XML 응답 파싱
-                $(xmlDoc).find('OIL').each(function () {
-                    const station = $(this);
-                    const name = station.find('OS_NM').text();
-                    let price = station.find('PRICE').text();
-
-
-                    const oilKatecX = parseFloat(station.find('GIS_X_COOR').text());
-                    const oilKatecY = parseFloat(station.find('GIS_Y_COOR').text());
-                    const brand = station.find('POLL_DIV_CO').text();
-                    const uni_id = station.find('UNI_ID').text();
-                    //객체 하나를 이름 / 가격 / 거리
-                    katecToWgsForMarker(oilKatecX, oilKatecY, name, price, brand, uni_id);
-                });
-            },
-            error: function (jqXHR) {
-                const errorMsg = jqXHR.responseJSON?.detail || "주변 주유소 정보 조회에 실패했습니다.";
-                alert(errorMsg);
-            }
-        });
-    }
-
     let oilAvgPrice = 0;
     // ✅ 마커 표시용 KATEC -> WGS84 변환 함수 추가
     function katecToWgsForMarker(katecX, katecY, name, price, brand, uni_id) {
@@ -485,31 +371,7 @@
                 }
 
                 /* ----------------------------------------윤선*/
-                switch (brand) {
-                    case "GSC":
-                        var imageSrc = './icon_map/GS.png';
-                        break;
-                    case "SKE":
-                    case "SKG":
-                        var imageSrc = './icon_map/SK.png';
-                        break;
-                    case "HDO":
-                        var imageSrc = './icon_map/HD.png';
-                        break;
-                    case "SOL":
-                        var imageSrc = './icon_map/S-OIL.png';
-                        break;
-                    case "RTX":
-                    case "RTE":
-                        var imageSrc = './icon_map/CAF.png';
-                        break;
-                    case "NHO":
-                        var imageSrc = './icon_map/NH.png';
-                        break;
-                    default :
-                        var imageSrc = './icon_map/ETC.png';
-
-                }
+                var imageSrc = './icon_map/fav.png';
                 const formattedDistance = distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km';
                 const newRow = `
                         <tr data-station-id="${uni_id}">
@@ -521,15 +383,15 @@
 
                 $(".list-table tbody").append(newRow);
 
-                var imageSize = new kakao.maps.Size(36, 48),
-                    imageOption = {offset: new kakao.maps.Point(18, 48)};
+                var imageSize = new kakao.maps.Size(35, 35),
+                    imageOption = {offset: new kakao.maps.Point(17, 17)};
 
                 // 클릭시 크기 키우기
-                var clickedWidth = 43;
-                var clickedHeight = 58;
+                var clickedWidth = 50;
+                var clickedHeight = 50;
                 var clickedSize = new kakao.maps.Size(clickedWidth, clickedHeight);
                 var clickedOption = {
-                    offset: new kakao.maps.Point(clickedWidth / 2, clickedHeight)
+                    offset: new kakao.maps.Point(25, 25)
                 };
                 var clickedImage = new kakao.maps.MarkerImage(imageSrc, clickedSize, clickedOption);
 
@@ -548,7 +410,7 @@
 
                 // 인포윈도우를 생성합니다
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: `<div style="padding:5px;font-size:12px;width:150px;"><strong>${name}</strong><br>휘발유: ${price}원<br>거리: ${distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km'}</div>`
+                    content: `<div style="padding:5px;font-size:12px;width:150px;"><strong>${name}</strong><br>거리: ${distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km'}</div>`
                 });
 
                 // 마커에 마우스오버 이벤트를 등록합니다
@@ -575,7 +437,7 @@
 
                     getDetailById(uni_id);
                     $('.gs-detail').css('display', 'block');
-                    getGsInfo(uni_id);
+                    // getGsInfo(uni_id);
                 })
 
             }
@@ -676,6 +538,77 @@
             }
         });
     });
+    favList();
+    async function favList() {
+        const userId = document.getElementById("userId").innerText;
+
+        // [수정] 1. 기존 마커 제거
+        clearGasStationMarkers(); // line 747에 이미 정의된 함수 호출
+        $('#favorites-list-container').empty();
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/favList?userId=${userId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            const favoriteList = await response.json(); // ["A00001", "A00002"]
+            console.log("즐겨찾기한 주유소 ID:", favoriteList); // 이 부분은 정상 작동 확인
+
+            // [수정] 3. ID 목록을 순회하며 마커 생성 함수 호출
+            favoriteList.forEach(gsId => {
+                // 기존: console.log("즐겨찾기한 주유소 ID:", favoriteList);
+                // 변경:
+                getGsInfoAndDrawMarker(gsId); // 각 ID로 상세정보 조회 및 마커 생성
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    // [추가된 함수]
+    // gsId를 받아 상세 정보를 조회하고 마커를 그립니다.
+    function getGsInfoAndDrawMarker(uid) {
+        $.ajax({
+            method: "GET",
+            url: `${API_BASE_URL}/api/detail-by-id`, // jido.html (935번째 줄)과 동일한 API
+            data: {
+                api_key: "F250930867",
+                uid: uid
+            },
+            success: function (response) {
+                const xmlText = response.xml_data;
+                const xmlDoc = $.parseXML(xmlText);
+                const $xml = $(xmlDoc);
+
+                const $station = $xml.find('OIL'); // 주유소 정보
+
+                // 마커 표시에 필요한 정보 추출
+                const name = $station.find('OS_NM').text();
+                const brand = $station.find('POLL_DIV_CO').text();
+                const oilKatecX = parseFloat($station.find('GIS_X_COOR').text());
+                const oilKatecY = parseFloat($station.find('GIS_Y_COOR').text());
+                const uni_id = $station.find('UNI_ID').text();
+                // 가격 정보 (katecToWgsForMarker는 가격 파라미터가 필요합니다)
+                // 여기서는 휘발유(B027) 가격을 기본값으로 전달해 보겠습니다.
+                let price = 'X'; // 기본값
+                $station.find('OIL_PRICE').each(function () {
+                    const $priceInfo = $(this);
+                    if ($priceInfo.find('PRODCD').text() === 'B027') { // B027 = 휘발유
+                        price = parseInt($priceInfo.find('PRICE').text(), 10);
+                        return false; // each 루프 중단
+                    }
+                });
+
+                // favorites.html에 이미 있는 katecToWgsForMarker 함수(661번째 줄)를 호출하여 마커를 그립니다.
+                katecToWgsForMarker(oilKatecX, oilKatecY, name, price, brand, uni_id);
+            },
+            error: function(err) {
+                console.error(`Failed to get gas station info for ${uid}:`, err);
+            }
+        });
+    }
 
 //     -----------------------------------------------------------윤선
 

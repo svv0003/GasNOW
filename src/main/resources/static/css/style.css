@@ -505,7 +505,7 @@ thead {
 #rating-result{
     font-size: 15px;
     position: fixed;
-    right: 50%;
+    right: 35%;
     top: 23%;
 }
 
@@ -513,12 +513,7 @@ thead {
     color: gold;
 }
 
-#count-rating {
-    font-size: 15px;
-    position: fixed;
-    right: 35%;
-    top: 23%;
-}
+
 
 #rating-btn{
     font-size: 15px;

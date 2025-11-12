@@ -97,14 +97,15 @@
 
                 <div class="gs-detail">
                     <div class="detail-top">
-                        <span id="gsId">abc123</span>
-                        <span id="userId">bbb</span>
+                        <span id="userId">hong</span>
                         <h3 id="info-gsName"></h3>
                         <button id="outInfo">X</button>
                         <button id="fav-unFilled"><i class="fa-regular fa-star"></i></button>
                         <button id="fav-filled"><i class="fa-solid fa-star"></i></button>
-                        <span id="rating-result"><span id="result-star"><i class="fa-solid fa-star gold-star"></i></span>1.9</span>
-                        <span id="count-rating">리뷰 111</span>
+                        <span id="rating-result"><span id="result-star"><i class="fa-solid fa-star gold-star"></i></span>
+                                                <span id="result-score"></span>
+                                                (<span id="count-rating"></span>)
+                        </span>
                         <button id="rating-btn">리뷰하기</button>
                         <span id="gs-address"></span>
                         <span id="gs-number"></span>
@@ -652,6 +653,7 @@
                     // 여기서 값 넣기
                     document.getElementById('avg-price').innerText = oilAvgPrice;
 
+
                 }
 
                 /* ----------------------------------------윤선*/
@@ -742,10 +744,11 @@
                     marker.setZIndex(100);
                     selectedMarker = marker;
                     map.panTo(marker.getPosition());
-
+                    $('.rating-info').css('display', 'none');
                     getDetailById(uni_id);
                     $('.gs-detail').css('display', 'block');
                     getGsInfo(uni_id);
+
                 })
 
             }
@@ -864,9 +867,35 @@
     });
 
 
-    async function isFav() {
-        const gsId = document.getElementById("gsId").innerText;
+    async function favList() {
         const userId = document.getElementById("userId").innerText;
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/favList?userId=${userId}`);
+            //여기서 uni_id 기반으로 마커 그리기
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            const favoriteList = await response.json(); // 백엔드가 double 반환하므로 text()로 받음
+            console.log("즐겨찾기한 주유소 ID:", favoriteList);
+            favoriteList.forEach(gsId => {
+                console.log("즐겨찾기한 주유소 ID:", favoriteList);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
+
+
+    async function isFav(stationId) {
+        const gsId = stationId;
+        const userId = document.getElementById("userId").innerText;
+
+
 
         // 2. API 호출
         try {
@@ -889,15 +918,15 @@
             }
         } catch (error) {
             console.error(error);
-            document.getElementById("scoreResult").innerText = "점수 불러오기 실패";
         }
 
 
     }
 
-    async function addFav() {
-        const gsId = document.getElementById("gsId").innerText;
+    async function addFav(stationId) {
+        const gsId = stationId;
         const userId = document.getElementById("userId").innerText;
+        console.log("문자열인가?",typeof gsId, gsId);
 
         // 2. API 호출
         try {
@@ -913,7 +942,7 @@
             });
 
             if (response.ok) {
-                isFav();
+                isFav(stationId);
             } else {
                 alert("등록 실패: " + response.status);
             }
@@ -924,16 +953,20 @@
 
     }
 
-    document.getElementById("fav-unFilled").addEventListener("click", addFav);
-    document.getElementById("fav-filled").addEventListener("click", addFav);
+    document.getElementById("fav-unFilled").addEventListener("click", function(){
+        addFav(stationId);
 
-    window.addEventListener("DOMContentLoaded", () => {
-        isFav();
     });
+    document.getElementById("fav-filled").addEventListener("click",function() {
+        addFav(stationId);
+    });
+
+     window.addEventListener("DOMContentLoaded", () => {
+         isFav(stationId);
+     });
 
 
     const stars = document.querySelectorAll('.star');
-    const scoreDisplay = document.getElementById('score');
     let currentScore = 0; // 클릭 후 저장된 점수
 
     function updateStars(idx, isHalf, permanent = false) {
@@ -973,21 +1006,28 @@
             const rect = star.getBoundingClientRect();
             const isHalf = (e.clientX - rect.left) < rect.width / 2;
             currentScore = idx + (isHalf ? 0.5 : 1);
-            scoreDisplay.textContent = currentScore;
             updateStars(0, false, true);
         });
     });
 
     // 확인 버튼 클릭 시 점수 알림
-    document.getElementById('giveRating').addEventListener('click', () => {
-        alert(`선택한 점수: ${currentScore}점`);
+    document.getElementById('giveRating').addEventListener('click', function() {
+
+        addRating().then(() => {
+            // 서버 반영 끝나고
+            $('.rating-info').css('display', 'none');
+            ratingScore();
+            ratingCount();
+        }).catch(err => console.error(err));
     });
+
 
 
     $('.oil-type button').on('click', function () {
         // 클릭된 오일 버튼 강조 (선택사항)
         $('.oil-type button').removeClass('active-btn');
         $(this).addClass('active-btn');
+
 
         // list-right 영역에 버튼 두 개 삽입
         document.querySelector('.list-right').innerHTML = `
@@ -1061,6 +1101,7 @@
     // 주유소 리스트에서 이름 클릭 시 상세창 보이기
     $(document).on('click', '.list-table tbody tr .left-text', function () {
         // .gs-detail을 보여주기
+        $('.rating-info').css('display', 'none');
         $('.gs-detail').css('display', 'block');
 
     });
@@ -1073,7 +1114,8 @@
 
     $('#rating-btn').on('click', function () {
         // .rating-info을 보여주기
-        $('.rating-info').css('display', 'block');
+        ratingDate();
+
 
     });
 
@@ -1084,11 +1126,13 @@
     });
 
 
+    let stationId;
     // 리스트에서 클릭한 주유소 아이디 불러오기
     $(document).on("click", ".list-table tbody tr", function () {
-        const stationId = $(this).data("station-id");
+        stationId = $(this).data("station-id");
         console.log("클릭한 주유소 ID:", stationId);
         getGsInfo(stationId)
+        isFav(stationId);
 
 
     });
@@ -1157,6 +1201,8 @@
                     const price = parseInt($priceInfo.find('PRICE').text(), 10);
                     stationInfo.prices[productCode] = price;
                 });
+                ratingScore();
+                ratingCount();
 
                 console.log(stationInfo);
 
@@ -1223,22 +1269,6 @@
                 document.getElementById("oil-kerosene-price2").innerText = areaData.products['C004'] ? `${Math.round(areaData.products['C004'])}원`  : 'X';
                 document.getElementById("oil-lpg-price2").innerText = areaData.products['K015'] ? `${Math.round(areaData.products['K015'])}원`  : 'X';
 
-                // <td>가격<br><span id="oil-info-area"></span></td>
-                // <td><span id="oil-diesel-price1"></span><br>
-                //     <span id="oil-diesel-price2"></span>
-                // </td>
-                // <td><span id="oil-gasoline-price1"></span><br>
-                //     <span id="oil-gasoline-price2"></span>
-                // </td>
-                // <td><span id="oil-premiumGasoline-price1"></span><br>
-                //     <span id="oil-premiumGasoline-price2"></span>
-                // </td>
-                // <td><span id="oil-kerosene-price1"></span><br>
-                //     <span id="oil-kerosene-price2"></span>
-                // </td>
-                // <td><span id="oil-lpg-price1"></span><br>
-                //     <span id="oil-lpg-price2"></span>
-                // </td>
 
 
             },
@@ -1265,6 +1295,137 @@
 
         const avgPrice = getAveragePrice();
         console.log(avgPrice);
+
+
+    // ---------------------------- rating 관련 js
+    async function ratingScore() {
+        const gsId = stationId
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/getRating?gsId=${gsId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            // 3. 결과값 받기
+            const avgRating = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
+            console.log(avgRating);
+
+            // 4. 결과 화면에 표시
+            document.getElementById("result-score").innerText = `${avgRating}`;
+
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
+
+    async function ratingCount() {
+        const gsId = stationId
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/ratingCount?gsId=${gsId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            // 3. 결과값 받기
+            const ratingCount = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
+
+            // 4. 결과 화면에 표시
+            document.getElementById("count-rating").innerText = `${ratingCount}`;
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
+
+
+
+    async function ratingDate() {
+        const gsId = stationId;
+        const userId = document.getElementById("userId").innerText;
+
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/ratingDate?gsId=${gsId}&userId=${userId}`);
+
+            if (!response.ok) {
+                throw new Error("서버 요청 실패");
+            }
+
+            // 3. 결과값 받기
+            const ratingDate = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
+            const dateOnly = ratingDate.slice(1, 11);
+
+
+
+            // 오늘 날짜 구하기
+            // const today = new Date();
+            // const year = today.getFullYear();
+            // const month = String(today.getMonth() + 1).padStart(2, '0');
+            // const day = String(today.getDate()).padStart(2, '0');
+            // const todayStr = `${year}-${month}-${day}`;
+            //
+            // console.log("입력날짜",ratingDate)
+            // console.log("오늘날짜",todayStr)
+            //
+            // if (dateOnly === todayStr) {
+            //     console.log("오늘 날짜와 같습니다!");
+            //     alert("오늘 이 주유소에 이미 평점을 입력했습니다.")
+            // } else {
+            //     console.log("오늘 날짜가 아닙니다.");
+            // }
+
+                $('.rating-info').css('display', 'block');
+
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
+
+    async function addRating() {
+        const gsId = stationId;
+        const userId = document.getElementById("userId").innerText;
+        const rating = currentScore;
+
+        // 2. API 호출
+        try {
+            const response = await fetch(`${API_BASE_URL1}/addRating`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    gsId: gsId,
+                    userId: userId,
+                    rating: rating  // 숫자로 변환
+                })
+            });
+
+            if (response.ok) {
+                const result = await response.text();
+                alert(result);
+            } else {
+                alert("등록 실패: " + response.status);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+
+    }
+
+
 
 
     /* ----------------------------윤선1 */
