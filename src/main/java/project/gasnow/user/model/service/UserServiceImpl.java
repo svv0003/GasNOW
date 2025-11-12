@@ -241,8 +241,8 @@ public class UserServiceImpl implements UserService {
             userPointMapper.insertPointHistory(userPointHistory);
             // 총 적립 포인트 변경
             int currentPoint = userPointMapper.getCurrentPoint(userId);
-            userPointMapper.updatePoint(currentPoint + 30);  // 현재 포인트 변경
-            userPointMapper.updateTotalEarned(userPoint.getTotalEarned() + 30);  // 총 적립 포인트(total_earned) 변경
+            userPointMapper.updatePoint(userId, currentPoint + 30);  // 현재 포인트 변경
+            userPointMapper.updateTotalEarned(userId,userPoint.getTotalEarned() + 30);  // 총 적립 포인트(total_earned) 변경
 
             log.info("출석 포인트 적립 - userId: {}, 적립: 30", userId);
 
