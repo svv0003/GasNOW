@@ -29,12 +29,44 @@ public class SchedulingServiceImpl implements SchedulingService{
     @Override
     public void saveChartData() {
 
-        final String API_URL = "https://www.opinet.co.kr/api/avgRecentPrice.do?out=xml&code=" + API_Key;
+        final String NATION_API_URL = "https://www.opinet.co.kr/api/avgRecentPrice.do?out=xml&code=" + API_Key;
+        log.info(NATION_API_URL);
 
         try {
             // 1. API 호출
-            log.info("API 호출: {}", API_URL);
-            String xmlResponse = restTemplate.getForObject(API_URL, String.class);
+            log.info("API 호출: {}", NATION_API_URL);
+            // String xmlResponse = restTemplate.getForObject(NATION_API_URL, String.class);
+            String fakeData = """
+                    <RESULT>
+                       <OIL>
+                          <DATE>20251113</DATE>
+                          <PRODCD>B027</PRODCD>
+                          <PRICE>1662.63</PRICE>
+                       </OIL>
+                       <OIL>
+                          <DATE>20251113</DATE>
+                          <PRODCD>B034</PRODCD>
+                          <PRICE>1911.79</PRICE>
+                       </OIL>
+                       <OIL>
+                          <DATE>20251113</DATE>
+                          <PRODCD>C004</PRODCD>
+                          <PRICE>1294.96</PRICE>
+                       </OIL>
+                       <OIL>
+                          <DATE>20251113</DATE>
+                          <PRODCD>D047</PRODCD>
+                          <PRICE>1535.68</PRICE>
+                       </OIL>
+                       <OIL>
+                          <DATE>20251113</DATE>
+                          <PRODCD>K015</PRODCD>
+                          <PRICE>999.49</PRICE>
+                       </OIL>
+                    </RESULT>""";
+            String xmlResponse = fakeData;
+
+            log.info("전국 XML 원본 데이터 ▼▼▼" + xmlResponse);
 
             if (xmlResponse == null || xmlResponse.isEmpty()) {
                 log.warn("API 응답이 비어있습니다.");
