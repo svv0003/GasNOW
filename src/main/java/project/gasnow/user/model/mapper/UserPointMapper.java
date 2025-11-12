@@ -26,19 +26,19 @@ public interface UserPointMapper {
      * 포인트 적립/사용 시 point 변경 메서드
      * @param point total_earned 와 total_used 로 계산해 setter로 담겨진 현재 포인트
      */
-    int updatePoint(int point);
+    int updatePoint(String user_id, int point);
 
     /**
      * 포인트 적립 시 total_earned 변경 메서드
      * @param point 총 적립된 포인트
      */
-    int updateTotalEarned(int point);
+    int updateTotalEarned(String user_id, int point);
 
     /**
      * 포인트 사용 시 total_used 변경 메서드
      * @param point 총 사용한 포인트
      */
-    int updateTotalUsed(int point);
+    int updateTotalUsed(String user_id, int point);
 
     /**
      * 회원의 현재 총 포인트 조회 메서드

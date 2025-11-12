@@ -188,13 +188,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(HttpSession session, String userId, String userPassword) {
         User user = userMapper.getUserById(userId);
+        int userCount = userMapper.checkUserIdExist(userId);
         
         // 아이디가 DB에 존재하지 않는 경우
-        if(user == null){
+        if(userCount != 1) {
+            log.warn("로그인 실패 - 아이디 없음: {}", userId);
             return null;
+        }
+        // if(user == null){
+        //     return null;
+        // }
+
+        // 로그 확인용
+        String encoded = user.getUserPassword();
+        if(encoded == null) {
+            log.warn("로그인 실패 - DB 비밀번호 매핑 null: {}", userId);
         }
         
         // 비밀번호가 일치하지 않는 경우
+        boolean ok = bCryptPasswordEncoder.matches(userPassword, encoded);
+        log.info("비밀번호 매치 결과: {}", ok);
         if(!bCryptPasswordEncoder.matches(userPassword, user.getUserPassword())){
             return null;
         }
@@ -228,8 +241,8 @@ public class UserServiceImpl implements UserService {
             userPointMapper.insertPointHistory(userPointHistory);
             // 총 적립 포인트 변경
             int currentPoint = userPointMapper.getCurrentPoint(userId);
-            userPointMapper.updatePoint(currentPoint + 30);  // 현재 포인트 변경
-            userPointMapper.updateTotalEarned(userPoint.getTotalEarned() + 30);  // 총 적립 포인트(total_earned) 변경
+            userPointMapper.updatePoint(userId, currentPoint + 30);  // 현재 포인트 변경
+            userPointMapper.updateTotalEarned(userId,userPoint.getTotalEarned() + 30);  // 총 적립 포인트(total_earned) 변경
 
             log.info("출석 포인트 적립 - userId: {}, 적립: 30", userId);
 

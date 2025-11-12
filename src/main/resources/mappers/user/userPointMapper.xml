@@ -56,7 +56,7 @@
         SELECT *
         FROM point_history
         WHERE user_id = #{userId}
-        ORDER BY create_at DESC
+        ORDER BY created_at DESC
             LIMIT 1;
     </select>
 

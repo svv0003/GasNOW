@@ -9,7 +9,11 @@
 
     <!-- userId로 유저 객체 반환 -->
     <select id="getUserById" resultType="User">
-        SELECT *
+        SELECT user_id  AS userId,
+                name AS userName,
+                password AS userPassword,
+                email AS userEmail,
+                phone AS userPhone
         FROM user
         WHERE user_id = #{userId}
     </select>
