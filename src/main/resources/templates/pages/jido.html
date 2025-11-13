@@ -12,10 +12,13 @@
 </head>
 <body>
 
-    <div class="map_wrap">
-        <div id="map" style="width:100vw;height:100vh;overflow:hidden;"></div> 
-
-    </div> 
+<div class="map_wrap">
+    <div id="map" style="width:100vw;height:100vh;overflow:hidden;"></div>
+    <div class="mobile-map-fav-btn">
+        <button id="go-jido"><i class="fas fa-map-marker-alt"></i></button>
+        <button id="go-fav"><i class="fa-solid fa-star"></i></button>
+    </div>
+</div>
     <aside class="main-sidebar">
         <div class="sidebar-logo">
             <a href="/">
@@ -1542,6 +1545,12 @@
 
 
 
+    document.getElementById('go-jido').classList.add('active');
+    document.getElementById('go-fav').classList.remove('active');
+
+    document.getElementById('go-fav').addEventListener('click', function() {
+        window.location.href = '/favorites';
+    });
 
 
     /* ----------------------------윤선1 */
