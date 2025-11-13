@@ -13,7 +13,7 @@ fetch('/api/config/key')
 
 
 
-const API_BASE_URL1 = "http://localhost:8080/api";
+const API_BASE_URL1 = "/api";
     // --- 1. 카카오맵 생성 ---
 
     // 마커들을 담을 배열입니다
