@@ -72,6 +72,7 @@ body {
     flex-direction: row-reverse;
 }
 .login-btn {
+    border: 1px solid black;
     border-radius: 30px;
     background-color: black;
     color: white;
