@@ -670,7 +670,7 @@ fetch('/api/config/key')
 
 
     /* 윤선1----------------------------*/
-    const API_BASE_URL1 = "http://localhost:8080/api";
+    const API_BASE_URL1 = "/api";
 
     document.addEventListener("DOMContentLoaded", function () {
     const desktopBtn = document.querySelector(".list-hide-desktop");
@@ -799,9 +799,9 @@ fetch('/api/config/key')
     addFav(stationId);
 });
 
-    window.addEventListener("DOMContentLoaded", () => {
-    isFav(stationId);
-});
+//     window.addEventListener("DOMContentLoaded", () => {
+//     isFav(stationId);
+// });
 
 
     const stars = document.querySelectorAll('.star');
