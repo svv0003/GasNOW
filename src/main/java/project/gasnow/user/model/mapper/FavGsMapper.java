@@ -8,5 +8,5 @@ public interface FavGsMapper {
      * 회원 탈퇴 시 즐겨찾기 삭제 메서드
      * @param userId
      */
-    void deleteUserFavorite(String userId);
+    void deleteUserFavorites(String userId);
 }

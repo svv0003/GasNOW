@@ -123,8 +123,8 @@ public class MyPageServiceImpl implements MyPageService {
      */
     @Override
     public void withdrawUser(String userId) {
-        favGsMapper.deleteUserFavorite(userId);  // 즐겨찾기 삭제
-        gsRatingMapper.deleteMyReview(userId);   // 리뷰 내역 삭제
+        favGsMapper.deleteUserFavorites(userId);  // 즐겨찾기 삭제
+        gsRatingMapper.deleteUserReview(userId);   // 리뷰 내역 삭제
         userPointMapper.deleteUserPoint(userId); // 포인트 삭제
         userPointMapper.deleteUserPointHistory(userId);  // 포인트 변동 내역 삭제
 

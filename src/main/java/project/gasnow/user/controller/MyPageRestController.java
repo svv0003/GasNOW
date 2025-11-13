@@ -36,7 +36,7 @@ public class MyPageRestController {
         User loginUser = (User)session.getAttribute("loginUser");
 
         if(loginUser == null) {
-            return "로그인 정보가 존재하지 않습니다.";
+            return null;
         }
         return loginUser.getUserId();
     }
@@ -64,9 +64,14 @@ public class MyPageRestController {
      * @return
      */
     @GetMapping("/api/mypage/point")
-    public UserPoint getUserPoint(HttpSession session) {
+    public ResponseEntity<?> getUserPoint(HttpSession session) {
         String userId = getLoginUserId(session);
-        return myPageService.getUserPoint(userId);
+
+        if(userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok(myPageService.getUserPoint(userId));
     }
 
     /**
@@ -129,7 +134,7 @@ public class MyPageRestController {
 
             log.info("비밀번호 변경 완료: {} -> {}", oldPassword, newPassword);
             resBody.put("message", "비밀번호가 성공적으로 변경되었습니다.");
-            // SessionUtil.logout(session);  // 로그아웃 후 다시 로그인하도록 유도
+            SessionUtil.logout(session);  // 로그아웃 후 다시 로그인하도록 유도
             return ResponseEntity.ok(resBody);
 
         } catch(IllegalArgumentException e) {
