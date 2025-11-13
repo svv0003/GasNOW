@@ -4,7 +4,7 @@ let i;
 
 for (i=0; i<col1.length; i++) {
     col1[i].addEventListener("click", function() {
-        this.classList.toggle("active");
+        this.classList.toggle("open");
         let content = this.nextElementSibling;
         if(content.style.maxHeight) {
             content.style.maxHeight = null;
@@ -56,11 +56,29 @@ async function showReviewList() {
 
     reviewList.innerHTML = result.map(item => `
             <li class="review-item">
-                <span>${item.createdAt}</span>
-                <span>${item.stationName}</span>
-                <span>${item.ratingScore}</span>
+                <div id="reviewDate">${item.createdAt.split(" ")[0]}</div>
+                <div id="reviewStation">${item.stationName}</div>
+                <div id="reviewRating">${renderStars(item.ratingScore)}</div>
             </li>
         `).join("");
+}
+
+// 별점 아이콘 반환 기능
+function renderStars(score) {
+    const fullStar = `<i class="fa-solid fa-star star-icon"></i>`
+    const halfStar = `<i class="fa-regular fa-star-half-stroke star-icon"></i>`
+    const emptyStar = `<i class="fa-regular fa-star star-icon"></i>`
+
+    const full = Math.floor(score); // 정수
+    const decimal = score - full;   // 소수
+    const hasHalf = decimal >= 0.25 && decimal <0.75;
+    const empty = 5 - full - (hasHalf ? 1 : 0);
+
+    return (
+        fullStar.repeat(full) +
+        (hasHalf ? halfStar : '') +
+            emptyStar.repeat(empty)
+    );
 }
 
 // 보유 포인트 조회 기능
@@ -142,13 +160,28 @@ async function showUserInfo() {
     const userInfoList = document.querySelector("#userInfoList");
     userInfoList.innerHTML = `
             <li class="userInfoItem">
-                이름: ${result.userName}
+                <div class="info-title">
+                    이름
+                </div>
+                <div class="info-cell">
+                    ${result.userName}
+               </div>
             </li>
             <li class="userInfoItem">
-                이메일: ${result.userEmail}
+                <div class="info-title">
+                    이메일
+                </div>
+                <div class="info-cell">
+                    ${result.userEmail}
+                </div>
             </li>
             <li class="userInfoItem">
-                연락처: ${result.userPhone}
+            <div class="info-title">
+                연락처 
+            </div>
+            <div class="info-cell">
+                ${result.userPhone}
+            </div>
             </li>
         `;
 }
