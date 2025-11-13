@@ -1,5 +1,7 @@
 package project.gasnow.chart.model.dto;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
@@ -9,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "OIL")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Chart {
 
     @XmlElement(name = "DATE")
     private String priceDate; // XML의 DATE → DB PRICE_DATE
 
     @XmlElement(name = "AREA_CD")
-    private String areaCode; // XML의 AREA_CD → DB AREA_CODE
+    private int areaCode; // XML의 AREA_CD → DB AREA_CODE
 
     @XmlElement(name = "AREA_NM")
     private String areaName; // XML의 AREA_NM → DB AREA_NAME

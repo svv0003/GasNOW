@@ -18,7 +18,6 @@ public class ChartServiceImpl implements ChartService {
     @Override
     public List<Chart> getChartData(String oilCategory, String areaName, String period) {
 
-        // 클라이언트가 선택한 기간에 따라 mapper 메서드 호출한다.
         if ("week".equals(period)) {
             return chartMapper.getOneWeekPrice(oilCategory, areaName);
 
