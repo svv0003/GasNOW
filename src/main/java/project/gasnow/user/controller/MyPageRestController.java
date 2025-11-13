@@ -4,6 +4,7 @@ import jakarta.mail.Session;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -113,9 +114,20 @@ public class MyPageRestController {
      * @param session
      */
     @PostMapping("/api/logout")
-    public void logout(HttpSession session) {
-        String userId = getLoginUserId(session);
+    public ResponseEntity<Map<String, String>> logout(HttpSession session) {
+        Map<String, String> body = new HashMap<>();
+        Object loginUser = SessionUtil.getLoginUser(session);
+
+        if(loginUser == null) {
+            log.error("로그아웃 실패: {}", loginUser);
+            body.put("message", "로그인 상태가 아닙니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+        }
+
+        log.info("로그아웃 성공: {}", loginUser);
         SessionUtil.logout(session);
+        body.put("message", "로그아웃 되었습니다.");
+        return ResponseEntity.ok(body);
     }
 
     /**
@@ -130,6 +142,7 @@ public class MyPageRestController {
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "회원 탈퇴가 완료되었습니다.");
+        log.info("회원탈퇴 성공: {}", userId);
         return ResponseEntity.ok(response);
     }
 }

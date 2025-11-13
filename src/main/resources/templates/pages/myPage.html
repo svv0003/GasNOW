@@ -54,6 +54,56 @@
             max-height: 0;
             transition: max-height 0.2s ease-out;
         }
+
+        /* 모달팝업 영역 스타일 */
+        .modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width:100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal .modal_popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 20px;
+        }
+
+        .modal-box {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .modal .modal_popup .modal-btn {
+            text-align: center;
+        }
+
+        .modal .modal_popup .close_btn {
+            display: block;
+            padding: 10px 20px;
+            bottom: 10%;
+            background-color: rgb(116, 0, 0);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+
+        .modal.on {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +117,28 @@
             </ul>
         </div>
     </div>
+
+    <!-- 포인트 변동 내역 모달팝업 -->
+    <div class="modal" id="pointModal">
+        <div class="modal_popup">
+            <div class="modal-box">
+                <h3><span id="modalUserName"></span> 님의 포인트 적립 / 사용 내역</h3>
+                <div class="history-list">
+                    <div class="history-content">
+                        <div class="content-description">test-설명</div>
+                        <div class="content-date">test-날짜</div>
+                        <div class="content-point">test-변동포인트</div>
+                        <div class="content-remaining">test-잔여포인트</div>
+                    </div>
+                </div>
+
+                <div class="modal-btn">
+                    <button type="button" class="close_btn" id="pointModalBtn">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="menu-container">
         <button type="button" class="collapsible">보유 포인트</button>
         <div class="content">
@@ -78,6 +150,39 @@
             </div>
         </div>
     </div>
+
+    <!-- 비밀번호 변경 모달팝업 -->
+    <div class="modal" id="pwModal">
+        <div class="modal_popup">
+            <div class="modal-box">
+                <h3>비밀번호 변경</h3>
+                <div class="history-content">
+                    <form id="pwChangeForm">
+                        <div class="form-item">
+                            <label>현재 비밀번호<span class="required">*</span></label>
+                            <input type="password" name="currentPw" id="currentPw"/>
+                        </div>
+
+                        <div class="form-item">
+                            <label>변경 비밀번호<span class="required">*</span></label>
+                            <input type="password" name="newPw" id="newPw"/>
+                        </div>
+
+                        <div class="form-item">
+                            <label>비밀번호 확인<span class="required">*</span></label>
+                            <input type="password" name="newPwChk" id="newPwChk">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-btn">
+                    <button type="button" class="close_btn" id="pwModalBtn">변경</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end 모달팝업 -->
+
     <div class="menu-container">
         <button type="button" class="collapsible">회원정보</button>
         <div class="content">
@@ -90,11 +195,13 @@
             </div>
         </div>
     </div>
+
     <div class="menu-container">
-        <button type="button" class="collapsible">로그아웃</button>
+        <button type="button" class="collapsible" id="logoutBtn">로그아웃</button>
     </div>
+
     <div class="menu-container">
-        <button type="button" class="collapsible">회원탈퇴</button>
+        <button type="button" class="collapsible" id="withdrawBtn">회원탈퇴</button>
     </div>
 </div>
 
@@ -179,6 +286,28 @@
         totalPoint.innerHTML = `${result.currentPoint}`;
     }
 
+    // 포인트 변동 모달팝업 작업
+    const pointModal = document.querySelector("#pointModal");
+    const pointModalOpen = document.querySelector("#pointListBtn");
+    const pointModalClose = document.querySelector("#pointModalBtn");
+
+    pointModalOpen.addEventListener("click", () => {
+        console.log("버튼 클릭 이벤트 발생")
+        pointModal.classList.add("on");
+    });
+
+    pointModalClose.addEventListener("click", () => {
+        console.log("닫기 버튼 클릭")
+        pointModal.classList.remove("on");
+    })
+
+    pointModal.addEventListener("click", (e) => {
+        if(e.target === pointModal) {
+            console.log("배경 클릭으로 모달 닫기")
+            pointModal.classList.remove("on");
+        }
+    })
+
     // 포인트 변동 내역 조회 기능
     async function showPointHistory() {
         const res = await fetch("api/mypage/point/detail", {
@@ -190,7 +319,21 @@
         const result = await res.json();
         console.log("포인트 변동 이력: ", result);
 
-        // 모달팝업 작업
+        const modalUserName = document.querySelector("#modalUserName");
+        const historyList = document.querySelector(".history-list");
+
+        modalUserName.innerHTML = `${result[0].userId}`;
+        historyList.innerHTML = result.map(item => `
+            <div class="history-content">
+                <div class="content-item">
+                    <div class="content-description">${item.description}</div>
+                    <div class="content-date">${item.createdAt}</div>
+                </div>
+                <div class="content-item">
+                    <div class="content-point">${item.pointChange}</div>
+                </div>
+            </div>
+        `).join("");
     }
 
     // 회원정보 조회 기능
@@ -219,9 +362,88 @@
         `;
     }
 
+    // 비밀번호 변경 모달팝업 작업
+    const pwmodal = document.querySelector("#pwModal");
+    const pwModalOpen = document.querySelector("#pwChangeBtn");
+    const pwModalClose = document.querySelector("#pwModalBtn");
+
+    pwModalOpen.addEventListener("click", () => {
+        console.log("버튼 클릭 이벤트 발생")
+        pwmodal.classList.add("on");
+    });
+
+    pwModalClose.addEventListener("click", () => {
+        console.log("닫기 버튼 클릭")
+        pwmodal.classList.remove("on");
+    })
+
+    pwmodal.addEventListener("click", (e) => {
+        if(e.target === pwmodal) {
+            console.log("배경 클릭으로 모달 닫기")
+            pwmodal.classList.remove("on");
+        }
+    })
+
     // 비밀번호 변경
     const pwChangeBtn = document.querySelector("#pwChangeBtn");
     pwChangeBtn.addEventListener("click", async () => {
+
+    })
+
+    // 로그아웃 기능
+    const logoutBtn = document.querySelector("#logoutBtn");
+    logoutBtn.addEventListener("click", async () => {
+        try{
+            const res = await fetch("/api/logout", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                credentials: "include",
+            })
+
+            const result = await res.json();
+            console.log("로그아웃: ", result)
+
+            if(res.ok) {
+                alert("로그아웃 되었습니다.");
+                location.href = "/";
+            } else {
+                alert(data.message || "로그아웃에 실패했습니다.")
+            }
+        } catch (err) {
+            console.error("로그아웃 요청 중 오류: ", err);
+            alert("네트워크 오류로 로그아웃에 실패했습니다.");
+        }
+    })
+
+    // 회원탈퇴 기능
+    const withdrawBtn = document.querySelector("#withdrawBtn");
+    withdrawBtn.addEventListener("click", async () => {
+        if(confirm("회원탈퇴를 진행하시겠습니까?")) {
+            try{
+                console.log("회원탈퇴 시작");
+                const res = await fetch("/api/logout", {
+                    method: "DELETE",
+                    headers: {"Content-Type": "application/json"},
+                    credentials: "include",
+                })
+
+                const result = await res.json();
+                console.log("회원 탈퇴: ", result);
+
+                if(res.ok) {
+                    alert("탈퇴가 완료되었습니다.")
+                    console.log("회원탈퇴 완료");
+                    location.href = "/";
+                } else {
+                    alert("회원 탈퇴에 실패하였습니다. 다시 시도해주세요.")
+                }
+            } catch(err) {
+                console.error("회원탈퇴 요청 중 오류: ", err);
+                alert("네트워크 오류로 회원탈퇴에 실패했습니다.");
+            }
+        } else {
+            console.log("회원탈퇴 취소");
+        }
 
     })
 </script>
