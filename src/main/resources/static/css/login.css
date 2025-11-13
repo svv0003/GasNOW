@@ -1,16 +1,7 @@
 /* ========================================
 웹, 모바일 공통 속성
 ======================================== */
-.login-wrapper {
-    display: flex;
-}
-.nav-area {
-    width: var(--sidebar-width);
-    height: var(--sidebar-height);
-}
-
 #loginForm {
-    width: 100%;
     min-height: 100vh;
     margin: 0;
     display: flex;
@@ -38,7 +29,7 @@
     margin-bottom: 0.4rem;
     align-self: flex-start;
     font-size: 0.9rem;
-    color: #555;
+    color: #000000;
     padding-left: 5px
 }
 
@@ -125,12 +116,31 @@ a {
     padding: 8px 20px;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+#loginBtn:hover {
+    background-color: #fff6eb;
+    transition: background-color 0.2s ease;
 }
 
 /* ========================================
 웹 사이즈
 ======================================== */
 @media(min-width: 451px){
+    .login-wrapper {
+        display: flex;
+    }
+
+    .nav-area {
+        width: var(--sidebar-width);
+        height: var(--sidebar-height);
+    }
+
+    #loginForm {
+        width: 100%;
+    }
+
     #loginForm h1{
         font-size: 3.125em;
         transition: font-size 0.3s ease 0s;
