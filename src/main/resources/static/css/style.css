@@ -10,9 +10,8 @@
         padding: 0;
         /* 수정(유성) */
         font-family: "Noto Sans", sans-serif;
-        background-color: #f4f7fa;
-        overflow-y: hidden;
-
+        background-color: white;
+        overflow: hidden;
     }
 
     /* --- (NEW) CSS 변수 정의 --- */

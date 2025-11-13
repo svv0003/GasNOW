@@ -31,6 +31,7 @@ public class SchedulingServiceImpl implements SchedulingService{
     @Value("${opinet.api.key}")
     private String API_Key;
 
+
     final String API_URL = "https://www.opinet.co.kr/api/";
 
     @Override

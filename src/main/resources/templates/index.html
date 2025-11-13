@@ -48,8 +48,16 @@
         </div>
     </aside>
     <main class="main-content">
+        <div class="login-container">
+            <div class="login-box">
+                <button type="button" class="register-btn" onclick="registerPageLink">Register</button>
+                <button type="button" class="login-btn" onclick="loginPageLink">Login</button>
+            </div>
+        </div>
         <div class="top-container">
             <div class="diff-container">
+            <h1>전일 대비 등락률</h1>
+            <div class="diff-boxes">
                 <div class="diff-box" id="B034DiffBox">
                     <div class="diff-oil" id="B034DiffOil">고급휘발유</div>
                     <div class="diff-price" id="B034DiffPrice">Loading...</div>
@@ -75,11 +83,13 @@
                     <div class="diff-price" id="K015DiffPrice">Loading...</div>
                     <div class="diff-percent" id="K015DiffPercent">Loading...</div>
                 </div>
+                </div>
             </div>
         </div>
 
         <div class="bottom-container">
             <div class="map-container">
+                <h1>지역별 최저가</h1>
                 <div class="btn-container">
                     <button id="B034Btn" class="oil-btn">고급휘발유</button>
                     <button id="B027Btn" class="oil-btn on">휘발유</button>
@@ -228,7 +238,7 @@
                     <button class="period-btn" id="all">전체</button>
                 </div>
 
-                <div class="chart-container" id="chartContainer" style="display: none;">
+                <div class="chart-box" id="chartContainer" style="display: none;">
                     <canvas class="price-chart" id="priceChart"></canvas>
                 </div>
 

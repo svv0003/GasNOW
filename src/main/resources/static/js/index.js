@@ -188,13 +188,13 @@ function renderChart(data, areaCode, periodKey) {
                     {
                         label: '전국',
                         data: chartData['전국'] || [],
-                        borderColor: '#4A90E2',
-                        backgroundColor: '#4A90E2',
+                        borderColor: '#0d47a1',
+                        backgroundColor: '#0d47a1',
                         tension: 0.4,
                         borderWidth: 2,
                         pointRadius: 4,
                         pointHoverRadius: 4,
-                        pointBackgroundColor: '#4A90E2',
+                        pointBackgroundColor: '#0d47a1',
                         pointBorderColor: '#fff',
                         pointBorderWidth: 2,
                         fill: false
@@ -202,13 +202,13 @@ function renderChart(data, areaCode, periodKey) {
                     {
                         label: koreanArea,
                         data: chartData[koreanArea] || [],
-                        borderColor: '#F5A623',
-                        backgroundColor: '#F5A623',
+                        borderColor: '#ff00ea',
+                        backgroundColor: '#ff00ea',
                         tension: 0.4,
                         borderWidth: 2,
                         pointRadius: 4,
                         pointHoverRadius: 6,
-                        pointBackgroundColor: '#F5A623',
+                        pointBackgroundColor: '#ff00ea',
                         pointBorderColor: '#fff',
                         pointBorderWidth: 2,
                         fill: false
