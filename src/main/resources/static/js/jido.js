@@ -1212,8 +1212,6 @@
 }
 
 
-
-
     document.getElementById('go-jido').classList.add('active');
     document.getElementById('go-fav').classList.remove('active');
 
