@@ -16,7 +16,7 @@ public class ChartScheduling {
 
     private final SchedulingService schedulingService;
 
-    @Scheduled(cron = "30 * * * * *")
+    @Scheduled(cron = "* * 3 * * *")
     public void insertOilPrice() {
 
         String startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

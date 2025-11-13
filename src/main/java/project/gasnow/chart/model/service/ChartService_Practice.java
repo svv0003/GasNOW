@@ -8,5 +8,6 @@ import java.util.Map;
 public interface ChartService_Practice {
 
     Map<String, Map<String, Object>> getPeriodChartData(String oilCategory, String areaName, String period);
+    List<Chart> getYesterdayData();
 
 }
