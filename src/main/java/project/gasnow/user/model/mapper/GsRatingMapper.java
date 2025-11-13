@@ -18,5 +18,5 @@ public interface GsRatingMapper {
      * 회원 탈퇴 메서드
      * @param userId service에서 넘겨받은 유저 아이디
      */
-    void deleteMyReview(String userId);
+    void deleteUserReview(String userId);
 }

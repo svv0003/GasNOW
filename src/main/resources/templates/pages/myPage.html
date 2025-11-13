@@ -443,7 +443,7 @@
                 newPw.value = "";
                 newPwChk.value = "";
 
-                // location.href = "/login";
+                location.href = "/login";
             }
         } catch(err) {
             console.error("비밀번호 변경 요청 중 오류: ", err);
@@ -488,7 +488,7 @@
         if(confirm("회원탈퇴를 진행하시겠습니까?")) {
             try{
                 console.log("회원탈퇴 시작");
-                const res = await fetch("/api/logout", {
+                const res = await fetch("/api/mypage/withdraw", {
                     method: "DELETE",
                     headers: {"Content-Type": "application/json"},
                     credentials: "include",

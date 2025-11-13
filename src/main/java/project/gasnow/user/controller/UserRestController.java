@@ -118,6 +118,7 @@ public class UserRestController {
 
         log.info("req userId={}, userPwLen={}", user.getUserId(),
                 user.getUserPassword() == null ? null : user.getUserPassword().length());
+        log.info("req userId={}, userPw={}", user.getUserId(), user.getUserPassword());
 
 
         String userId = user.getUserId();
