@@ -1,0 +1,100 @@
+
+.menu-container > button {
+    background-color: #ffffff;
+}
+
+.menu-container .collapsible {
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    border-top: 1px solid #666666;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.menu-container:last-child {
+    border-bottom: 1px solid #666666;
+}
+
+.collapsible::after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+.menu-container:nth-last-child(-n+2) .collapsible::after {
+    content: '';
+}
+
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+.content {
+    padding: 0 18px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+
+    /* 내려오는 효과 */
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+}
+
+/* 모달팝업 영역 스타일 */
+.modal {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal .modal_popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+}
+
+.modal-box {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal .modal_popup .modal-btn {
+    text-align: center;
+}
+
+.modal .modal_popup .close_btn {
+    display: block;
+    padding: 10px 20px;
+    bottom: 10%;
+    background-color: rgb(116, 0, 0);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.modal.on {
+    display: block;
+}
