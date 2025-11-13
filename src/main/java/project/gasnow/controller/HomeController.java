@@ -17,7 +17,8 @@ public class HomeController {
     }
 
     @GetMapping("/favorites")
-    public String favorites() { return "/pages/favorites.html"; }
+    public String favorites() { return "/pages/favorites.html";
+    }
 
     @GetMapping("/login")
     public String pageLogin() {return "pages/login";}

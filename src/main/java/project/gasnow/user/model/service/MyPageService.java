@@ -1,5 +1,6 @@
 package project.gasnow.user.model.service;
 
+import org.apache.ibatis.annotations.Param;
 import project.gasnow.user.model.dto.ReviewItemDTO;
 import project.gasnow.user.model.dto.User;
 import project.gasnow.user.model.dto.UserPoint;
@@ -14,7 +15,7 @@ public interface MyPageService {
      * @param userId 세션에 저장된 유저 아이디
      * @return 리뷰 리스트(List)
      */
-    List<ReviewItemDTO> getMyReview(String userId);
+    List<ReviewItemDTO> getMyReview(@Param("userId") String userId);
 
     /**
      * 보유 포인트 조회 메서드
