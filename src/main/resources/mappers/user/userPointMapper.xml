@@ -8,7 +8,7 @@
 
     <!-- user_point 객체 반환 -->
     <select id="getUserPointById" parameterType="String">
-        SELECT *
+        SELECT user_id, point AS currentPoint, total_earned AS totalEarned
         FROM user_point
         WHERE user_id = #{userId}
     </select>
@@ -29,21 +29,24 @@
     </insert>
 
     <!-- user_point 테이블 - 포인트 적립 / 사용 (update) -->
-    <update id="updatePoint" parameterType="int">
+<!--    <update id="updatePoint" parameterType="int">-->
+    <update id="updatePoint">
         UPDATE user_point
         SET point = #{currentPoint}
         WHERE user_id = #{userId}
     </update>
 
     <!-- user_point 테이블 - 포인트 적립 시 totalEarned 변경 (update) -->
-    <update id="updateTotalEarned" parameterType="int">
+<!--    <update id="updateTotalEarned" parameterType="int">-->
+    <update id="updateTotalEarned">
         UPDATE user_point
         SET total_earned = #{totalEarned}
         WHERE user_id = #{userId}
     </update>
 
     <!-- user_point 테이블 - 포인트 사용 시 totalUsed 변경 (update) -->
-    <update id="updateTotalUsed" parameterType="int">
+<!--    <update id="updateTotalUsed" parameterType="int">-->
+    <update id="updateTotalUsed">
         UPDATE user_point
         SET total_used = #{totalUsed}
         WHERE user_id = #{userId}
@@ -56,6 +59,7 @@
         SELECT *
         FROM point_history
         WHERE user_id = #{userId}
+            AND description = "출석체크"
         ORDER BY created_at DESC
             LIMIT 1;
     </select>
