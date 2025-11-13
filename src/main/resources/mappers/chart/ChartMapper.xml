@@ -6,39 +6,56 @@
 
 <mapper namespace="project.gasnow.chart.model.mapper.ChartMapper">
 
-    <select id="getAllPrice" resultType="Chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        WHERE OIL_CATEGORY = #{oilCategory}
-          AND AREA_NAME = #{areaName}
-        ORDER BY PRICE_DATE ASC
-    </select>
-
-    <select id="getOneYearPrice" resultType="Chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
-          AND OIL_CATEGORY = #{oilCategory}
-          AND AREA_NAME = #{areaName}
-        ORDER BY PRICE_DATE ASC
-    </select>
-
-    <select id="getOneMonthPrice" resultType="Chart">
-        SELECT PRICE_DATE, AVG_PRICE
-        FROM AREA_AVG
-        WHERE price_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
-          AND OIL_CATEGORY = #{oilCategory}
-          AND AREA_NAME = #{areaName}
-        ORDER BY PRICE_DATE ASC
-    </select>
-
+    <!-- 최근 1주일 데이터 (일별) -->
     <select id="getOneWeekPrice" resultType="Chart">
         SELECT PRICE_DATE, AVG_PRICE
         FROM AREA_AVG
-        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
           AND OIL_CATEGORY = #{oilCategory}
           AND AREA_NAME = #{areaName}
         ORDER BY PRICE_DATE ASC
+    </select>
+
+    <!-- 최근 1개월 데이터 (일별) -->
+    <select id="getOneMonthPrice" resultType="Chart">
+        SELECT PRICE_DATE, AVG_PRICE
+        FROM AREA_AVG
+        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+          AND OIL_CATEGORY = #{oilCategory}
+          AND AREA_NAME = #{areaName}
+        ORDER BY PRICE_DATE ASC
+    </select>
+
+    <!-- 최근 1년 데이터 (월별 평균) -->
+    <select id="getOneYearPrice" resultType="Chart">
+        SELECT
+            MIN(PRICE_DATE) as PRICE_DATE,
+            ROUND(AVG(AVG_PRICE), 2) as AVG_PRICE
+        FROM AREA_AVG
+        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+          AND OIL_CATEGORY = #{oilCategory}
+          AND AREA_NAME = #{areaName}
+        GROUP BY
+            YEAR(PRICE_DATE),
+            MONTH(PRICE_DATE)
+        ORDER BY
+            YEAR(PRICE_DATE) ASC,
+            MONTH(PRICE_DATE) ASC
+    </select>
+
+    <!-- 최근 3년 데이터 (연도별 평균) -->
+    <select id="getAllPrice" resultType="Chart">
+        SELECT
+            CONCAT(YEAR(PRICE_DATE), '-01-01') as PRICE_DATE,
+            ROUND(AVG(AVG_PRICE), 2) as AVG_PRICE
+        FROM AREA_AVG
+        WHERE PRICE_DATE >= DATE_SUB(CURDATE(), INTERVAL 3 YEAR)
+          AND OIL_CATEGORY = #{oilCategory}
+          AND AREA_NAME = #{areaName}
+        GROUP BY
+            YEAR(PRICE_DATE)
+        ORDER BY
+            YEAR(PRICE_DATE) ASC
     </select>
 
     <select id="getYesterdayPrice" resultType="Chart">

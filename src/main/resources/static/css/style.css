@@ -11,6 +11,7 @@
         /* 수정(유성) */
         font-family: "Noto Sans", sans-serif;
         background-color: #f4f7fa;
+        overflow: hidden;
     }
 
     /* --- (NEW) CSS 변수 정의 --- */
@@ -648,8 +649,8 @@
     .gas-info.hidden {
         transform: translateY(100%); /* 화면 밖으로 이동 */
     }
-    #decktop{
-        display: none;
+    .list-hide-desktop{
+        display: none !important;
     }
 
     .list-hide-mobile {

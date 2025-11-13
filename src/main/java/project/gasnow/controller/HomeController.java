@@ -25,7 +25,4 @@ public class HomeController {
 
     @GetMapping("/register")
     public String pageRegister() {return "pages/register";}
-
-    @GetMapping("/mypage")
-    public String mypage() {return "pages/myPage.html";}
 }
