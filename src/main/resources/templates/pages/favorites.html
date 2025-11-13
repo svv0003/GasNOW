@@ -17,6 +17,10 @@
 <div class="map_wrap">
     <div id="map" style="width:100vw;height:100vh;overflow:hidden;"></div>
 
+    <div class="mobile-map-fav-btn">
+        <button id="go-jido"><i class="fas fa-map-marker-alt"></i></button>
+        <button id="go-fav"><i class="fa-solid fa-star"></i></button>
+    </div>
 </div>
 <aside class="main-sidebar">
     <div class="sidebar-logo">
@@ -35,7 +39,7 @@
                 </a>
             </li>
             <li>
-                <a href="/jido">
+                <a href="/jido" id="active">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Map</span>
                 </a>
@@ -55,6 +59,10 @@
         </a>
     </div>
 </aside>
+
+
+
+
 
 <aside class="right-info">
     <button class="list-hide-desktop">>></button>
@@ -135,7 +143,10 @@
 
 
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=536af43f432cf63c34cf438bc785017a&autoload=false"></script>
+
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=536af43f432cf63c34cf438bc785017a&autoload=false"></script>
+
 </body>
 
 <script>
@@ -843,7 +854,7 @@
     // 확인 버튼 클릭 시 점수 알림
     document.getElementById('giveRating').addEventListener('click', function() {
 
-        addRating().then(() => {
+        addRating(stationId, currentScore).then(() => {
             // 서버 반영 끝나고
             $('.rating-info').css('display', 'none');
             gsRatingScore();
@@ -1013,7 +1024,12 @@
     }
 
 
+    document.getElementById('go-fav').classList.add('active');
+    document.getElementById('go-jido').classList.remove('active');
 
+    document.getElementById('go-jido').addEventListener('click', function() {
+        window.location.href = '/jido';
+    });
 
 
     /* ----------------------------윤선1 */
