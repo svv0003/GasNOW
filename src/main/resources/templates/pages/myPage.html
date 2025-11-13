@@ -71,7 +71,8 @@
         <button type="button" class="collapsible">보유 포인트</button>
         <div class="content">
             <h4>보유 포인트</h4>
-            <strong id="totalPoint">test P</strong>
+            <strong class="total-point" id="totalPoint">test</strong>
+            <strong class="total-point"> P</strong>
             <div class="content-btn" id="pointBtn">
                 <button type="button" id="pointListBtn">포인트 적립 / 사용내역</button>
             </div>
@@ -167,10 +168,10 @@
         // 여기부터 작업
 
         const result = await res.json();
-        console.log("현재 포인트: ", result);
+        console.log("현재 포인트: ", result.currentPoint);
 
         const totalPoint = document.querySelector("#totalPoint");
-        // totalPoint.innerHTML =
+        totalPoint.innerHTML = `${result.currentPoint}`;
     }
 
     // 포인트 변동 내역 조회 기능

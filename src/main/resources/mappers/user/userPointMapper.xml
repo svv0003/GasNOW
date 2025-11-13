@@ -8,7 +8,7 @@
 
     <!-- user_point 객체 반환 -->
     <select id="getUserPointById" parameterType="String">
-        SELECT *
+        SELECT user_id, point AS currentPoint, total_earned AS totalEarned
         FROM user_point
         WHERE user_id = #{userId}
     </select>
