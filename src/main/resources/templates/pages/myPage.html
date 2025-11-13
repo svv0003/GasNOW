@@ -85,6 +85,9 @@
             <ul id="userInfoList">
                 <li>test</li>
             </ul>
+            <div class="content-btn" id="infoBtn">
+                <button type="button" id="pwChangeBtn">비밀번호 변경</button>
+            </div>
         </div>
     </div>
     <div class="menu-container">
@@ -123,6 +126,9 @@
 
         // 포인트 변동 내역 조회 기능
         showPointHistory();
+
+        // 회원정보 조회 기능
+        showUserInfo();
 
     })
 
@@ -165,7 +171,6 @@
             headers: {"Content-Type": "application/json"},
             credentials: "include",
         })
-        // 여기부터 작업
 
         const result = await res.json();
         console.log("현재 포인트: ", result.currentPoint);
@@ -181,11 +186,44 @@
             headers: {"Content-Type": "application/json"},
             credentials: "include",
         })
-        // 여기부터 작업
+
         const result = await res.json();
         console.log("포인트 변동 이력: ", result);
+
+        // 모달팝업 작업
     }
 
+    // 회원정보 조회 기능
+    async function showUserInfo() {
+        const res = await fetch("/api/mypage/info", {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+            credentials: "include",
+        })
+
+        const result = await res.json();
+        console.log("회원 정보: ", result);
+
+        // 여기부터 작업
+        const userInfoList = document.querySelector("#userInfoList");
+        userInfoList.innerHTML = `
+            <li class="userInfoItem">
+                이름: ${result.userName}
+            </li>
+            <li class="userInfoItem">
+                이메일: ${result.userEmail}
+            </li>
+            <li class="userInfoItem">
+                연락처: ${result.userPhone}
+            </li>
+        `;
+    }
+
+    // 비밀번호 변경
+    const pwChangeBtn = document.querySelector("#pwChangeBtn");
+    pwChangeBtn.addEventListener("click", async () => {
+
+    })
 </script>
 
 </body>

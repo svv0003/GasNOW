@@ -59,6 +59,7 @@
         SELECT *
         FROM point_history
         WHERE user_id = #{userId}
+            AND description = "출석체크"
         ORDER BY created_at DESC
             LIMIT 1;
     </select>
