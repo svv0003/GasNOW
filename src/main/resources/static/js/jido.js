@@ -1,7 +1,19 @@
+let API_KEY = null;
 
-    // --- 1. 카카오맵 생성 ---
+// 먼저 API 키를 받아오기
+fetch('/api/config/key')
+    .then(response => response.json())
+    .then(data => {
+        API_KEY = data.apiKey;
 
-    // 마커들을 담을 배열입니다
+
+    })
+    .catch(err => console.error("API Key 불러오기 실패:", err));
+
+
+
+
+// 마커들을 담을 배열입니다
     var selectedMarker = null;
     var gasStationMarkers = [];
     var map; // map 변수를 전역에서 접근할 수 있도록 바깥으로 빼냅니다.
@@ -270,7 +282,7 @@
         method: "GET",
         url: `${API_BASE_URL}/api/detail-by-id`,
         data: {
-            api_key: "F250930867",
+            api_key: API_KEY,
             uid: uid
         },
         success: function (response) {
@@ -374,7 +386,7 @@
     url: `${API_BASE_URL}/api/nearby-gas-stations`,
     data: {
     // ✅ 필요한 파라미터만 전달
-    api_key: "F250930867",
+    api_key: API_KEY,
     x: katecX,
     y: katecY,
     radius: 5000,
@@ -978,7 +990,7 @@
         method: "GET",
         url: `${API_BASE_URL}/api/detail-by-id`,
         data: {
-            api_key: "F250930867",
+            api_key: API_KEY,
             uid: uid
 
         },
@@ -1063,7 +1075,7 @@
         method: "GET",
         url: `${API_BASE_URL}/api/avg-sigun-price`,
         data: {
-            api_key: "F250930867",
+            api_key: API_KEY,
             sido: sido,
             sigun: sigun
         },

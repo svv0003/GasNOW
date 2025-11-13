@@ -1,5 +1,19 @@
+let API_KEY = null;
 
-    const API_BASE_URL1 = "http://localhost:8080/api";
+// 먼저 API 키를 받아오기
+fetch('/api/config/key')
+    .then(response => response.json())
+    .then(data => {
+        API_KEY = data.apiKey;
+
+
+    })
+    .catch(err => console.error("API Key 불러오기 실패:", err));
+
+
+
+
+const API_BASE_URL1 = "http://localhost:8080/api";
     // --- 1. 카카오맵 생성 ---
 
     // 마커들을 담을 배열입니다
@@ -130,7 +144,7 @@
         method: "GET",
         url: `${API_BASE_URL}/api/detail-by-id`,
         data: {
-            api_key: "F251113111",
+            api_key: API_KEY,
             uid: uid
         },
         success: function (response) {
@@ -499,7 +513,7 @@
         method: "GET",
         url: `${API_BASE_URL}/api/detail-by-id`, // jido.html (935번째 줄)과 동일한 API
         data: {
-            api_key: "F251113111",
+            api_key: API_KEY,
             uid: uid
         },
         success: function (response) {
@@ -700,7 +714,7 @@
         method: "GET",
         url: `${API_BASE_URL}/api/avg-sigun-price`,
         data: {
-            api_key: "F251113111",
+            api_key: API_KEY,
             sido: sido,
             sigun: sigun
         },
