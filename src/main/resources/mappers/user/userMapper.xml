@@ -54,9 +54,10 @@
     </select>
 
     <!-- 마이페이지 - 비밀번호 변경 (새로운 비밀번호 저장) -->
-    <update id="updateUserPassword" parameterType="User">
+<!--    <update id="updateUserPassword" parameterType="User">-->
+    <update id="updateUserPassword">
         UPDATE user
-        SET password = #{userPassword}
+        SET password = #{encodedPassword}
         WHERE user_id = #{userId}
     </update>
 

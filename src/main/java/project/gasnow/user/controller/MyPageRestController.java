@@ -100,13 +100,45 @@ public class MyPageRestController {
     /**
      * 비밀번호 변경 메서드
      * @param session
-     * @param oldPassword 클라이언트가 입력한 기존 비밀번호
-     * @param newPassword 클리이언트가 입력한 변경 비밀번호
+     * @param body JSON 형태의 비밀번호 정보 (oldPassword, newPassword, newPasswordCheck)
      */
     @PatchMapping("/api/mypage/password")
-    public void changePassword(HttpSession session, String oldPassword, String newPassword) {
+    public ResponseEntity<Map<String, String>> changePassword(HttpSession session,
+                                                              @RequestBody Map<String, String> body) {
         String userId = getLoginUserId(session);
-        myPageService.changePassword(userId, oldPassword, newPassword);
+        Map<String, String> resBody = new HashMap<>();
+
+        if(userId == null) {
+            log.error("비밀번호 변경 실패-로그인되지 않음: {}", userId);
+            body.put("message", "로그인 상태가 아닙니다.");
+            return ResponseEntity.badRequest().body(resBody);
+        }
+
+        String oldPassword = body.get("oldPassword");
+        String newPassword = body.get("newPassword");
+        // String newPasswordCheck = body.get("newPasswordCheck");
+
+        try {
+            int updated = myPageService.changePassword(userId, oldPassword, newPassword);
+
+            if(updated == 0) {
+                log.error("비밀번호 변경 실패: {}", userId);
+                resBody.put("message", "비밀번호 변경에 실패했습니다.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resBody);
+            }
+
+            log.info("비밀번호 변경 완료: {} -> {}", oldPassword, newPassword);
+            resBody.put("message", "비밀번호가 성공적으로 변경되었습니다.");
+            // SessionUtil.logout(session);  // 로그아웃 후 다시 로그인하도록 유도
+            return ResponseEntity.ok(resBody);
+
+        } catch(IllegalArgumentException e) {
+            resBody.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(resBody);  // 400
+        } catch(Exception e) {
+            resBody.put("message", "서버 오류로 비밀번호 변경에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resBody);
+        }
     }
 
     /**

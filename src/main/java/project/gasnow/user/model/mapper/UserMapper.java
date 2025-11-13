@@ -1,6 +1,7 @@
 package project.gasnow.user.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import project.gasnow.user.model.dto.User;
 
 import java.util.List;
@@ -55,7 +56,8 @@ public interface UserMapper {
      * @param encodedPassword 암호화된 새 비밀번호
      * @return 업데이트 된 행의 개수 / Controller 에서 boolean으로 정상작동 했는지 판단하는 용도로 사용
      */
-    int updateUserPassword(String userId, String encodedPassword);
+    int updateUserPassword(@Param("userId") String userId,
+                           @Param("encodedPassword") String encodedPassword);
 
     /**
      * 마이페이지 - 회원 탈퇴 메서드
