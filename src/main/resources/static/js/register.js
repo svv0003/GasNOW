@@ -1,9 +1,6 @@
 // 네비게이션 - 모바일 반응형 js 추가
 document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
-// 네비게이션 - 현재 페이지 클릭 표시
-document.querySelector('li > a[href="/register"]').classList.add('active');
-
 const username = document.querySelector("#registerForm input[name=username]");
 const userId = document.querySelector("#registerForm input[name=userId]");
 const userPw = document.querySelector("#registerForm input[name=userPassword]");

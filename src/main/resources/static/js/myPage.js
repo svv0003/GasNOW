@@ -2,7 +2,7 @@
 document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
 // 네비게이션 - 현재 페이지 클릭 표시
-document.querySelector('li > a[href="/mypage"]').classList.add('active');
+document.querySelector('a[href="/mypage"]').classList.add('active');
 
 // 아코디언 메뉴 열리는 효과
 let col1 = document.getElementsByClassName("collapsible");
@@ -160,12 +160,6 @@ async function showPointHistory() {
                 </div>
             </div>
         `}).join("");
-
-    if(item.pointChange < 0) {
-        document.querySelector(".content-point").classList.add("font-red");
-    } else {
-        document.querySelector(".content-point").classList.add("font-green");
-    }
 }
 
 // 회원정보 조회 기능
