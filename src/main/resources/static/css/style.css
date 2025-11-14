@@ -186,6 +186,11 @@
         color: #f70;
     }
 
+    .sidebar-profile a.active {
+        background-color: #afafaf;
+        color: #f70;
+    }
+
     /* --- 2. 헤더 --- */
     .main-header {
         display: flex;
