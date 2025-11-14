@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -22,46 +22,8 @@
         <button id="go-fav"><i class="fa-solid fa-star"></i></button>
     </div>
 </div>
-<aside class="main-sidebar">
-    <div class="sidebar-logo">
-        <a href="/">
-            <img src="./logo/logo-small-white.png" alt="GASNOW Logo" class="logo-default">
-            <img src="./logo/logo-small-orange.png" alt="GASNOW Logo Hover" class="logo-hover">
-        </a>
-    </div>
 
-    <nav class="sidebar-nav">
-        <ul>
-            <li>
-                <a href="/" >
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="/jido" id="active">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Map</span>
-                </a>
-            </li>
-            <li>
-                <a href="/favorites" class="active">
-                    <i class="fas fa-star"></i>
-                    <span>Favorite</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="sidebar-profile">
-        <a href="/profile">
-            <i class="fas fa-user"></i>
-        </a>
-    </div>
-</aside>
-
-
-
+<div th:replace="~{header :: header}"></div>
 
 
 <aside class="right-info">
@@ -87,15 +49,16 @@
                 <button id="rating-btn">리뷰하기</button>
                 <span id="gs-address"></span>
                 <span id="gs-number"></span>
-                <table id="oil-info-table" border="1" cellspacing="0" cellpadding="5">                    <thead id="oil-info-head">
-                    <tr>
-                        <th>유종</th>
-                        <th>경유</th>
-                        <th>휘발유</th>
-                        <th>고급휘발유</th>
-                        <th>실내등유</th>
-                        <th>LPG</th>
-                    </tr>
+                <table id="oil-info-table" border="1" cellspacing="0" cellpadding="5">
+                    <thead id="oil-info-head">
+                        <tr>
+                            <th>유종</th>
+                            <th>경유</th>
+                            <th>휘발유</th>
+                            <th>고급휘발유</th>
+                            <th>실내등유</th>
+                            <th>LPG</th>
+                        </tr>
                     </thead>
                     <tbody id="oil-info-body">
                     <tr>
