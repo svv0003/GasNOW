@@ -1235,7 +1235,9 @@ fetch('/api/config/key')
 document.querySelectorAll('li > a').forEach(a => a.classList.remove('active'));
 
 // 특정 메뉴에 active 추가
+
 document.querySelector('li > a[href="/jido"]').classList.add('active');
+
 document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
 

@@ -486,7 +486,7 @@ const API_BASE_URL1 = "/api";
     if (!response.ok) {
     if (response.status === 401) {
     alert("로그인이 필요합니다.");
-    window.location.href = './jido';
+    window.location.href = './login';
 }
     throw new Error("서버 요청 실패");
 }
@@ -863,6 +863,7 @@ document.querySelectorAll('li > a').forEach(a => a.classList.remove('active'));
 
 // 특정 메뉴에 active 추가
 document.querySelector('li > a[href="/favorites"]').classList.add('active');
+
 document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
     /* ----------------------------윤선1 */
