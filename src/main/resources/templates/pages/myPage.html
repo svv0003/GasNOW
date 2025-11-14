@@ -48,10 +48,9 @@
                             <div class="content-remaining">test-잔여포인트</div>
                         </div>
                     </div>
-
-                    <div class="modal-btn">
-                        <button type="button" class="close_btn" id="pointModalBtn">닫기</button>
-                    </div>
+                </div>
+                <div class="modal-btn">
+                    <button type="button" class="close_btn" id="pointModalBtn">닫기</button>
                 </div>
             </div>
         </div>
@@ -84,16 +83,22 @@
             <div class="modal_popup">
                 <div class="modal-box">
                     <h3>비밀번호 변경</h3>
-                    <div class="history-content">
+                    <div class="pw-content">
                         <form id="pwChangeForm">
                             <div class="form-item">
                                 <label>현재 비밀번호<span class="required">*</span></label>
-                                <input type="password" name="currentPw" id="currentPw"/>
+                                <input type="password"
+                                       name="currentPw"
+                                       id="currentPw"
+                                       placeholder="현재 비밀번호를 입력하세요"/>
                             </div>
 
                             <div class="form-item">
                                 <label>변경 비밀번호<span class="required">*</span></label>
-                                <input type="password" name="newPw" id="newPw"/>
+                                <input type="password"
+                                       name="newPw"
+                                       id="newPw"
+                                       placeholder="새로운 비밀번호를 입력하세요"/>
                                 <div class="alertBox" id="pwAlertItem">
                                     영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)
                                 </div>
@@ -101,7 +106,10 @@
 
                             <div class="form-item">
                                 <label>비밀번호 확인<span class="required">*</span></label>
-                                <input type="password" name="newPwChk" id="newPwChk"/>
+                                <input type="password"
+                                       name="newPwChk"
+                                       id="newPwChk"
+                                       placeholder="새로운 비밀번호 확인"/>
                             </div>
                         </form>
                     </div>

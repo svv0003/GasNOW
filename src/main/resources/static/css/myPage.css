@@ -27,6 +27,33 @@
     .menu-container {
         width: 75vw;
     }
+
+    /* 모달 팝업 */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .modal .modal_popup {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 50%;
+        height: 80vh;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /* ========================================
@@ -38,7 +65,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        max-width: 350px;
+        /*max-width: 350px;*/
         margin: 0 auto; /* 부모 기준 가로 가운데 정렬 */
         gap: 30px;
     }
@@ -55,6 +82,38 @@
         max-width: 100%;
         width: 90vw;
     }
+
+    .info-gap {
+        flex: 0 0 10em;
+    }
+
+    /* 모달 팝업 */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width:100vw;
+        height: 100vh;
+        /*overflow: hidden;*/
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .modal .modal_popup {
+        position: absolute;
+        top: 53%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 70%;
+        height: 50vh;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /* ========================================
@@ -70,9 +129,8 @@ button {
 
 .mypage-wrapper {
     display: flex;
-    /*width: 100%;*/
-    width: 100vw;
-    overflow-y: auto;
+    width: 100%;
+    overflow-y: hidden;
 }
 
 .mypage-container {
@@ -85,10 +143,10 @@ button {
     margin-bottom: 2rem;
 }
 
-.menu-container {
-    /*width: 100%;*/
-    /*max-width: 500px;*/
-}
+/*.menu-container {*/
+/*    width: 100%;*/
+/*    !*max-width: 500px;*!*/
+/*}*/
 
 .menu-container > button {
     background-color: #f4f7fa;
@@ -112,15 +170,16 @@ button {
 }
 
 .collapsible::after {
-    content: '\02795'; /* Unicode character for "plus" sign (+) */
-    font-size: 13px;
-    color: white;
+    content: "+";
+    font-size: 1.2em;
+    color: #afafaf;
     float: right;
     margin-left: 0.8em;
 }
 
 .open:after {
-    content: "\2796"; /* Unicode character for "minus" sign (-) */
+    content: "–";
+    font-size: 01.2em;
 }
 
 .menu-container:nth-last-child(-n+2) .collapsible::after {
@@ -190,7 +249,7 @@ button {
 }
 
 #reviewRating {
-    flex: 0 0 8em;
+    flex: 0 0 6em;
 }
 
 .review-item i {
@@ -202,11 +261,15 @@ button {
     display: flex;
     flex-direction: column;
     max-width: 60%;
+
+    justify-content: center;
 }
 
 .userInfoItem {
     display: flex;
+    gap: 3px;
 }
+
 
 .info-title {
     flex: 0 0 4em;
@@ -217,34 +280,11 @@ button {
     justify-content: flex-start;
 }
 
+.info-gap {
+    flex: 0 0 1em;
+}
+
 /* 모달팝업 영역 스타일 */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:100vw;
-    height: 100vh;
-    /*overflow: hidden;*/
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
-.modal .modal_popup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 50%;
-    height: 80vh;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
 .modal-box {
     flex: 1;
     overflow-y: auto;
@@ -252,7 +292,9 @@ button {
 }
 
 .modal .modal_popup .modal-btn {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
 }
 
 .modal .modal_popup .close_btn {
@@ -267,11 +309,107 @@ button {
     cursor: pointer;
 }
 
-.modal-btn > button:hover {
+#pointModalBtn:hover {
+    background-color: #ee6c00;
+    transition: background-color 0.2s ease;
+}
+
+#pwModalBtn:hover {
     background-color: #ee6c00;
     transition: background-color 0.2s ease;
 }
 
 .modal.on {
     display: block;
+}
+
+/* 포인트 내역 모달팝업 */
+.modal-box > h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-content {
+    display: flex;
+    padding: 8px 8px;
+    border-top: 1px solid #afafaf;
+    justify-content: space-between;
+}
+
+.history-list:last-child {
+    border-bottom: 1px solid #afafaf;
+}
+
+.history-content .content-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-description {
+    font-size: 0.9em;
+}
+
+.content-date {
+    /*flex: 0 0 9em;*/
+    font-size: 0.75em;
+}
+
+.content-point {
+    /*flex: 0 0 9em;*/
+    /*align-items: flex-end;*/
+    font-size: 0.9em;
+}
+
+/* 비밀번호 변경 모달팝업 */
+.pw-content {
+    display: flex;
+    padding: 8px 8px;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    max-width: 360px;
+    margin-bottom: 20px;
+}
+
+.form-item label {
+    margin-bottom: 0.4rem;
+    align-self: flex-start;
+    font-size: 0.9rem;
+    color: #000000;
+    padding-left: 5px
+}
+
+.form-item input[type="password"] {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 20px;
+    border: 1.5px solid #afafaf;
+    box-sizing: border-box;
+}
+
+.form-item input[type="password"]:focus {
+    border: 1px solid #ff7700;
+    outline: none;
+}
+
+.alertBox {
+    font-size: 0.8em;
+    color: #696969;
+}
+
+.required {
+    color: #ff0004;
 }

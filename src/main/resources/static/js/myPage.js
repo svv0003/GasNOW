@@ -1,3 +1,6 @@
+// 네비게이션 - 모바일 반응형 js 추가
+document.querySelector('li > a[href="/jido"]').classList.add('active1');
+
 // 아코디언 메뉴 열리는 효과
 let col1 = document.getElementsByClassName("collapsible");
 let i;
@@ -98,6 +101,7 @@ async function showCurrentPoint() {
 
 // 포인트 변동 모달팝업 작업
 const pointModal = document.querySelector("#pointModal");
+const modalBackground = document.querySelector("#pointModal .modal-background");
 const pointModalOpen = document.querySelector("#pointListBtn");
 const pointModalClose = document.querySelector("#pointModalBtn");
 
@@ -113,8 +117,9 @@ pointModalClose.addEventListener("click", () => {
 
 pointModal.addEventListener("click", (e) => {
     if(e.target === pointModal) {
-        console.log("배경 클릭으로 모달 닫기")
-        pointModal.classList.remove("on");
+
+            console.log("배경 클릭으로 모달 닫기")
+            pointModal.classList.remove("on");
     }
 })
 
@@ -133,17 +138,31 @@ async function showPointHistory() {
     const historyList = document.querySelector(".history-list");
 
     modalUserName.innerHTML = `${result[0].userId}`;
-    historyList.innerHTML = result.map(item => `
+    historyList.innerHTML = result.map(item => {
+        const description = item.description;
+        const changeNum = Number(item.pointChange);  // 받아온 문자열을 숫자로 형변환
+        const changeNumType = description === "리뷰 작성" ? -changeNum : changeNum;
+        const isNegative = changeNumType < 0;
+        const colorClass = isNegative ? "font-red" : "font-green";
+        const displayValue = changeNumType > 0 ? `+${changeNum}` : `${changeNum}`;
+
+        return `
             <div class="history-content">
                 <div class="content-item">
-                    <div class="content-description">${item.description}</div>
-                    <div class="content-date">${item.createdAt}</div>
+                    <div class="content-description font-bold">${item.description}</div>
+                    <div class="content-date font-gray2">${item.createdAt.split(" ")[0]}</div>
                 </div>
                 <div class="content-item">
-                    <div class="content-point">${item.pointChange}</div>
+                    <div class="content-point font-bold ${colorClass}">${displayValue} P</div>
                 </div>
             </div>
-        `).join("");
+        `}).join("");
+
+    if(item.pointChange < 0) {
+        document.querySelector(".content-point").classList.add("font-red");
+    } else {
+        document.querySelector(".content-point").classList.add("font-green");
+    }
 }
 
 // 회원정보 조회 기능
@@ -160,6 +179,7 @@ async function showUserInfo() {
     const userInfoList = document.querySelector("#userInfoList");
     userInfoList.innerHTML = `
             <li class="userInfoItem">
+                <div class="info-gap"></div>
                 <div class="info-title">
                     이름
                 </div>
@@ -168,6 +188,7 @@ async function showUserInfo() {
                </div>
             </li>
             <li class="userInfoItem">
+                <div class="info-gap"></div>
                 <div class="info-title">
                     이메일
                 </div>
@@ -176,12 +197,13 @@ async function showUserInfo() {
                 </div>
             </li>
             <li class="userInfoItem">
-            <div class="info-title">
-                연락처 
-            </div>
-            <div class="info-cell">
-                ${result.userPhone}
-            </div>
+                <div class="info-gap"></div>
+                <div class="info-title">
+                    연락처 
+                </div>
+                <div class="info-cell">
+                    ${result.userPhone}
+                </div>
             </li>
         `;
 }

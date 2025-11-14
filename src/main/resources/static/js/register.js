@@ -1,3 +1,6 @@
+// 네비게이션 - 모바일 반응형 js 추가
+document.querySelector('li > a[href="/jido"]').classList.add('active1');
+
 const username = document.querySelector("#registerForm input[name=username]");
 const userId = document.querySelector("#registerForm input[name=userId]");
 const userPw = document.querySelector("#registerForm input[name=userPassword]");
@@ -26,6 +29,9 @@ const initTime = "05:00";
 let authTimer; // setInterval 저장
 let min = initMin;
 let sec = initSec;
+
+// 네비게이션 - 모바일 반응형 js 추가
+document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
 // 이름 확인
 username.addEventListener("input", () => {
