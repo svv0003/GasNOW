@@ -1,6 +1,9 @@
 // 네비게이션 - 모바일 반응형 js 추가
 document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
+// 네비게이션 - 현재 페이지 클릭 표시
+document.querySelector('li > a[href="/mypage"]').classList.add('active');
+
 // 아코디언 메뉴 열리는 효과
 let col1 = document.getElementsByClassName("collapsible");
 let i;
