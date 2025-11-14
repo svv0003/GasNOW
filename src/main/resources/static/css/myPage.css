@@ -1,18 +1,110 @@
+/* ========================================
+웹 사이즈
+======================================== */
+@media (min-width: 451px) {
+    .mypage-wrapper {
+        display: flex;
+        margin: 0 auto;
+        width: 75vw;
+        max-width: 1300px;
+        min-width: 500px;
+        height: 100vh;
+    }
+
+    .nav-area {
+        width: var(--sidebar-width);
+        height: var(--sidebar-height);
+    }
+
+    .mypage-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-top: 4rem;
+        align-items: center;
+    }
+
+    .menu-container {
+        width: 75vw;
+    }
+}
+
+/* ========================================
+모바일 사이즈
+======================================== */
+@media (max-width: 450px) {
+    .mypage-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 350px;
+        margin: 0 auto; /* 부모 기준 가로 가운데 정렬 */
+        gap: 30px;
+    }
+
+    .nav-area {
+        height: var(--sidebar-height);
+    }
+
+    .mypage-container {
+        padding: 1.5rem 1rem 2rem 1rem;
+    }
+
+    .menu-container {
+        max-width: 100%;
+        width: 90vw;
+    }
+}
+
+/* ========================================
+웹, 모바일 공통 속성
+======================================== */
+li {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.mypage-wrapper {
+    display: flex;
+    /*width: 100%;*/
+    width: 100vw;
+    overflow-y: auto;
+}
+
+.mypage-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mypage-container > h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.menu-container {
+    /*width: 100%;*/
+    /*max-width: 500px;*/
+}
 
 .menu-container > button {
-    background-color: #ffffff;
+    background-color: #f4f7fa;
+    width: 100%;
 }
 
 .menu-container .collapsible {
-    color: #444;
+    color: #000000;
     cursor: pointer;
-    padding: 18px;
+    padding: 1.12em;
     width: 100%;
     border: none;
     border-top: 1px solid #666666;
     text-align: left;
     outline: none;
-    font-size: 15px;
+    font-size: 0.9em;
 }
 
 .menu-container:last-child {
@@ -24,10 +116,10 @@
     font-size: 13px;
     color: white;
     float: right;
-    margin-left: 5px;
+    margin-left: 0.8em;
 }
 
-.active:after {
+.open:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
 
@@ -35,29 +127,105 @@
     content: '';
 }
 
-.active, .collapsible:hover {
-    background-color: #ccc;
+.open, .collapsible:hover {
+    background-color: #f3e1d4;
 }
 
 .content {
     padding: 0 18px;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: #ffeedf;
 
     /* 내려오는 효과 */
     max-height: 0;
     transition: max-height 0.2s ease-out;
 }
 
+.content-item  h4 {
+    padding-bottom: 0.3em;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+#pointContent {
+    text-align: center;
+}
+
+.content-box {
+    padding: 1.5em 1em;
+}
+
+.total-point {
+    font-size: 1.2em;
+}
+
+.content-btn {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.content-btn > button {
+    background-color: #FFC696;
+    border: 1px solid #FF7700;
+    border-radius: 12px;
+    color: #000000;
+    padding: 5px 10px;
+}
+
+.content-btn > button:hover {
+    background-color: #ffbd88;
+}
+
+/* 리뷰 목록 조회 */
+.review-item {
+    display: flex;
+}
+
+#reviewDate {
+    flex: 0 0 7em;
+}
+
+#reviewStation {
+    flex: 1;
+}
+
+#reviewRating {
+    flex: 0 0 8em;
+}
+
+.review-item i {
+    color: #FFC402;
+}
+
+/* 회원정보 조회 */
+#userInfoList {
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+}
+
+.userInfoItem {
+    display: flex;
+}
+
+.info-title {
+    flex: 0 0 4em;
+}
+
+.info-cell {
+    flex: 1;
+    justify-content: flex-start;
+}
+
 /* 모달팝업 영역 스타일 */
 .modal {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width:100vw;
     height: 100vh;
-    overflow: hidden;
+    /*overflow: hidden;*/
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
@@ -66,15 +234,19 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 50%;
-    height: 50%;
     transform: translate(-50%, -50%);
+
+    width: 50%;
+    height: 80vh;
     padding: 20px;
     background: #ffffff;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-box {
+    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -86,13 +258,18 @@
 .modal .modal_popup .close_btn {
     display: block;
     padding: 10px 20px;
-    bottom: 10%;
-    background-color: rgb(116, 0, 0);
+    background-color: #ff7700;
+    color: #ffffff;
+    font-size: 1.1rem;
+    padding: 8px 20px;
     border: none;
-    border-radius: 5px;
-    color: #fff;
+    border-radius: 10px;
     cursor: pointer;
-    transition: box-shadow 0.2s;
+}
+
+.modal-btn > button:hover {
+    background-color: #ee6c00;
+    transition: background-color 0.2s ease;
 }
 
 .modal.on {
