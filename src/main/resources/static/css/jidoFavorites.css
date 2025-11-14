@@ -48,14 +48,10 @@
     .right-info {
         position: fixed;
         top: 0;
-        right: 0;
-        width: 25vw;       /* gas-info width와 동일 */
+        right: 0;      /* gas-info width와 동일 */
         height: 100vh;
         overflow: visible; /* 버튼이 밖으로 나올 수 있게 */
         z-index: 100;
-
-
-
 
     }
 
@@ -442,8 +438,6 @@
     .right-info {
         position: fixed;
         bottom: 0;
-        width: 100vw;
-        height: 50vh;
         overflow: visible;
         z-index: 100;
 
