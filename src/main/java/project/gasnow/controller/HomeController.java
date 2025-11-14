@@ -13,11 +13,11 @@ public class HomeController {
 
     @GetMapping("/jido")
     public String jido() {
-        return "/pages/jido.html";
+        return "pages/jido.html";
     }
 
     @GetMapping("/favorites")
-    public String favorites() { return "/pages/favorites.html";
+    public String favorites() { return "pages/favorites.html";
     }
 
     @GetMapping("/login")
@@ -26,9 +26,6 @@ public class HomeController {
     @GetMapping("/register")
     public String pageRegister() {return "pages/register";}
 
-    @GetMapping("/chart")
-    public String pageChart() {return "pages/chart.html";}
-
     @GetMapping("/mypage")
-    public String pageMypage() {return "pages/mypage.html";}
+    public String pageMypage() {return "pages/myPage.html";}
 }

@@ -22,7 +22,7 @@
         padding: 10px 15px;
         overflow-y: auto; /* 목록이 길어지면 스크롤 */
         /* 상세 정보가 보일 때를 대비해 최대 높이 설정 (조절 가능) */
-        max-height: 40vh;
+        max-height: 50vh;
     }
 
     .favorite-item {
@@ -54,6 +54,9 @@
         overflow: visible; /* 버튼이 밖으로 나올 수 있게 */
         z-index: 100;
 
+
+
+
     }
 
     .gas-info {
@@ -68,6 +71,10 @@
         transform: translateX(0);
         border-top-left-radius: 50px;
         border-bottom-left-radius: 50px;
+        box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);
+    }
+    .list-hide-desktop {
+        box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);
     }
 
     .gas-info.hidden {
@@ -377,11 +384,11 @@
     }
 
     #giveRating {
-        width: 10%;
+        width: 15%;
         height: 10%;
         border: none;
         background-color: white;
-        font-size: 12px;
+        font-size: 16px;
         cursor: pointer;
     }
 
@@ -498,8 +505,9 @@
     .oil-type button {
         margin: 0;
         padding: 0;
-        width: 15vw;
+        width: 17vw;
         height: 4vh;
+        font-size: 12px;
         cursor: pointer;
         border: 1px solid black;
 
@@ -707,7 +715,7 @@
     }
 
     #oil-info-head th{
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 400;
     }
 
@@ -789,7 +797,7 @@
     }
 
     #giveRating {
-        width: 10%;
+        width: 15%;
         height: 10%;
         border: none;
         position: fixed;

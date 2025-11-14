@@ -59,7 +59,8 @@
         SELECT *
         FROM point_history
         WHERE user_id = #{userId}
-            AND description = "출석체크"
+            AND description IN ("출석체크", "회원가입")
+            AND DATE(created_at) = CURDATE()
         ORDER BY created_at DESC
             LIMIT 1;
     </select>
