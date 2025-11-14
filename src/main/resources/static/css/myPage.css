@@ -27,6 +27,41 @@
     .menu-container {
         width: 75vw;
     }
+
+    /* 모달 팝업 */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .modal-background {
+        position: fixed;
+        top: 0;
+        left: var(--sidebar-width);
+        width: calc(100vw - var(--sidebar-width));
+        height: 100vh;
+    }
+
+    .modal .modal_popup {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 50%;
+        height: 80vh;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /* ========================================
@@ -54,6 +89,34 @@
     .menu-container {
         max-width: 100%;
         width: 90vw;
+    }
+
+    /* 모달 팝업 */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width:100vw;
+        height: 100vh;
+        /*overflow: hidden;*/
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .modal .modal_popup {
+        position: absolute;
+        top: 53%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 70%;
+        height: 50vh;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -190,7 +253,7 @@ button {
 }
 
 #reviewRating {
-    flex: 0 0 8em;
+    flex: 0 0 6em;
 }
 
 .review-item i {
@@ -202,14 +265,17 @@ button {
     display: flex;
     flex-direction: column;
     max-width: 60%;
+
+    justify-content: center;
 }
 
 .userInfoItem {
     display: flex;
+    gap: 3px;
 }
 
 .info-gap {
-    flex: 0 0 13em;
+    flex: 0 0 10em;
 }
 
 .info-title {
@@ -222,33 +288,6 @@ button {
 }
 
 /* 모달팝업 영역 스타일 */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:100vw;
-    height: 100vh;
-    /*overflow: hidden;*/
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
-.modal .modal_popup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 50%;
-    height: 80vh;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
 .modal-box {
     flex: 1;
     overflow-y: auto;
@@ -256,7 +295,10 @@ button {
 }
 
 .modal .modal_popup .modal-btn {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    margin-top: 1rem;
 }
 
 .modal .modal_popup .close_btn {
@@ -278,4 +320,48 @@ button {
 
 .modal.on {
     display: block;
+}
+
+/* 포인트 내역 모달팝업 */
+.modal-box > h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-content {
+    display: flex;
+    padding: 8px 8px;
+    border-top: 1px solid #afafaf;
+    justify-content: space-between;
+}
+
+.history-list:last-child {
+    border-bottom: 1px solid #afafaf;
+}
+
+.history-content .content-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-description {
+    font-size: 0.9em;
+}
+
+.content-date {
+    /*flex: 0 0 9em;*/
+    font-size: 0.75em;
+}
+
+.content-point {
+    /*flex: 0 0 9em;*/
+    /*align-items: flex-end;*/
+    font-size: 0.9em;
 }
