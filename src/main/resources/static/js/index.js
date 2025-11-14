@@ -322,9 +322,17 @@ $('#chartContainer').on('dblclick', function() {
 공통 변수, 객체, 배열
 ================================================================================================*/
 // API
+let API_KEY = null;
+fetch('/api/config/key')
+    .then(response => response.json())
+    .then(data => {
+        API_KEY = data.apiKey;
+        console.log("api_key:", API_KEY);
+    })
+    .catch(err => console.error("API Key 불러오기 실패:", err));
 const DB_URL = "http://localhost:8080/api";
 const API_BASE_URL = "https://axis-convert-new.vercel.app";
-const API_KEY = "F250930867";
+// const API_KEY = "F250930867";
 
 /*=================================================
 시도별 유종별 현재가
@@ -431,16 +439,18 @@ $(document).ready(function () {
             if (data && data.xml_data) {
                 try {
                     const xmlDoc = $.parseXML(data.xml_data);
+                    console.log("xmlDoc:", xmlDoc);
                     const $xml = $(xmlDoc);
                     $xml.find("OIL").each(function () {
                         const $oil = $(this);
+                        console.log("$oil:", $oil);
                         const oilData = {
                             SIDOCD: $oil.find("SIDOCD").text(),
                             SIDONM: $oil.find("SIDONM").text(),
                             PRODCD: $oil.find("PRODCD").text(),
                             PRICE: $oil.find("PRICE").text(),
                         };
-                        // console.log("oilData:", oilData);
+                        console.log("oilData:", oilData);
                         allOilPrice.push(oilData);
                         if (!API_SIDOCD_SIDONM_Map.has(oilData.SIDOCD)) {
                             API_SIDOCD_SIDONM_Map.set(oilData.SIDOCD, oilData.SIDONM);
