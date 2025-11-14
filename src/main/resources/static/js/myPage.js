@@ -72,12 +72,16 @@ async function showReviewList() {
 // 별점 아이콘 반환 기능
 function renderStars(score) {
     const fullStar = `<i class="fa-solid fa-star star-icon"></i>`
-    const halfStar = `<i class="fa-regular fa-star-half-stroke star-icon"></i>`
+    const halfStar = `<i class="fa-solid fa-star-half-stroke star-icon"></i>`
     const emptyStar = `<i class="fa-regular fa-star star-icon"></i>`
 
-    const full = Math.floor(score); // 정수
-    const decimal = score - full;   // 소수
-    const hasHalf = decimal >= 0.25 && decimal <0.75;
+    console.log("평점: ", score);
+
+    const num = Number(score);
+    const rounded = Math.round(num * 2) / 2;
+
+    const full = Math.floor(rounded); // 정수
+    const hasHalf = rounded - full === 0.5;
     const empty = 5 - full - (hasHalf ? 1 : 0);
 
     return (
