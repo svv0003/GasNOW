@@ -28,6 +28,10 @@
         width: 75vw;
     }
 
+    .info-gap {
+        flex: 0 0 10em;
+    }
+
     /* 모달 팝업 */
     .modal {
         display: none;
@@ -84,7 +88,7 @@
     }
 
     .info-gap {
-        flex: 0 0 10em;
+        flex: 0 0 1em;
     }
 
     /* 모달 팝업 */
@@ -270,7 +274,6 @@ button {
     gap: 3px;
 }
 
-
 .info-title {
     flex: 0 0 4em;
 }
@@ -278,10 +281,6 @@ button {
 .info-cell {
     flex: 1;
     justify-content: flex-start;
-}
-
-.info-gap {
-    flex: 0 0 1em;
 }
 
 /* 모달팝업 영역 스타일 */
