@@ -400,7 +400,7 @@
     }
 
     /* active 클래스가 있는 li만 보이게 */
-    .sidebar-nav ul li a.active {
+    .sidebar-nav ul li a.active1 {
         display: flex; /* 기존 a 스타일 유지 */
 
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
 <div class="map_wrap">
     <div id="map" style="width:100vw;height:100vh;overflow:hidden;"></div>
     <div class="mobile-map-fav-btn">
@@ -20,44 +19,10 @@
         <button id="go-fav"><i class="fa-solid fa-star"></i></button>
     </div>
 </div>
-    <aside class="main-sidebar">
-        <div class="sidebar-logo">
-            <a href="/">
-                <img src="./logo/logo-small-white.png" alt="GASNOW Logo" class="logo-default">
-                <img src="./logo/logo-small-orange.png" alt="GASNOW Logo Hover" class="logo-hover">
-            </a>
-        </div>
 
-        <nav class="sidebar-nav">
-            <ul>
-                <li>
-                    <a href="/">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/jido" class="active">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Map</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/favorites">
-                        <i class="fas fa-star"></i>
-                        <span>Favorite</span>
-                    </a>
-                </li>
-            </ul>
-          </nav>
-          
-          <div class="sidebar-profile">
-              <a href="/profile">
-                  <i class="fas fa-user"></i>
-              </a>
-          </div>
-    </aside>
-    
+<div th:replace="~{header :: header}"></div>
+
+
     <!-- 윤선1-------------------------------->
     <aside class="right-info">
         <button class="list-hide-desktop">>></button>
