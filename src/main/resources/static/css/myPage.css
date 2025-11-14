@@ -208,6 +208,10 @@ button {
     display: flex;
 }
 
+.info-gap {
+    flex: 0 0 13em;
+}
+
 .info-title {
     flex: 0 0 4em;
 }

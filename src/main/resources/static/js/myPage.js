@@ -160,6 +160,7 @@ async function showUserInfo() {
     const userInfoList = document.querySelector("#userInfoList");
     userInfoList.innerHTML = `
             <li class="userInfoItem">
+                <div class="info-gap"></div>
                 <div class="info-title">
                     이름
                 </div>
@@ -168,6 +169,7 @@ async function showUserInfo() {
                </div>
             </li>
             <li class="userInfoItem">
+                <div class="info-gap"></div>
                 <div class="info-title">
                     이메일
                 </div>
@@ -176,12 +178,13 @@ async function showUserInfo() {
                 </div>
             </li>
             <li class="userInfoItem">
-            <div class="info-title">
-                연락처 
-            </div>
-            <div class="info-cell">
-                ${result.userPhone}
-            </div>
+                <div class="info-gap"></div>
+                <div class="info-title">
+                    연락처 
+                </div>
+                <div class="info-cell">
+                    ${result.userPhone}
+                </div>
             </li>
         `;
 }
