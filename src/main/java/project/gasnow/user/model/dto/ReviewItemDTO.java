@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ReviewItemDTO {
     private String createdAt;
     private String stationName;
-    private int ratingScore;
+    private Double ratingScore;
 }

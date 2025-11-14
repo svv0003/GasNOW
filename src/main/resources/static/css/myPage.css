@@ -6,7 +6,7 @@
         display: flex;
         margin: 0 auto;
         width: 75vw;
-        max-width: 1300px;
+        /*max-width: 1300px;*/
         min-width: 500px;
         height: 100vh;
     }
@@ -134,6 +134,7 @@ button {
 .mypage-wrapper {
     display: flex;
     width: 100%;
+    margin: 0 auto;
     overflow-y: hidden;
 }
 
@@ -333,6 +334,7 @@ button {
 .history-list {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .history-content {
@@ -340,6 +342,7 @@ button {
     padding: 8px 8px;
     border-top: 1px solid #afafaf;
     justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .history-list:last-child {
