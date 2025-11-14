@@ -384,11 +384,11 @@
     }
 
     #giveRating {
-        width: 10%;
+        width: 15%;
         height: 10%;
         border: none;
         background-color: white;
-        font-size: 12px;
+        font-size: 16px;
         cursor: pointer;
     }
 
@@ -505,8 +505,9 @@
     .oil-type button {
         margin: 0;
         padding: 0;
-        width: 15vw;
+        width: 17vw;
         height: 4vh;
+        font-size: 12px;
         cursor: pointer;
         border: 1px solid black;
 
@@ -714,7 +715,7 @@
     }
 
     #oil-info-head th{
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 400;
     }
 
@@ -796,7 +797,7 @@
     }
 
     #giveRating {
-        width: 10%;
+        width: 15%;
         height: 10%;
         border: none;
         position: fixed;
