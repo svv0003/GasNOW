@@ -117,10 +117,9 @@ pointModalClose.addEventListener("click", () => {
 
 pointModal.addEventListener("click", (e) => {
     if(e.target === pointModal) {
-        if (e.target === e.currentTarget) {
+
             console.log("배경 클릭으로 모달 닫기")
             pointModal.classList.remove("on");
-        }
     }
 })
 
