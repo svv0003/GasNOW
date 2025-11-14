@@ -54,6 +54,9 @@
         overflow: visible; /* 버튼이 밖으로 나올 수 있게 */
         z-index: 100;
 
+
+
+
     }
 
     .gas-info {
@@ -68,6 +71,10 @@
         transform: translateX(0);
         border-top-left-radius: 50px;
         border-bottom-left-radius: 50px;
+        box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);
+    }
+    .list-hide-desktop {
+        box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);
     }
 
     .gas-info.hidden {
