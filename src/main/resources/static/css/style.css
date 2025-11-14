@@ -11,7 +11,7 @@
         /* 수정(유성) */
         font-family: "Noto Sans", sans-serif;
         background-color: white;
-        overflow: hidden;
+        overflow-y: hidden;
     }
 
     /* --- (NEW) CSS 변수 정의 --- */
