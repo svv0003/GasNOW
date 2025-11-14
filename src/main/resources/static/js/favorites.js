@@ -858,6 +858,12 @@ const API_BASE_URL1 = "/api";
     window.location.href = '/jido';
 });
 
+// 모든 메뉴에서 active 제거
+document.querySelectorAll('li > a').forEach(a => a.classList.remove('active'));
+
+// 특정 메뉴에 active 추가
+document.querySelector('li > a[href="/favorites"]').classList.add('active');
+document.querySelector('li > a[href="/jido"]').classList.add('active1');
 
     /* ----------------------------윤선1 */
     //     -----------------------------------------------------------윤선

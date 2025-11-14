@@ -1231,5 +1231,12 @@ fetch('/api/config/key')
     window.location.href = '/favorites';
 });
 
+// 모든 메뉴에서 active 제거
+document.querySelectorAll('li > a').forEach(a => a.classList.remove('active'));
 
-    /* ----------------------------윤선1 */
+// 특정 메뉴에 active 추가
+document.querySelector('li > a[href="/jido"]').classList.add('active');
+document.querySelector('li > a[href="/jido"]').classList.add('active1');
+
+
+/* ----------------------------윤선1 */
