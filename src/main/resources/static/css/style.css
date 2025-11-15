@@ -73,7 +73,7 @@
     }
 
     /* 모든 로고 이미지의 공통 스타일 */
-    .sidebar-logo img {
+    .sidebar-logo a img {
         /* 반응형 크기 유지 */
         width: 100%; /* 부모(a 태그)의 100%를 채움 */
         height: auto;
@@ -85,6 +85,11 @@
           기본 로고를 블록으로 처리합니다. (호버 이미지는 absolute)
         */
         display: block;
+    }
+
+    .map-img,
+    .mypage-img {
+        display: none;
     }
 
     /* 호버용 로고 스타일 */
@@ -309,7 +314,7 @@
 
 
     /* 모든 로고 이미지의 공통 스타일 */
-    .sidebar-logo img {
+    .sidebar-logo a img {
         /* 반응형 크기 유지 */
         width: 100%; /* 부모(a 태그)의 100%를 채움 */
         height: auto;
@@ -322,6 +327,8 @@
         */
         display: block;
     }
+
+
 
     /* 호버용 로고 스타일 */
     .sidebar-logo .logo-default {

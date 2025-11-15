@@ -88,7 +88,7 @@ const areaCodeToName = {
 };      // Chart 지역 매핑 객체
 
 let currentTickerIndex = 0;             // 티커 현재 idx
-const tickerItemHeight = 40;            // 티커 높이 -> CSS에서 .diff-box 높이와 일치하도록 작성한다.
+const tickerItemHeight = 50;            // 티커 높이 -> CSS에서 .diff-box 높이와 일치하도록 작성한다.
 const tickerTransitionTime = 500;       // 티커 전환 = 0.5초 (CSS transition 시간)
 const $tickerList = $("#tickerList");             // HTML <ul> id
 let totalTickerItems = 0;              //
@@ -213,6 +213,28 @@ function setupEventListeners() {
     /*================================================================================================
     로그인, 회원가입 버튼 => loginPageLink(), registerPageLink() 함수로 대체
     ================================================================================================*/
+
+    /*================================================================================================
+    모바일 환경 지도/차트 토글
+    ================================================================================================*/
+    $("#showMapBtn").on("click", function () {
+        $(".toggle-btn").removeClass("on");
+        $(this).addClass("on");
+        $(".chart-container").removeClass("on");
+        $(".map-container").addClass("on");
+    });
+
+    $("#showChartBtn").on("click", function () {
+        $(".toggle-btn").removeClass("on");
+        $(this).addClass("on");
+        $(".map-container").removeClass("on");
+        $(".chart-container").addClass("on");
+        setTimeout(() => {
+            if (chart) {
+                chart.resize();
+            }
+        }, 10);
+    });
 }
 
 /*================================================================================================
@@ -387,10 +409,10 @@ async function initializePriceTickers(defaultDiffArea) {
         // (신규) .ticker-box <li> 생성
         const oilName = PRODCD_to_Korean[prodcd] || prodcd;
         const liHtml = `
-          <li class="ticker-box">
+          <li class="ticker-box ${diffData.className}">
             <div class="ticker-oil">${oilName}</div>
             <div class="ticker-price">${formattedPrice}</div>
-            <div class="ticker-percent ${diffData.className}">${diffData.displayText}</div>
+            <div class="ticker-percent">${diffData.displayText}</div>
           </li>`;
         $tickerList.append(liHtml);
     });
@@ -408,7 +430,7 @@ async function initializePriceTickers(defaultDiffArea) {
 }
 
 /**
- * 전일 대비 가격 변동을 계산하고, .diff-percent 영역을 업데이트합니다.
+ * 전일 대비 가격 변동을 계산하고, .diff-percent 영역 업데이트
  * (기존 showDiff 함수에서 계산 로직과 HTML 반환 로직을 분리)
  */
 function calculateDiff(prodcd, currentPriceStr, yesterdayPriceStr) {
@@ -448,7 +470,7 @@ function calculateDiff(prodcd, currentPriceStr, yesterdayPriceStr) {
 
 
 /**
- * 티커 롤링 애니메이션을 실행합니다.
+ * 티커 롤링 애니메이션을 실행
  */
 function runTickerLoop() {
     currentTickerIndex++;
@@ -578,7 +600,6 @@ function renderChart(data, areaCode, periodKey) {
         return;
     }
 
-    // (차트 옵션... 기존 코드와 동일)
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
@@ -654,7 +675,6 @@ function renderChart(data, areaCode, periodKey) {
 }
 
 
-
 /*================================================================================================
 로그인 / 로그아웃 버튼
 로그인 상태 확인 후 UI 업데이트
@@ -695,6 +715,15 @@ async function checkLoginStatus() {
         $("#welcomeBtn").removeClass("on");
     }
 }
+
+$("#mapImg").on("click", function () {
+    window.location.href = "jido";
+})
+
+$("#mypageImg").on("click", function () {
+    window.location.href = "login";
+})
+
 
 
 

@@ -1,60 +1,22 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GASNOW</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    <aside class="main-sidebar">
-        <div class="sidebar-logo">
-            <a href="/">
-                <img src="./logo/logo-small-white.png" alt="GASNOW Logo" class="logo-default">
-                <img src="./logo/logo-small-orange.png" alt="GASNOW Logo Hover" class="logo-hover">
-            </a>
-        </div>
-
-        <nav class="sidebar-nav">
-            <ul>
-                <li>
-                    <a href="/" class="active">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/jido">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Map</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/favorites">
-                        <i class="fas fa-star"></i>
-                        <span>Favorite</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="sidebar-profile">
-            <a href="/profile">
-                <i class="fas fa-user"></i>
-            </a>
-        </div>
-    </aside>
+    <div th:replace="~{header :: header}"></div>
     <main class="main-content">
         <div class="login-container">
             <div class="login-box">
                 <button type="button" class="welcome-btn" id="welcomeBtn" onclick="myPageLink()">마이페이지</button>
                 <button type="button" class="register-btn" id="registerBtn" onclick="registerPageLink()">Register</button>
                 <button type="button" class="login-btn" id="loginBtn" onclick="loginPageLink()">Login</button>
-                <img src="/logo/map.svg" alt="map image" class="map-img" id="mapImg">
-                <img src="/logo/mypage.svg"  alt="mypage image" class="mypage-img" id="mypageImg">
             </div>
         </div>
         <div class="top-container">
@@ -91,15 +53,12 @@
         </div>
 
         <div class="bottom-container">
-            <div class="map-container">
+            <div class="view-toggle">
+                <button id="showMapBtn" class="toggle-btn on">지도</button>
+                <button id="showChartBtn" class="toggle-btn">차트</button>
+            </div>
+            <div class="map-container on">
                 <h1>지역별 최저가</h1>
-                <div class="btn-container">
-                    <button id="B034Btn" class="oil-btn">고급휘발유</button>
-                    <button id="B027Btn" class="oil-btn on">휘발유</button>
-                    <button id="D047Btn" class="oil-btn">경유</button>
-                    <button id="C004Btn" class="oil-btn">등유</button>
-                    <button id="K015Btn" class="oil-btn">LPG</button>
-                </div>
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 800 1200"
@@ -256,6 +215,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="btn-container">
+            <button id="B034Btn" class="oil-btn">고급휘발유</button>
+            <button id="B027Btn" class="oil-btn on">휘발유</button>
+            <button id="D047Btn" class="oil-btn">경유</button>
+            <button id="C004Btn" class="oil-btn">등유</button>
+            <button id="K015Btn" class="oil-btn">LPG</button>
         </div>
         <div class="ticker-container" id="tickerViewport">
             <ul id="tickerList">
