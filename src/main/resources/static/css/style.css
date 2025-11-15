@@ -1,31 +1,31 @@
-    /* --- 기본 스타일 --- */
-    * {
-        margin: 0;
-        padding: 0;
-    }
+/* --- 기본 스타일 --- */
+* {
+    margin: 0;
+    padding: 0;
+}
 
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-        /* 수정(유성) */
-        font-family: "Noto Sans", sans-serif;
-        background-color: #f4f7fa;
-        overflow-y: hidden;
+body,
+html {
+    margin: 0;
+    padding: 0;
+    /* 수정(유성) */
+    font-family: "Noto Sans", sans-serif;
+    background-color: #f4f7fa;
+    overflow-y: hidden;
 
-    }
+}
 
-    /* --- (NEW) CSS 변수 정의 --- */
-    :root {
-        /* 사이드바 너비를 정의합니다.
-          - 최솟값: 160px
-          - 선호값: 화면 너비의 12% (12vw)
-          - 최댓값: 220px
-        */
-        --sidebar-width: clamp(160px, 12vw, 220px);
-    }
+/* --- (NEW) CSS 변수 정의 --- */
+:root {
+    /* 사이드바 너비를 정의합니다.
+      - 최솟값: 160px
+      - 선호값: 화면 너비의 12% (12vw)
+      - 최댓값: 220px
+    */
+    --sidebar-width: clamp(160px, 12vw, 220px);
+}
 
-    @media(min-width: 451px){
+@media(min-width: 451px){
     /* --- 1. 사이드바 --- */
     .main-sidebar {
         position: fixed;
@@ -252,7 +252,7 @@
 
 
 
-    }
+}
 
 /*    !important     */
 @media(max-width: 450px){
@@ -266,31 +266,31 @@
         --sidebar-height: clamp(10px, 7vh, 220px);
     }
 
-        /* --- 1. 사이드바 --- */
-        .main-sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            /* (UPDATED) 고정값 대신 변수를 사용합니다. */
-            height: var(--sidebar-height);
+    /* --- 1. 사이드바 --- */
+    .main-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        /* (UPDATED) 고정값 대신 변수를 사용합니다. */
+        height: var(--sidebar-height);
 
-            background-color: #1f1f1f;
-            color: #ffffff;
-            background: white;
-            box-shadow: 5px 0 20px 0 rgba(0, 0, 0, 0.25);
+        background-color: #1f1f1f;
+        color: #ffffff;
+        background: white;
+        box-shadow: 5px 0 20px 0 rgba(0, 0, 0, 0.25);
 
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
-            /* (UPDATED) 패딩도 %/vw/vh를 사용해 유동적으로 변경 */
-            /* padding: 3vh 20px;  */
-            /*padding: 3vh 10px;*/
+        /* (UPDATED) 패딩도 %/vw/vh를 사용해 유동적으로 변경 */
+        /* padding: 3vh 20px;  */
+        /*padding: 3vh 10px;*/
 
-            box-sizing: border-box;
-            z-index: 1001;
-        }
+        box-sizing: border-box;
+        z-index: 1001;
+    }
 
     .sidebar-logo {
         text-align: center;
