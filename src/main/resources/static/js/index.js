@@ -90,7 +90,7 @@ const areaCodeToName = {
 };      // Chart 지역 매핑 객체
 
 let currentTickerIndex = 0;             // 티커 현재 idx
-const tickerItemHeight = 50;            // 티커 높이 -> CSS에서 .diff-box 높이와 일치하도록 작성한다.
+const tickerItemHeight = 40;            // 티커 높이 -> CSS에서 .diff-box 높이와 일치하도록 작성한다.
 const tickerTransitionTime = 500;       // 티커 전환 = 0.5초 (CSS transition 시간)
 const $tickerList = $("#tickerList");             // HTML <ul> id
 let totalTickerItems = 0;              //
@@ -138,6 +138,7 @@ async function initializeApp() {
     }
 }
 
+document.querySelector('li > a[href="/"]').classList.add('active');
 
 /*================================================================================================
 모든 이벤트 리스너 함수
@@ -452,13 +453,13 @@ function calculateDiff(prodcd, currentPriceStr, yesterdayPriceStr) {
     let className = "";
 
     if (calPrice > 0) {
-        displayText = `▲${calPrice.toLocaleString("ko-KR")}원 (+${calPercent.toFixed(2)}%)`;
+        displayText = `▲${calPrice.toLocaleString("ko-KR")}원(${calPercent.toFixed(2)}%)`;
         className = "up";
     } else if (calPrice < 0) {
-        displayText = `▼${Math.abs(calPrice).toLocaleString("ko-KR")}원 (${calPercent.toFixed(2)}%)`;
+        displayText = `▼${Math.abs(calPrice).toLocaleString("ko-KR")}원(${Math.abs(calPercent).toFixed(2)}%)`;
         className = "down";
     } else {
-        displayText = `0원 (0.00%)`;
+        displayText = `0원(0.00%)`;
         className = "";
     }
 
@@ -620,13 +621,21 @@ function renderChart(data, areaCode, periodKey) {
         },
         scales: {
             y: {
-                ticks: { font: { size: 11 } },
-                grid: { color: '#f0f0f0' },
+                ticks: {
+                    font: { size: 11 },
+                    color: 'black'
+                },
+                grid: { color: '#cccccc' },
                 grace: '10%',
             },
             x: {
                 type: 'category',
-                ticks: { font: { size: 11 }, maxRotation: 45, minRotation: 45 },
+                ticks: {
+                    font: { size: 11 },
+                    maxRotation: 45,
+                    minRotation: 45,
+                    color: 'black'
+                },
                 grid: { display: false }
             }
         }

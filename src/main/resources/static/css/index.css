@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+    background-color: #f4f7fa;
 }
 .main-content {
     display: block;
@@ -8,7 +8,7 @@ body {
     margin-left: auto; /* 핵심: 왼쪽 여백을 최대로 -> 오른쪽 정렬 효과 */
     margin-right: 0;   /* 명시적으로 오른쪽 여백 없음 */
     text-align: center;
-    background-color: white;
+    background-color: #f4f7fa;
 }
 .top-container {
     max-height: 30vh;
@@ -29,11 +29,6 @@ body {
     padding-left: 7%;
     height: 25vh;
     width: 88%;
-}
-.diff-boxes {
-    display: flex;
-    gap: 20px;
-    align-items: center;
 }
 .login-container {
     height: 5vh;
@@ -57,12 +52,15 @@ body {
     width: 30%;
     height: 100%;
     margin-right: 7%;
-    background: white;
+    background: #f4f7fa;
     border-radius: 8px;
     display: flex;              /* 내부 요소들을 Flex로 제어 */
     flex-direction: column;     /* 세로로 쌓기 (제목 -> 탭 -> 차트) */
     overflow: hidden;
     text-align: left;
+}
+.ticker-container {
+    display: none;
 }
 
 /*================================================================================================
@@ -75,10 +73,10 @@ body {
     flex-direction: row-reverse;
 }
 .login-btn {
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 30px;
-    background-color: black;
-    color: white;
+    background-color: #f0f0f0;
+    color: black;
     font-weight: bold;
     padding: 5px 30px;
     max-height: 100%;
@@ -87,8 +85,8 @@ body {
 .register-btn {
     border-radius: 30px;
     border: 1px solid black;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     font-weight: bold;
     padding: 5px 20px;
     max-height: 100%;
@@ -97,8 +95,8 @@ body {
 
 .welcome-btn {
     border-radius: 30px;
-    border: 1px solid black;
-    background-color: white;
+    border: 2px solid black;
+    background-color: #f0f0f0;
     color: black;
     font-weight: bold;
     text-align: center;
@@ -169,38 +167,28 @@ body {
     pointer-events: none;
 }
 
-/*================================================================================================
-유종 버튼 스타일
-================================================================================================*/
-.oil-btn {
-    width: 120px;
-    height: 50px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: #e3f2fd;
-    color: #1565c0;
-    border: none;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-.oil-btn:hover {
-    background-color: #99d5ff;
-    color: #1565c0;
-}
-.oil-btn.on {
-    background-color: #99d5ff;
-    color: #1565c0;
-}
 
 /*================================================================================================
 전일대비등락률 스타일
 ================================================================================================*/
+.diff-boxes {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
 .diff-box {
     width: 18vh;
     height: 14vh;
-    text-align: center;
-    align-content: center;
+    display: flex;
+    flex-direction: column; /* 아이템을 세로로 정렬 */
+    justify-content: center; /* 그룹을 박스 세로 중앙에 배치 */
+
+    /* ↓↓↓ 추가: 항목 사이의 간격을 vh로 지정 (기존 margin 대신) */
+    gap: 0.8vh;
+
+    /* ↓↓↓ 추가: 패딩을 주면 더 안정적입니다 (선택 사항) */
+    padding: 1vh 0;
+    box-sizing: border-box; /* 패딩이 높이에 포함되도록 함 */
     border-radius: 10px;
     background-color: #ffddaa;
     cursor: pointer;
@@ -213,71 +201,26 @@ body {
 }
 .diff-oil {
     color: black;
-    font-size: 1.1rem;
+    font-size: 2vh; /* rem -> vh 로 변경 */
     font-weight: bold;
-    margin-bottom: 10px;
+    text-align: center;
 }
 .diff-price {
     color: rgb(9, 135, 0);
-    font-size: 1.5rem;
+    font-size: 2.8vh; /* rem -> vh 로 변경 (가장 크게) */
     font-weight: bold;
-    margin-bottom: 10px;
+    text-align: center;
 }
 .diff-percent {
-    font-size: 0.9rem;
+    font-size: 1.6vh; /* rem -> vh 로 변경 */
+    text-align: center;
+
 }
 .diff-percent.up {
     color: rgb(255, 0, 75);
 }
 .diff-percent.down {
     color: rgb(0, 150, 200);
-}
-
-/*================================================================================================
-티커 스타일
-================================================================================================*/
-.ticker-container {
-    height: 40px;
-    border: 1px solid black;
-    align-content: center;
-    overflow: hidden;
-    gap: 0;
-    display: none;
-}
-#tickerList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    /* 0.5초 동안 부드럽게 움직이게 함 */
-    transition: transform 0.5s ease;
-}
-.ticker-box {
-    width: 200px;
-    height: 40px;
-    display: flex;
-    align-content: center;
-}
-.ticker-box.fading {
-    opacity: 0;
-    align-content: center;
-}
-.ticker-oil {
-    width: 120px;
-    font-size: 1rem;
-    text-align: center;
-    align-content: center;
-}
-.ticker-price {
-    width: 80px;
-    font-size: 1rem;
-    text-align: left;
-    align-content: center;
-}
-.ticker-percent {
-    width: 70px;
-    font-size: 0.7rem;
-    text-align: center;
-    align-content: center;
 }
 
 
@@ -305,7 +248,6 @@ h1 {
 
 .tabs {
     display: flex;
-    border: 1px solid #ddd;
     margin-bottom: 20px;
 }
 
@@ -316,13 +258,19 @@ h1 {
     background: white;
     border: none;
     cursor: pointer;
-    font-size: 14px;
-    color: #3c3c3c;
-    border-right: 1px solid #ddd;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: black;
+    background-color: #f0f0f0;
+    border: 1px solid #3c3c3c;
+}
+
+.period-btn:first-child {
+    border-radius: 10px 0 0 10px;
 }
 
 .period-btn:last-child {
-    border-right: none;
+    border-radius: 0 10px 10px 0;
 }
 
 .period-btn.on {
@@ -392,7 +340,7 @@ h1 {
 
         /* 3. 고정된 요소들의 공간만큼 패딩으로 밀어냄 */
         padding-top: var(--sidebar-height); /* 상단 Nav 높이 */
-        padding-bottom: 100px; /* 유종 버튼(50px) + 티커(50px) */
+        padding-bottom: 80px; /* 유종 버튼(40px) + 티커(40px) */
         margin: 0;
     }
 
@@ -446,11 +394,12 @@ h1 {
     }
     .toggle-btn {
         flex: 1;
-        padding: 10px;
         border: 1px solid #ccc;
         background-color: #f0f0f0;
         color: #555;
         font-size: 1rem;
+        text-align: center;
+        align-content: center;
         cursor: pointer;
     }
     .toggle-btn.on {
@@ -524,60 +473,6 @@ h1 {
         width: auto;
         height: 80%;
     }
-    .tabs {
-        display: flex;
-        border: 1px solid #ddd;
-        margin-bottom: 20px;
-    }
-    .period-btn {
-        flex: 1;
-        padding: 10px;
-        text-align: center;
-        background: white;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        color: #3c3c3c;
-        border-right: 1px solid #ddd;
-    }
-
-    .period-btn:last-child {
-        border-right: none;
-    }
-
-    .period-btn.on {
-        background: #3c3c3c;
-        color: white;
-        font-weight: bold;
-    }
-
-    .legend {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 15px;
-        font-size: 12px;
-    }
-
-    .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .legend-line {
-        width: 20px;
-        height: 2px;
-    }
-
-    .nation {
-        background-color: #0d47a1;
-    }
-
-    .local {
-        background-color: #ff00ea;
-    }
-
 
 
     /*=====================
@@ -586,7 +481,7 @@ h1 {
     .btn-container {
         display: flex;
         position: fixed;          /* 화면에 고정 */
-        bottom: 50px;             /* 하단에서 50px 띄움 */
+        bottom: 40px;             /* 하단에서 50px 띄움 */
         left: 0;
         right: 0;
         width: 100%;              /* 전체 너비 */
@@ -604,11 +499,13 @@ h1 {
         border: none;
         border-radius: 10px 10px 0 0;
         transition: all 0.3s ease;
+        padding-top: 0;
+        padding-bottom: 0;
         cursor: pointer;
         display: flex;
         align-items: center;             /* 수직 가운데 */
         justify-content: center;         /* 수평 가운데 */
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
     .oil-btn:hover {
         background-color: #99d5ff;
@@ -616,7 +513,7 @@ h1 {
     }
     .oil-btn.on {
         background-color: #99d5ff;
-        height: 50px;
+        height: 40px;
         color: #1565c0;
     }
 
@@ -631,7 +528,7 @@ h1 {
         border-top: 1px solid #e0e0e0;      /* 상단 구분선 */
         border-bottom: 1px solid #e0e0e0;   /* 하단 구분선 */
         width: 100%;                        /* 화면 전체 너비 */
-        height: 50px;
+        height: 40px;
         position: fixed;                    /* 뷰포트(화면) 기준으로 위치 고정 */
         bottom: 0;                          /* 화면 맨 아래에 붙임 */
         left: 0;                            /* 화면 맨 왼쪽에 붙임 */
@@ -647,7 +544,7 @@ h1 {
     }
     .ticker-box {
         width: 100%;
-        height: 50px;
+        height: 40px;
         display: flex;
         align-items: center;
     }
@@ -658,20 +555,21 @@ h1 {
     .ticker-oil {
         padding-left: 5%;
         flex: 1;                    /* 1/3 공간 차지 */
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: bold;
         text-align: center;         /* 좌측 정렬 */
     }
     .ticker-price {
         flex: 1;                    /* 1/3 공간 차지 */
-        font-size: 1rem;
+        font-size: 0.9rem;
+        font-weight: bold;
         text-align: right;          /* 우측 정렬 */
         padding-right: 3%;
     }
     .ticker-percent {
         flex: 1; /* 1/3 공간 차지 */
-        font-size: 0.8rem;            /* 등락률은 약간 작게 */
-        text-align: center;         /* 우측 정렬 */
+        font-size: 0.75rem;            /* 등락률은 약간 작게 */
+        text-align: left;         /* 우측 정렬 */
         padding-right: 5%;
     }
     .ticker-price,
