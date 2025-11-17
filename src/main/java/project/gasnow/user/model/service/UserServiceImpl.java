@@ -224,7 +224,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int addLoginPoint(String userId) {
-        UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(userId);
+        // UserPointHistory userPointHistory = userPointMapper.getPointHistoryById(userId);
+        UserPointHistory userPointHistory = userPointMapper.getPointHistory(userId);
         UserPoint userPoint = userPointMapper.getUserPointById(userId);
 
         // String 형태의 createdAt -> 날짜 형식으로 파싱

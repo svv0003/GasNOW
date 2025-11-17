@@ -53,6 +53,15 @@
     </update>
 
     <!-- ============================================================== -->
+    <select id="getPointHistory" resultType="UserPointHistory">
+        SELECT *
+        FROM point_history
+        WHERE user_id = #{userId}
+          AND description IN ("출석체크", "회원가입")
+        ORDER BY created_at DESC
+            LIMIT 1;
+    </select>
+
 
     <!-- point_history 객체 반환 -->
     <select id="getPointHistoryById" resultType="UserPointHistory">
