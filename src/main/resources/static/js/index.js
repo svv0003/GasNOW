@@ -664,13 +664,13 @@ function renderChart(data, areaCode, periodKey) {
                     {
                         label: koreanArea,
                         data: chartData[koreanArea] || [],
-                        borderColor: '#ff00ea',
-                        backgroundColor: '#ff00ea',
+                        borderColor: '#ff0055',
+                        backgroundColor: '#ff0055',
                         tension: 0.4,
                         borderWidth: 2,
                         pointRadius: 4,
                         pointHoverRadius: 6,
-                        pointBackgroundColor: '#ff00ea',
+                        pointBackgroundColor: '#ff0055',
                         pointBorderColor: '#fff',
                         pointBorderWidth: 2,
                         fill: false
