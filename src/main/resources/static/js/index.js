@@ -117,20 +117,20 @@ let totalTickerItems = 0;              //
 $(document).ready(initializeApp);
 
 async function initializeApp() {
-    console.log("페이지 초기화 시작...");
+    // console.log("페이지 초기화 시작...");
     setupEventListeners();                                  // 클릭 이벤트 핸들러부터 설정
     checkLoginStatus();                                     // 로그인 상태 확인
     try {                                                   // 데이터 호출 (API 키, 유가 정보, DB 정보)
         API_KEY = await fetchApiKey();                      // API Key 조회
-        console.log("API Key 조회 성공: ", API_KEY);
+        // console.log("API Key 조회 성공: ", API_KEY);
         const xmlData = await fetchOilPriceData(API_KEY);   // API Key 사용해서 Opinet 유가 정보 조회
-        console.log("Opinet 유가 정보 조회 성공");
+        // console.log("Opinet 유가 정보 조회 성공");
         parsePriceData(xmlData);                    // 가져온 XML 데이터 파싱 후 전역 변수 저장
-        console.log("XML 파싱 및 데이터 저장 완료");
+        // console.log("XML 파싱 및 데이터 저장 완료");
         updateMapPrices(selectedOil);                       // 지도 <text> 가격 업데이트
         await initializePriceTickers(defaultDiffArea);      // 상단 가격 정보 및 티커 초기화
         await updateChart();                                // 기본값 (서울, 휘발유, 주간)으로 차트 렌더링
-        console.log("페이지 렌더링 성공");
+        // console.log("페이지 렌더링 성공");
         // setTimeout(startAutoCycle, 2000);                // 슬라이드 시작
     } catch (error) {
         console.error("페이지 초기화 실패:", error);        // 초기화 과정에서 오류 발생
@@ -270,7 +270,7 @@ function fetchOilPriceData(apiKey) {
             },
             success: function (data) {
                 if (data && data.xml_data) {
-                    console.log("API 전체 응답:", data);
+                    // console.log("API 전체 응답:", data);
                     resolve(data.xml_data); // XML 문자열만 반환
                 } else {
                     console.error("API 응답에 xml_data가 없습니다:", data);
@@ -292,7 +292,7 @@ MySQL DB 전일 평균가 데이터 조회
 3. JSON 데이터를 JavaScript 객체로 변환하여 반환한다.
 ================================================================================================*/
 async function fetchYesterdayData() {
-    const res = await fetch(DB_URL + "/chart/yesterday");
+    const res = await fetch("/api/chart/yesterday");
     if (!res.ok) {
         throw new Error("서버 응답 오류 (yesterday): " + res.status);
     }
@@ -323,7 +323,7 @@ function parsePriceData(xmlData) {
             }
         });
 
-        console.log("XML 파싱 후 allOilPrice:", allOilPrice);
+        // console.log("XML 파싱 후 allOilPrice:", allOilPrice);
         if (allOilPrice.length === 0) {
             // alert("데이터 파싱에 성공했으나, 유가 정보가 없습니다.");
             console.warn("데이터 파싱에 성공했으나, 유가 정보가 없습니다.");
@@ -376,7 +376,7 @@ async function initializePriceTickers(defaultDiffArea) {
         chartData.forEach((item) => {
             yesterdayPricesMap.set(item.oilCategory, item.avgPrice);
         });
-        console.log("yesterdayPricesMap:", yesterdayPricesMap);
+        // console.log("yesterdayPricesMap:", yesterdayPricesMap);
     } catch (e) {
         console.error("DB (어제자) 데이터 조회 실패:", e);
         // 실패해도 API 데이터만이라도 보여주기 위해 중단하지 않습니다.
@@ -531,7 +531,7 @@ async function updateChart() {
 
     $("#localName").text(selectedKoreanArea); // jQuery 사용
     const chartURL = `/api/chart/data?oilCategory=${selectedOil}&areaName=${selectedKoreanArea}&period=${selectedPeriod}`;
-    console.log("차트 요청 URL:", chartURL);
+    // console.log("차트 요청 URL:", chartURL);
 
     try {
         const res = await fetch(chartURL); // (localhost:8080 제거 - 상대 경로 사용)
@@ -540,7 +540,7 @@ async function updateChart() {
         }
 
         const chartData = await res.json();
-        console.log("서버 응답 데이터:", chartData);
+        // console.log("서버 응답 데이터:", chartData);
 
         if (!chartData || typeof chartData !== 'object') {
             throw new Error("응답 데이터가 비어 있습니다.");
@@ -582,7 +582,7 @@ async function updateChart() {
 Chart.js 객체를 제거 후 재생성
 ================================================================================================*/
 function renderChart(data, areaCode, periodKey) {
-    console.log("renderChart 시작");
+    // console.log("renderChart 시작");
 
     const canvas = document.getElementById('priceChart');
     if (!canvas) {
@@ -592,7 +592,7 @@ function renderChart(data, areaCode, periodKey) {
     const ctx = canvas.getContext('2d');
 
     if (chart) {
-        console.log("기존 차트 제거");
+        // console.log("기존 차트 제거");
         chart.destroy();
     }
 
@@ -679,7 +679,7 @@ function renderChart(data, areaCode, periodKey) {
             },
             options: chartOptions
         });
-        console.log("차트 생성 성공!");
+        // console.log("차트 생성 성공!");
     } catch (err) {
         console.error("Chart.js 생성 실패:", err);
     }
@@ -707,14 +707,14 @@ async function checkLoginStatus() {
         const response = await fetch('/api/mypage/info');
         if (response.ok) {
             const user = await response.json();
-            console.log('로그인된 사용자:', user.userName);
+            // console.log('로그인된 사용자:', user.userName);
             $("#welcomeBtn").text(`${user.userName}님, 환영합니다!`);
             $("#welcomeBtn").addClass("on");
             $("#registerBtn").removeClass("on");
             $("#loginBtn").removeClass("on");
 
         } else {
-            console.log('로그인 상태가 아닙니다.');
+            // console.log('로그인 상태가 아닙니다.');
             $("#registerBtn").addClass("on");
             $("#loginBtn").addClass("on");
             $("#welcomeBtn").removeClass("on");

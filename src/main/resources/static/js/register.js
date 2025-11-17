@@ -133,16 +133,16 @@ sendAuthKeyBtn.addEventListener("click", async () => {
         });
 
         if (res.ok) {
-            console.log("인증번호 발송 성공");
+            // console.log("인증번호 발송 성공");
         }else {
-            console.log("인증번호 발송 실패");
+            // console.log("인증번호 발송 실패");
         }
         countdown.innerText = initTime;  // 시간 세팅
         emailAlert.classList.remove("confirm", "error");
 
         const result = await res.text();
         alert("인증번호가 발송되었습니다.");
-        console.log("result: ", result);
+        // console.log("result: ", result);
 
         // 제한시간 5분
         authTimer = setInterval(() => {
@@ -194,11 +194,11 @@ checkAuthBtn.addEventListener("click", async () => {
         if(result == 0) {
             authAlert.innerHTML = `<div class="alert error">인증번호가 일치하지 않습니다.</div>`
             chkObj.inputAuthKey = false;
-            console.log("검증 실패");
+            // console.log("검증 실패");
         } else {
             clearInterval(authTimer);
             authAlert.innerHTML = `<div class="alert confirm">인증번호가 일치합니다.</div>`
-            console.log("검증 성공");
+            // console.log("검증 성공");
 
             authAlert.classList.remove("error");
             authAlert.classList.add("confirm");
@@ -219,7 +219,7 @@ userPhone.addEventListener("input", async () => {
         phoneAlert.innerHTML = '';
     }
 
-    console.log("연락처 유효성 검사 완료");
+    // console.log("연락처 유효성 검사 완료");
 });
 
 // 연락처 중복 확인
@@ -236,7 +236,7 @@ phoneDblChkBtn.addEventListener("click", async () => {
         phoneAlert.innerHTML = `<div class="alert confirm">사용 가능한 연락처입니다.</div>`
         chkObj.userPhone = true;
     }
-    console.log("연락처 중복확인 완료");
+    // console.log("연락처 중복확인 완료");
 });
 
 // 회원가입
@@ -245,7 +245,7 @@ registerForm.addEventListener("submit", async e => {
     e.preventDefault();
 
     if(Object.values(chkObj).every( v => v === true)){
-        console.log("모든 항목이 true");
+        // console.log("모든 항목이 true");
         const body = {
             userId: userId.value.trim(),
             userName: username.value.trim(),
@@ -270,11 +270,11 @@ registerForm.addEventListener("submit", async e => {
         const result = await res.json();
 
         if(result === 1) {
-            console.log("회원가입 성공");
+            // console.log("회원가입 성공");
             alert("회원가입이 완료되었습니다.");
             window.location.href = "login";
         } else {
-            console.log("회원가입 실패");
+            // console.log("회원가입 실패");
             alert("회원가입 실패");
         }
     }
