@@ -184,7 +184,7 @@ const API_BASE_URL1 = "/api";
             });
 
             // 3. 최종적으로 파싱된 데이터를 확인합니다.
-            console.log(stationInfo);
+            //console.log(stationInfo);
             document.getElementById("info-gsName").innerText = stationInfo.name ? stationInfo.name  : 'X';
             document.getElementById("gs-address").innerText = stationInfo.address ? stationInfo.address  : 'X';
             document.getElementById("gs-number").innerText = stationInfo.tel ? stationInfo.tel  : 'X';
@@ -241,7 +241,7 @@ const API_BASE_URL1 = "/api";
             // 모든 요청이 끝났을 때만 실행
             if (completed === totalStations) {
                 oilAvgPrice = getAveragePrice();
-                console.log("최종 평균:", oilAvgPrice);
+                //console.log("최종 평균:", oilAvgPrice);
                 // 여기서 값 넣기
                 document.getElementById('avg-price').innerText = oilAvgPrice;
 
@@ -270,14 +270,14 @@ const API_BASE_URL1 = "/api";
                     console.error(`--- [DEBUG] 마커 찾기 실패 ---`);
                     console.warn(`[1] 찾으려는 ID: ${stationId} (타입: ${typeof stationId})`);
 
-                    console.log(`[2] 현재 'gasStationMarkers' 배열:`);
-                    console.log(gasStationMarkers); // 배열 전체 객체 출력
+                    //console.log(`[2] 현재 'gasStationMarkers' 배열:`);
+                    //console.log(gasStationMarkers); // 배열 전체 객체 출력
 
                     // 배열에 저장된 ID 목록만 따로 추출
                     const allMarkerIds = gasStationMarkers.map(m => {
                         return `ID: ${m.gs_id} (타입: ${typeof m.gs_id})`;
                     });
-                    console.log(`[3] 배열에 저장된 ID 목록:`, allMarkerIds);
+                    //console.log(`[3] 배열에 저장된 ID 목록:`, allMarkerIds);
                     console.error(`------------------------------`);
                     console.warn(`ID(${stationId})와 일치하는 마커를 찾을 수 없습니다.`);
                 }
@@ -388,7 +388,7 @@ const API_BASE_URL1 = "/api";
             const katecResultX = response.x;
             const katecResultY = response.y;
             if (isInitial) {
-                console.log("현재 위치 KATEC 변환 결과:", {x: katecResultX, y: katecResultY});
+                //console.log("현재 위치 KATEC 변환 결과:", {x: katecResultX, y: katecResultY});
                 $("#curr_loc").html(`<b>현재 위치 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
             } else {
                 $("#result_katec").html(`<p style="color:blue;"><b>✅ 변환 성공</b></p><p><b>원본 WGS84:</b> 경도=${wgsLon}, 위도=${wgsLat}</p><p><b>변환된 KATEC:</b> X=${katecResultX}, Y=${katecResultY}</p>`);
@@ -492,7 +492,7 @@ const API_BASE_URL1 = "/api";
 }
 
     const favoriteList = await response.json(); // ["A00001", "A00002"]
-    console.log("즐겨찾기한 주유소 ID:", favoriteList); // 정상 작동 확인
+    //console.log("즐겨찾기한 주유소 ID:", favoriteList); // 정상 작동 확인
 
     // [수정] 3. ID 목록을 순회하며 마커 생성 함수 호출
     favoriteList.forEach(gsId => {
@@ -746,7 +746,7 @@ const API_BASE_URL1 = "/api";
 
             gsRatingScore();
             ratingCount();
-            console.log(areaData);
+            //console.log(areaData);
 
             // 주유소 이름, 주소, 전화번호 넣기
             document.getElementById("oil-info-area").innerText = `${areaName} 평균`;
@@ -781,7 +781,7 @@ const API_BASE_URL1 = "/api";
 
     // 3. 결과값 받기
     const avgRating = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
-    console.log(avgRating);
+   // console.log(avgRating);
 
     // 4. 결과 화면에 표시
     document.getElementById("result-score").innerText = `${avgRating}`;
@@ -822,7 +822,7 @@ const API_BASE_URL1 = "/api";
     async function addRating(stationId, currentScore) {
     const gsId = stationId;
     const rating = currentScore;
-    console.log("주유소Id : " + stationId, "평점" + currentScore);
+    //console.log("주유소Id : " + stationId, "평점" + currentScore);
     try {
     const response = await fetch(`${API_BASE_URL1}/addRating`, {
     method: "POST",

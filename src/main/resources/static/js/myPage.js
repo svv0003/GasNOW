@@ -22,7 +22,7 @@ for (i=0; i<col1.length; i++) {
 }
 
 window.addEventListener("load", () => {
-    console.log("리소스 로딩 시작");
+    // console.log("리소스 로딩 시작");
     // 리뷰 목록 기능
     showReviewList();
 
@@ -52,7 +52,7 @@ async function showReviewList() {
     }
 
     const result = await res.json();
-    console.log("리뷰 목록: ", result);
+    // console.log("리뷰 목록: ", result);
 
     const reviewList = document.querySelector("#reviewList");  // <ul> 태그
     if(!Array.isArray(result) || result.length === 0) {
@@ -75,7 +75,7 @@ function renderStars(score) {
     const halfStar = `<i class="fa-solid fa-star-half-stroke star-icon"></i>`
     const emptyStar = `<i class="fa-regular fa-star star-icon"></i>`
 
-    console.log("평점: ", score);
+    // console.log("평점: ", score);
 
     const num = Number(score);
     const rounded = Math.round(num * 2) / 2;
@@ -100,7 +100,7 @@ async function showCurrentPoint() {
     })
 
     const result = await res.json();
-    console.log("현재 포인트: ", result.currentPoint);
+    // console.log("현재 포인트: ", result.currentPoint);
 
     const totalPoint = document.querySelector("#totalPoint");
     totalPoint.innerHTML = `${result.currentPoint}`;
@@ -113,19 +113,19 @@ const pointModalOpen = document.querySelector("#pointListBtn");
 const pointModalClose = document.querySelector("#pointModalBtn");
 
 pointModalOpen.addEventListener("click", () => {
-    console.log("버튼 클릭 이벤트 발생")
+    // console.log("버튼 클릭 이벤트 발생")
     pointModal.classList.add("on");
 });
 
 pointModalClose.addEventListener("click", () => {
-    console.log("닫기 버튼 클릭")
+    // console.log("닫기 버튼 클릭")
     pointModal.classList.remove("on");
 })
 
 pointModal.addEventListener("click", (e) => {
     if(e.target === pointModal) {
 
-            console.log("배경 클릭으로 모달 닫기")
+            // console.log("배경 클릭으로 모달 닫기")
             pointModal.classList.remove("on");
     }
 })
@@ -139,7 +139,7 @@ async function showPointHistory() {
     })
 
     const result = await res.json();
-    console.log("포인트 변동 이력: ", result);
+    // console.log("포인트 변동 이력: ", result);
 
     const modalUserName = document.querySelector("#modalUserName");
     const historyList = document.querySelector(".history-list");
@@ -175,7 +175,7 @@ async function showUserInfo() {
     })
 
     const result = await res.json();
-    console.log("회원 정보: ", result);
+    // console.log("회원 정보: ", result);
 
     const userInfoList = document.querySelector("#userInfoList");
     userInfoList.innerHTML = `
@@ -215,18 +215,18 @@ const pwModalOpen = document.querySelector("#pwChangeBtn");
 const pwModalClose = document.querySelector("#pwModalBtn");
 
 pwModalOpen.addEventListener("click", () => {
-    console.log("버튼 클릭 이벤트 발생")
+    // console.log("버튼 클릭 이벤트 발생")
     pwmodal.classList.add("on");
 });
 
 // pwModalClose.addEventListener("click", () => {
-//     console.log("닫기 버튼 클릭")
+//     // console.log("닫기 버튼 클릭")
 //     pwmodal.classList.remove("on");
 // })
 
 pwmodal.addEventListener("click", (e) => {
     if(e.target === pwmodal) {
-        console.log("배경 클릭으로 모달 닫기")
+        // console.log("배경 클릭으로 모달 닫기")
         pwmodal.classList.remove("on");
     }
 })
@@ -280,7 +280,7 @@ pwModalBtn.addEventListener("click", async () => {
         })
 
         const result = await res.json()
-        console.log("비밀번호 변경 응답: ", result)
+        // console.log("비밀번호 변경 응답: ", result)
         alert(result.message || (res.ok ? "비밀번호가 변경되었습니다." : "비밀번호 변경에 실패했습니다."));
 
         if(res.ok) {
@@ -313,7 +313,7 @@ logoutBtn.addEventListener("click", async () => {
         })
 
         const result = await res.json();
-        console.log("로그아웃: ", result)
+        // console.log("로그아웃: ", result)
 
         if(res.ok) {
             alert("로그아웃 되었습니다.");
@@ -332,7 +332,7 @@ const withdrawBtn = document.querySelector("#withdrawBtn");
 withdrawBtn.addEventListener("click", async () => {
     if(confirm("회원탈퇴를 진행하시겠습니까?")) {
         try{
-            console.log("회원탈퇴 시작");
+            // console.log("회원탈퇴 시작");
             const res = await fetch("/api/mypage/withdraw", {
                 method: "DELETE",
                 headers: {"Content-Type": "application/json"},
@@ -340,11 +340,11 @@ withdrawBtn.addEventListener("click", async () => {
             })
 
             const result = await res.json();
-            console.log("회원 탈퇴: ", result);
+            // console.log("회원 탈퇴: ", result);
 
             if(res.ok) {
                 alert("탈퇴가 완료되었습니다.")
-                console.log("회원탈퇴 완료");
+                // console.log("회원탈퇴 완료");
                 location.href = "/";
             } else {
                 alert("회원 탈퇴에 실패하였습니다. 다시 시도해주세요.")
@@ -354,7 +354,7 @@ withdrawBtn.addEventListener("click", async () => {
             alert("네트워크 오류로 회원탈퇴에 실패했습니다.");
         }
     } else {
-        console.log("회원탈퇴 취소");
+        // console.log("회원탈퇴 취소");
     }
 
 })

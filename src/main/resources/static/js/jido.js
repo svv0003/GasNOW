@@ -258,7 +258,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
 });
 });
 } else {
-    console.log("GPS error");
+    // console.log("GPS error");
 }
 
 
@@ -327,7 +327,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
             });
 
             // 3. 최종적으로 파싱된 데이터를 확인합니다.
-            console.log(stationInfo);
+           // console.log(stationInfo);
             $('#detail_name').text(stationInfo.name);
             $('#detail_address').text(stationInfo.address);
             $('#detail_tel').text(stationInfo.tel);
@@ -443,7 +443,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
     contentType: "application/json",
     data: JSON.stringify(gasStationData),
     success: function() {
-    console.log(`Partially saved station: ${gasStationData.gsId}`);
+    // console.log(`Partially saved station: ${gasStationData.gsId}`);
 },
     error: function(err) {
     console.error(`Failed to partially save station: ${gasStationData.gsId}`, err);
@@ -493,7 +493,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
             // 모든 요청이 끝났을 때만 실행
             if (completed === totalStations) {
                 oilAvgPrice = getAveragePrice();
-                console.log("최종 평균:", oilAvgPrice);
+                // console.log("최종 평균:", oilAvgPrice);
                 // 여기서 값 넣기
                 document.getElementById('avg-price').innerText = oilAvgPrice;
 
@@ -638,7 +638,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
             const katecResultX = response.x;
             const katecResultY = response.y;
             if (isInitial) {
-                console.log("현재 위치 KATEC 변환 결과:", {x: katecResultX, y: katecResultY});
+                // console.log("현재 위치 KATEC 변환 결과:", {x: katecResultX, y: katecResultY});
                 $("#curr_loc").html(`<b>현재 위치 KATEC 좌표:</b> X=${katecResultX.toFixed(2)}, Y=${katecResultY.toFixed(2)}`);
             } else {
                 $("#result_katec").html(`<p style="color:blue;"><b>✅ 변환 성공</b></p><p><b>원본 WGS84:</b> 경도=${wgsLon}, 위도=${wgsLat}</p><p><b>변환된 KATEC:</b> X=${katecResultX}, Y=${katecResultY}</p>`);
@@ -957,7 +957,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
     kakao.maps.event.trigger(targetMarker, 'click');
 }
     else {
-    console.log("마커 찾기 오류");
+    // console.log("마커 찾기 오류");
 }
 });
 
@@ -985,7 +985,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
     // 리스트에서 클릭한 주유소 아이디 불러오기
     $(document).on("click", ".list-table tbody tr", function () {
     stationId = $(this).data("station-id");
-    console.log("클릭한 주유소 ID:", stationId);
+    // console.log("클릭한 주유소 ID:", stationId);
     getGsInfo(stationId)
     isFav(stationId);
 
@@ -1027,7 +1027,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
                 contentType: "application/json",
                 data: JSON.stringify(gasStationData),
                 success: function() {
-                    console.log("Gas station data saved successfully.");
+                    // console.log("Gas station data saved successfully.");
                 },
                 error: function(err) {
                     console.error("Failed to save gas station data:", err);
@@ -1045,7 +1045,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
             };
 
             const sido = stationInfo.sigunCd.substring(0, 2); // 0번 인덱스부터 2번 인덱스 전까지
-            console.log(sido); // 출력: "12"
+            // console.log(sido); // 출력: "12"
 
 
             // 모든 OIL_PRICE 정보를 반복해서 prices 객체에 저장
@@ -1058,7 +1058,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
             gsRatingScore();
             ratingCount();
 
-            console.log(stationInfo);
+            // console.log(stationInfo);
 
             // 주유소 이름, 주소, 전화번호 넣기
             document.getElementById("info-gsName").innerText = stationInfo.name ? stationInfo.name  : 'X';
@@ -1113,7 +1113,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
                 products: products
             };
 
-            console.log(areaData);
+            // console.log(areaData);
 
             // 주유소 이름, 주소, 전화번호 넣기
             document.getElementById("oil-info-area").innerText = `${areaName} 평균`;
@@ -1148,7 +1148,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
 }
 
     const avgPrice = getAveragePrice();
-    console.log(avgPrice);
+    // console.log(avgPrice);
 
 
     // ---------------------------- rating 관련 js
@@ -1165,7 +1165,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
 
     // 3. 결과값 받기
     const avgRating = await response.text(); // 백엔드가 double 반환하므로 text()로 받음
-    console.log(avgRating);
+    // console.log(avgRating);
 
     // 4. 결과 화면에 표시
     document.getElementById("result-score").innerText = `${avgRating}`;
@@ -1203,7 +1203,7 @@ document.querySelector('.oil-type').addEventListener('click', function(e) {
     async function addRating(stationId, currentScore) {
     const gsId = stationId;
     const rating = currentScore;
-    console.log("주유소Id : " + stationId, "평점" + currentScore);
+    // console.log("주유소Id : " + stationId, "평점" + currentScore);
     try {
     const response = await fetch(`${API_BASE_URL1}/addRating`, {
     method: "POST",
