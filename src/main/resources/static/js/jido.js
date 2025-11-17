@@ -587,6 +587,7 @@ fetch('/api/config/key')
                 getDetailById(uni_id);
                 $('.gs-detail').css('display', 'block');
                 getGsInfo(uni_id);
+                isFav(stationId);
 
             })
 

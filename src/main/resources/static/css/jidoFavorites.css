@@ -56,7 +56,7 @@
     }
 
     .gas-info {
-        background-color: #ffffff;
+        background-color: #f4f7fa;
         width: 25vw;
         height: 100vh;
         position: absolute;
@@ -70,7 +70,10 @@
         box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);
     }
     .list-hide-desktop {
-        box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);
+        /*box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.25);*/
+        box-shadow: -3px 0 5px rgba(0, 0, 0, 0.25);
+
+
     }
 
     .gas-info.hidden {
@@ -86,7 +89,7 @@
         top: 50%;
         transform: translateY(-50%);
         z-index: 101;
-
+        background-color: #f4f7fa;
         border-top: 1px solid #aaaaaa;
         border-bottom: 1px solid #aaaaaa;
         border-left: 1px solid #aaaaaa;
@@ -94,6 +97,10 @@
         border-radius: 3px;
         cursor: pointer;
         transition: right 0.3s ease; /* gas-info 이동에 맞춰 부드럽게 이동 */
+    }
+
+    #order-price, #order-distance {
+        background-color: #f4f7fa;
     }
 
     .list-hide-mobile{
@@ -119,7 +126,8 @@
     .oil-type button {
         margin: 0;
         padding: 0;
-        width: 4vw;
+        width: 4.3vw;
+        font-size: 0.8vw;
         height: 4vh;
         cursor: pointer;
         border: 1px solid black;
@@ -130,12 +138,12 @@
         background-color: #9E9E9E;
     }
 
-    .gasoline {
+    #gasoline {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
     }
 
-    .lpg {
+    #lpg {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
@@ -195,6 +203,8 @@
         margin: 20px auto 0 auto;
         font-size: 14px;
         border: 1px solid #ddd;
+
+
     }
     .list-table table {
         width: 100%;
@@ -208,8 +218,8 @@
     .list-table th,
     .list-table td {
         padding: 5px;
-        border-left: 1px solid white;
-        border-right: 1px solid white;
+        border-left: 1px solid #f4f7fa;
+        border-right: 1px solid #f4f7fa;
 
     }
 
@@ -226,7 +236,7 @@
     }
 
     .oil-type button.selected {
-        background-color: #9E9E9E;
+        background-color: #3c3c3c;
         color: white;
 
     }
@@ -234,7 +244,7 @@
     .gs-detail {
         width: 100%;
         height: 35%;
-        background-color: #FFEBEB;
+        background-color: #E0E0E0;
         position: fixed;
         left: 50%;
         bottom: 0%;
@@ -269,8 +279,8 @@
     #fav-unFilled {
         font-size: 30px;
         border: none;
-        background-color: #FFEBEB;
-        color: red;
+        background-color: #E0E0E0;
+        color: #FF7700;
         cursor: pointer;
         border-radius: 20px;
         position: fixed;
@@ -281,8 +291,8 @@
     #fav-filled {
         font-size: 30px;
         border: none;
-        background-color: #FFEBEB;
-        color: red;
+        background-color: #E0E0E0;
+        color: #FF7700;
         cursor: pointer;
         border-radius: 20px;
         position: fixed;
@@ -297,7 +307,7 @@
 
 
     #outInfo {
-        background-color: #FFEBEB;
+        background-color: #E0E0E0;
         border: none;
         cursor: pointer;
         font-size: 30px;
@@ -334,7 +344,7 @@
         font-size: 15px;
         color: #EB9823;
         border: none;
-        background-color: #FFEBEB;
+        background-color: #E0E0E0;
         cursor: pointer;
         position: fixed;
         right: 17%;
@@ -444,7 +454,7 @@
     }
 
     .gas-info {
-        background-color: #ffffff;
+        background-color: #f4f7fa;
         width: 100vw;
         height: 50vh;
         position: absolute;
@@ -462,6 +472,7 @@
     }
 
     .list-hide-mobile {
+        background-color: #f4f7fa;
         position: fixed;    /* 화면 기준으로 위치 고정 */
         width: 100px;
         height: 20px;
@@ -507,13 +518,17 @@
 
     }
 
+    #order-price, #order-distance {
+        background-color: #f4f7fa;
+    }
 
-    .gasoline {
+
+    #gasoline {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
     }
 
-    .lpg {
+    #lpg {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
@@ -564,6 +579,7 @@
         margin: 20px auto 0 auto;
         font-size: 14px;
         border: 1px solid #ddd;
+
     }
     .list-table table {
         width: 100%;
@@ -592,7 +608,7 @@
 
 
     .oil-type button.selected {
-        background-color: #9E9E9E;
+        background-color: #3c3c3c;
         color: white;
 
     }
@@ -600,7 +616,7 @@
     .gs-detail {
         width: 100%;
         height: 100%;
-        background-color: #FFEBEB;
+        background-color: #E0E0E0;
         position: fixed;
         left: 50%;
         bottom: 0%;
@@ -635,8 +651,8 @@
     #fav-unFilled {
         font-size: 30px;
         border: none;
-        background-color: #FFEBEB;
-        color: red;
+        background-color: #E0E0E0;
+        color: #FF7700;
         cursor: pointer;
         border-radius: 20px;
         position: fixed;
@@ -647,8 +663,8 @@
     #fav-filled {
         font-size: 30px;
         border: none;
-        background-color: #FFEBEB;
-        color: red;
+        background-color: #E0E0E0;
+        color: #FF7700;
         cursor: pointer;
         border-radius: 20px;
         position: fixed;
@@ -658,7 +674,7 @@
     }
 
     #outInfo {
-        background-color: #FFEBEB;
+        background-color: #E0E0E0;
         border: none;
         cursor: pointer;
         font-size: 30px;
@@ -682,7 +698,7 @@
         font-size: 15px;
         color: #EB9823;
         border: none;
-        background-color: #FFEBEB;
+        background-color: #E0E0E0;
         cursor: pointer;
         position: fixed;
         right: 17%;
