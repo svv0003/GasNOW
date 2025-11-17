@@ -22,7 +22,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect("/login");
             return false;
         }
-
         return true;
     }
 }
