@@ -61,6 +61,9 @@ public interface UserPointMapper {
      */
     int insertPointHistory(UserPointHistory pointHistory);
 
+
+    UserPointHistory getPointHistory(String userId);
+
     /**
      * 포인트 적립/사용 내역 조회
      * @param userId 세션에 저장된 유저 아이디 (WHERE 조건절에서 사용)
