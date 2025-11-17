@@ -685,10 +685,10 @@ fetch('/api/config/key')
 
     if (gasList.classList.contains("hidden")) {
     desktopBtn.style.right = "0";
-    desktopBtn.textContent = "<<";
+    desktopBtn.textContent = "|||";
 } else {
     desktopBtn.style.right = "25vw";
-    desktopBtn.textContent = ">>";
+    desktopBtn.textContent = "|||";
 }
 });
 }
@@ -700,10 +700,10 @@ fetch('/api/config/key')
 
     if (gasList.classList.contains("hidden")) {
     mobileBtn.style.bottom = "0";
-    mobileBtn.textContent = "^";
+    mobileBtn.textContent = "=";
 } else {
     mobileBtn.style.bottom = "50vh";
-    mobileBtn.textContent = "v";
+    mobileBtn.textContent = "=";
 }
 });
 }
