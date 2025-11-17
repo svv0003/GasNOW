@@ -129,9 +129,9 @@ public class UserRestController {
         // 로그인 입력란에 아무것도 작성하지 않은 경우
         if(user == null) {
             // HTTP 상태 코드 401
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+            return ResponseEntity.ok(Map.of(
                     "ok", "false",
-                    "error", "아이디 또는 비밀번호가 일치하지 않습니다."
+                    "message", "아이디 또는 비밀번호가 일치하지 않습니다."
             ));
         }
 
