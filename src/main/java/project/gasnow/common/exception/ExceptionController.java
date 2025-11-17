@@ -35,4 +35,5 @@ public class ExceptionController {
         log.error("예외 발생", e);
         return "error/500";
     }
+
 }
