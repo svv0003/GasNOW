@@ -27,8 +27,6 @@ public class  AdminInterceptor implements HandlerInterceptor {
             response.sendRedirect("/");
             return false;
         }
-
         return true;
     }
-
 }
