@@ -211,11 +211,16 @@
         border-top: 2px solid black;
     }
 
+    .list-table tbody{
+        border: 1px solid black;
+    }
+
     .list-table th,
     .list-table td {
         padding: 5px;
         border-left: 1px solid #f4f7fa;
         border-right: 1px solid #f4f7fa;
+        border-bottom: 1px solid black;
 
     }
 
@@ -596,8 +601,9 @@
     .list-table th,
     .list-table td {
         padding: 5px;
-        border-left: 1px solid white;
-        border-right: 1px solid white;
+        border-left: 1px solid #f4f7fa;
+        border-right: 1px solid #f4f7fa;
+        border-bottom: 1px solid black;
 
     }
 
