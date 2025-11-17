@@ -49,7 +49,9 @@ body {
     overflow: hidden;
 }
 .chart-container {
-    width: 30%;
+    width: 40%;
+    padding-left: 5%;
+    padding-right: 5%;
     height: 100%;
     margin-right: 7%;
     background: #f4f7fa;
@@ -72,25 +74,27 @@ body {
     gap: 10px;
     flex-direction: row-reverse;
 }
-.login-btn {
-    border: 2px solid black;
-    border-radius: 30px;
-    background-color: #f0f0f0;
-    color: black;
-    font-weight: bold;
-    padding: 5px 30px;
-    max-height: 100%;
-    cursor: pointer;
-}
+.login-btn,
 .register-btn {
-    border-radius: 30px;
-    border: 1px solid black;
-    background-color: black;
-    color: white;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    color: black;
+    font-size: 0.9rem;
     font-weight: bold;
-    padding: 5px 20px;
-    max-height: 100%;
     cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    box-shadow:
+            inset 5px 5px 10px #ffffff, /* 1. 밝은 그림자 (좌측 상단) */
+            0 5px 10px #bebebe;         /* 2. 어두운 그림자 (우측 하단) */
+}
+.login-btn:active,
+.register-btn:active {
+    color: #555;
+    box-shadow:
+            inset 0 -5px 10px #ffffff,      /* 안쪽 밝은 그림자 */
+            inset 5px 5px 10px #afafaf;     /* 안쪽 어두운 그림자 */
 }
 
 .welcome-btn {
@@ -182,22 +186,30 @@ body {
     display: flex;
     flex-direction: column; /* 아이템을 세로로 정렬 */
     justify-content: center; /* 그룹을 박스 세로 중앙에 배치 */
-
-    /* ↓↓↓ 추가: 항목 사이의 간격을 vh로 지정 (기존 margin 대신) */
     gap: 0.8vh;
-
-    /* ↓↓↓ 추가: 패딩을 주면 더 안정적입니다 (선택 사항) */
     padding: 1vh 0;
     box-sizing: border-box; /* 패딩이 높이에 포함되도록 함 */
     border-radius: 10px;
-    background-color: #ffddaa;
     cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #ffddaa;
+    color: #555;
+    box-shadow:
+            inset 4px 5px 10px rgba(255, 255, 255, 0.7),   /* 1. 밝은 그림자 (좌측 상단) */
+            4px 5px 10px #bebebe;         /* 2. 어두운 그림자 (우측 하단) */
 }
-.diff-box:hover {
-    background-color: #ffaa64;
-}
+.diff-box:active,
 .diff-box.on {
     background-color: #ffaa64;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    box-shadow:
+            inset -3px -4px 10px #fae6c8,      /* 안쪽 밝은 그림자 */
+            inset 3px 4px 10px #9a663c;        /* 안쪽 어두운 그림자 */
+}
+.diff-box:active .diff-oil,
+.diff-box.on .diff-oil {
+    color: #555;
 }
 .diff-oil {
     color: black;
@@ -255,14 +267,15 @@ h1 {
     flex: 1;
     padding: 10px;
     text-align: center;
-    background: white;
-    border: none;
     cursor: pointer;
     font-size: 0.8rem;
     font-weight: bold;
-    color: black;
+    border: 1px solid #ccc;
     background-color: #f0f0f0;
-    border: 1px solid #3c3c3c;
+    color: #000000;
+    box-shadow:
+            inset 5px 5px 10px #ffffff, /* 1. 밝은 그림자 (좌측 상단) */
+            0 5px 10px #bebebe;         /* 2. 어두운 그림자 (우측 하단) */
 }
 
 .period-btn:first-child {
@@ -272,11 +285,23 @@ h1 {
 .period-btn:last-child {
     border-radius: 0 10px 10px 0;
 }
-
-.period-btn.on {
-    background: #3c3c3c;
-    color: white;
+.period-btn:active {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #ccc;
     font-weight: bold;
+    box-shadow:
+            inset 0 -5px 10px #ffffff,      /* 안쪽 밝은 그림자 */
+            inset 5px 5px 10px #afafaf;     /* 안쪽 어두운 그림자 */
+}
+.period-btn.on {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    box-shadow:
+            inset 0 -5px 10px #ffffff, /* 안쪽 밝은 그림자 */
+            inset 5px 5px 10px #afafaf;  /* 안쪽 어두운 그림자 */
 }
 
 .legend {
@@ -303,7 +328,7 @@ h1 {
 }
 
 .local {
-    background-color: #ff00ea;
+    background-color: #ff0055;
 }
 
 
@@ -398,15 +423,31 @@ h1 {
         background-color: #f0f0f0;
         color: #555;
         font-size: 1rem;
+        font-weight: bold;
         text-align: center;
         align-content: center;
         cursor: pointer;
+        box-shadow:
+                inset 5px 5px 10px #ffffff, /* 1. 밝은 그림자 (좌측 상단) */
+                0 5px 10px #bebebe;         /* 2. 어두운 그림자 (우측 하단) */
+    }
+    .toggle-btn:active {
+        background-color: #f0f0f0;
+        color: #555;
+        border: 1px solid #ccc;
+        font-weight: normal;
+        box-shadow:
+                inset 0 -5px 10px #ffffff,      /* 안쪽 밝은 그림자 */
+                inset 5px 5px 10px #afafaf;     /* 안쪽 어두운 그림자 */
     }
     .toggle-btn.on {
-        background-color: black;
-        color: white;
-        border-color: black;
-        font-weight: bold;
+        background-color: #f0f0f0;
+        color: #555;
+        border: 1px solid #ccc;
+        font-weight: normal;
+        box-shadow:
+                inset 0 -5px 10px #ffffff,      /* 안쪽 밝은 그림자 */
+                inset 5px 5px 10px #afafaf;     /* 안쪽 어두운 그림자 */
     }
     .toggle-btn:first-child {
         border-radius: 5px 0 0 5px;
@@ -441,7 +482,7 @@ h1 {
         margin-left: 0;
     }
     .label {
-        font-size: 1.9rem;
+        font-size: 1.5rem;
         font-weight: bold;
     }
 
@@ -449,9 +490,9 @@ h1 {
     차트 스타일
     ================================================================================================*/
     .chart-container {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 90vw;
+        padding-left: 5%;
+        padding-right: 5%;
         display: none;
     }
     .chart-container.on {
@@ -506,6 +547,8 @@ h1 {
         align-items: center;             /* 수직 가운데 */
         justify-content: center;         /* 수평 가운데 */
         font-size: 0.8rem;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(to bottom, #f8f8f8, #eaeaea);
     }
     .oil-btn:hover {
         background-color: #99d5ff;
@@ -525,6 +568,12 @@ h1 {
         align-items: center;
         overflow: hidden;
         gap: 0;
+        background: linear-gradient(
+                to bottom,
+                #f8f8f8 0%,
+                #f8f8f8 5%,
+                #eaeaea 50%
+        );
         border-top: 1px solid #e0e0e0;      /* 상단 구분선 */
         border-bottom: 1px solid #e0e0e0;   /* 하단 구분선 */
         width: 100%;                        /* 화면 전체 너비 */
