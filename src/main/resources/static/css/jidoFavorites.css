@@ -422,16 +422,17 @@
     }
 
     #oil-info-head th{
-        font-size: 15px;
+        font-size: 0.7vw;
         font-weight: 400;
     }
 
     #oil-info-body td {
         text-align: center;
+        font-size: 0.8vw;
     }
 
     #oil-info-area, #oil-diesel-price2, #oil-gasoline-price2, #oil-premiumGasoline-price2, #oil-kerosene-price2, #oil-lpg-price2 {
-        font-size: 12px;
+        font-size: 0.7vw;
         color: #969696;
     }
 
