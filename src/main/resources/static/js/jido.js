@@ -11,7 +11,14 @@ fetch('/api/config/key')
     .catch(err => console.error("API Key 불러오기 실패:", err));
 
 
+let clickOil = null;
 
+document.querySelector('.oil-type').addEventListener('click', function(e) {
+    if (e.target.tagName === 'BUTTON') {
+        clickOil = e.target.innerText;
+
+    }
+});
 
 // 마커들을 담을 배열입니다
     var selectedMarker = null;
@@ -558,7 +565,7 @@ fetch('/api/config/key')
 
             // 인포윈도우를 생성합니다
             var infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="padding:5px;font-size:12px;width:150px;"><strong>${name}</strong><br>휘발유: ${price}원<br>거리: ${distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km'}</div>`
+                content: `<div style="padding:5px;font-size:12px;width:150px;"><strong>${name}</strong><br>${clickOil}: ${price}원<br>거리: ${distanceInMeters < 1000 ? distanceInMeters.toFixed(0) + 'm' : (distanceInMeters / 1000).toFixed(2) + 'km'}</div>`
             });
 
             // 마커에 마우스오버 이벤트를 등록합니다
