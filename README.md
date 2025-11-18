@@ -1,55 +1,71 @@
-# ⛽️ GasNOW  실시간 전국 주유소 검색
+# ⛽️ GasNOW 위치 기반 주유소 검색
+<div align="center">
+    <a href="https://gasnow.store ">
+        <img src="/images/logo-small-orange.png" alt="GASNOW Logo" width="400"/>
+    </a>
+</div>
 
-> API를 활용하여 실시간 유가 및 주유소 정보를 조회하는 프로젝트입니다.
-<br>https://3.38.154.32:8443/
+<p align="center">
+  <b>API를 활용한 실시간 인근 주유소 검색 서비스</b>
+  <br/>
+  <a href="https://gasnow.store "><strong>Visit GASNOW »</strong></a>
+</p>
+
+---
+
+# 💡프로젝트 소개
+<hr>
+**GASNOW**는 오피넷 API를 활용하여 지도 상에서 현 위치를 기준으로 인근 주유소를 보여주고,
+유가 관련 인사이트를 제공하는 웹사이트입니다.
+
+
+
 
 <br>
-
 # 메인 화면
 * 전국 전일 평균가 대비 현재 평균가 변동률을 알 수 있는 유종별 데이터를 제공합니다. 
 * 전국/지역별 유가 추이를 한눈에 볼 수 있는 차트와 지도를 제공합니다.
 
 <br>
 
-![메인화면](./images/index.PNG)
+# 🔅 주요 기능
+<hr>
 
-<br>
+## 🏠 Home 대시보드
+#### 실시간 현재가
+* 오피넷의 유가 정보 API 데이터를 연동하여 전국 현재 평균가를 조회하고, DB에 저장된 전일 평균가와의 변동률을 보여줍니다.
+#### 전국 평균 유가 지도
+* \<SVG> 태그를 사용해 지역별 현재 평균가를 지도 위에 표시합니다.
+#### 기간별 유가 변동 시각화 차트
+* Chart.js를 이용해 1주/1개월/1년/전체 기간 단위로 DB에 저장된 유가 변동을 시각화합니다.
+ 
+<img src="/images/index.PNG">
 
-### 주요 기능
-* **지도:** 대한민국 지도 <SVG> 태그를 사용해 지역별 현재 평균가를 지도 위에 표시합니다.
-* **차트:** Chart.js를 이용해 1주/1개월/1년/전체 기간 단위로 DB에 저장된 유가 변동을 시각화합니다.
-* **실시간 현재가:** Opinet (유가 정보 API) 데이터를 연동하여 전국 현재 평균가를 조회하고, DB에 저장된 전일 평균가와의 변동률을 보여줍니다.
-* **유종별 검색:** 고급휘발유, 휘발유, 경유, 등유, LPG를 선택하여 지도와 차트 기능을 해당 유종으로 조회합니다.
-
-<br>
-<br>
-
-# 지도 / 상세조회 / 즐겨찾기
+## 📍 지도 / 상세조회 / 즐겨찾기
+#### 주유소 검색
+* 현재 위치를 기준으로 반경 5km 이내의 주유소를 검색해 지도 상에서 보여줍니다.
+#### 주유소 상세조회
 * 현재 위치 기준 반경 5km 내 모든 주유소를 거리순/가격순으로 조회하는 지도를 제공합니다.
+#### 즐겨찾기 조회
 * 주유소 클릭 시 해당 주유소의 상세 정보 및 즐겨찾기, 후기 기능을 제공합니다.
-* 로그인 계정으로 즐겨찾기 설정한 매장들을 한 곳에서 조회 가능합니다.
 
-<br>
 
 ![지도](./images/map.PNG)
 ![주유소 상세](./images/map2.PNG)
 ![즐겨찾기](./images/favorites.PNG)
 
-<br>
 
-### 주요 기능
-* **지도:** 파이썬 라이브러리를 이용한 좌표 변환 API 기능과 Geolocation을 이용하여 현재위치 찾기 및 지도 표시 기능을 제공합니다. 
-* **주유소 상세조회:** 현재 위치 기준으로 조회한 주유소 클릭 시 해당 주유소의 고유 번호로 API 조회하여 상세 정보를 제공합니다.
-* **리뷰/즐겨찾기:** 주유소 상세조회 창에서 즐겨찾기 등록한 매장을, 그리고 리뷰 버튼으로 선택한 평점을 DB에 저장합니다.
-* **즐겨찾기 조회:** DB에 로그인 계정으로 저장된 즐겨찾기 등록된 매장을 조회하여 지도에 표시합니다.
-
-<br>
-<br>
-
-# 회원가입 / 로그인 / 마이페이지
-* 중복 확인 및 유효성 검사, 이메일 인증을 통한 회원가입 기능을 제공합니다.
-* 아이디 저장 체크 버튼으로 쿠키에 30일 동안 아이디가 저장되는 기능을 제공합니다.
-* 로그인한 회원만 접근할 수 있으며, 나의 리뷰, 포인트, 회원정보 수정 등의 작업이 가능합니다.
+## 👦 회원가입 / 로그인 / 마이페이지
+* 로그인 계정으로 즐겨찾기 설정한 매장들을 한 곳에서 조회 가능합니다.
+#### 회원가입
+* ID, 연락처 중복 확인 및 유효성 검사를 실시합니다.
+* Bcrypt 알고리즘을 활용해 비밀번호를 암호화하여 DB에 저장합니다.
+* JavaMailServer를 이용해 이메일 인증번호를 발송합니다.
+#### 로그인
+* 아이디 저장 체크 시 쿠키에 사용자 아이디가 30일간 저장됩니다.
+#### 마이페이지
+* 로그인한 회원만 접근할 수 있도록 WebConfig를 설정하여, 비회원 접근 시 자동으로 로그인 페이지로 이동합니다.
+* 리뷰 내역/포인트 내역/회원정보 및 비밀번호 변경, 로그아웃, 회원 탈퇴 기능을 제공합니다.
 
 <br>
 
@@ -59,29 +75,46 @@
 
 <br>
 
-### 주요 기능
-* **회원가입:** <br>ID, 연락처 중복 확인 및 유효성 검사
-<br>비밀번호 정규표현식 유효성 검사 및 암호화
-<br>JavaMainServer를 이용한 이메일 인증번호 기능
-* **로그인:** 입력한 정보가 유효한 지 확인하고, ID 저장 버튼 선택 시 쿠키에 30일 간 저장합니다.
-* **마이페이지:** 로그인 회원만 접근 가능하도록 인터셉터와 WebConfig 설정하고, DB에 저장된 회원의 리뷰/포인트/회원정보 데이터를 조회 및 수정합니다. 
+## 🚀️ 기술 스택
+### **Frontend**
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
 
+### **Backend**
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=openjdk&logoColor=white)
 
-<br>
-<br>
-<br>
+### **API**
+![Opinet API](https://img.shields.io/badge/Opinet%20API-FF8C00?style=for-the-badge&logo=apache%20cloudstack&logoColor=white)
 
-## 🛠️ 기술 스택
+### **Database**
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-* **Frontend:** HTML, CSS, JavaScript, Chart.js
-* **Backend:** Spring Boot, Java
-* **API:** Opinet API
-* **DBMS:** MySQL
-* **Tool:** IntelliJ IDEA, GitHub, Figma, notion, MySQL Workbench
-* **Server:** AWS(Amazon Web Services)
-* **OS:** Windows, MacOS
+### **Tools**
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=for-the-badge&logo=intellijidea&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+![MySQL Workbench](https://img.shields.io/badge/MySQL%20Workbench-00678C?style=for-the-badge&logo=mysql&logoColor=white)
 
-<br>
+### **Server**
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+
+### **Operating System**
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)
+
+## 🧑‍💻 역할 분담 - 전원 풀스택
+
+| 역할                                | 이름   | GitHub |
+|:----------------------------------|:-----| :--- |
+| 👨‍💻 **Map**                     | 김재민  | [@andrew00874](https://github.com/andrew00874) |
+| 👩‍💻 **Home(index)**             | 박세원  | [@svv0003](https://github.com/svv0003) |
+| 👨‍💻 **Login, Register, Mypage** | 오유성  | [@Emma10003](https://github.com/Emma10003) |
+| 👨‍💻 **Map, Favorite**           | 현윤선  | [@yunseonHyun](https://github.com/yunseonHyun) |
+
 
 ## ⚙️ 설치 및 시작하기
 
