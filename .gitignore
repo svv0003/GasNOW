@@ -38,5 +38,3 @@ out/
 .env
 logs/
 *.log
-
-src/main/resources/config.properties
