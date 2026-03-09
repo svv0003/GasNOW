@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="60 seconds">
 
-    <property resource="config.properties" />
+<!--    <property resource="config.properties" />-->
 
     <property name="logPath"		value="${log.config.path}" /> <!-- config.properties에서 얻어온 값-->
     <property name="fileName"		value="${log.config.fileName}" />  <!-- config.properties에서 얻어온 값-->
