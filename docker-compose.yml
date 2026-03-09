@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: gasnow-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/gasnow
+      SPRING_DATASOURCE_USERNAME: gasnow
+      SPRING_DATASOURCE_PASSWORD: 1234
+
+  db:
+    image: mysql:8.0
+    container_name: gasnow-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: gasnow
+      MYSQL_USER: gasnow
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: root1234
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
