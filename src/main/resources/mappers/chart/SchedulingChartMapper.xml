@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="project.gasnow.common.scheduling.schedulingModel.schedulingMapper.SchedulingMapper">
 
-    <!--
-    INSERT API 데이터 저장
-    <insert id="insertOilPrice" parameterType="chart">
-        INSERT INTO avg_price (price_date, oil_category, avg_price, created_at)
-        VALUES (#{priceDate}, #{oilCategory}, #{avgPrice}, NOW())
-    </insert>
-    -->
-
     <insert id="saveChartData" parameterType="java.util.List">
-        INSERT INTO AREA_AVG (
-        PRICE_DATE,
-        AREA_CODE,
-        AREA_NAME,
-        OIL_CATEGORY,
-        AVG_PRICE,
-        CREATED_AT
+        INSERT INTO area_avg (
+        price_date,
+        area_code,
+        area_name,
+        oil_category,
+        avg_price,
+        created_at
         )
         VALUES
         <foreach collection="list" item="chart" separator=",">
             (
             STR_TO_DATE(#{chart.priceDate}, '%Y%m%d'),
             0,
-            "전국",
+            '전국',
             #{chart.oilCategory},
             #{chart.avgPrice},
             NOW()
             )
         </foreach>
         ON DUPLICATE KEY UPDATE
-        AVG_PRICE = VALUES(AVG_PRICE),
-        CREATED_AT = NOW()
+        avg_price = VALUES(avg_price),
+        created_at = NOW()
     </insert>
 
     <insert id="saveAreaChartData" parameterType="java.util.List">
-        INSERT INTO AREA_AVG (
-        PRICE_DATE,
-        AREA_CODE,
-        AREA_NAME,
-        OIL_CATEGORY,
-        AVG_PRICE,
-        CREATED_AT
+        INSERT INTO area_avg (
+        price_date,
+        area_code,
+        area_name,
+        oil_category,
+        avg_price,
+        created_at
         )
         VALUES
         <foreach collection="list" item="chart" separator=",">
@@ -60,8 +51,8 @@
             )
         </foreach>
         ON DUPLICATE KEY UPDATE
-        AVG_PRICE = VALUES(AVG_PRICE),
-        CREATED_AT = NOW()
+        avg_price = VALUES(avg_price),
+        created_at = NOW()
     </insert>
 
 </mapper>
