@@ -16,9 +16,9 @@ public class ChartScheduling {
 
     private final SchedulingService schedulingService;
 
-    @Scheduled(cron = "0 0 3 * * *")
+    // 매주 월요일 0시 0분 0초에 한국 시간(KST) 기준으로 실행
+    @Scheduled(cron = "0 0 0 * * MON", zone = "Asia/Seoul")
     public void insertOilPrice() {
-
         String startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         log.info("==== 일일 평균가 업데이트 시작 [{}] ====", startTime);
 
