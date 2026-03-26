@@ -54,6 +54,10 @@ dependencies {
     implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.5'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // env 파일 읽기
+    implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
 }
 
 tasks.named('test') {
